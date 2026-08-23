@@ -1,0 +1,8 @@
+const resources=[
+{name:"112 India Emergency Response",category:"Emergency",location:"India",description:"Unified emergency number for police, fire, ambulance and other emergency assistance.",source:"Government of India — 112 India",url:"https://112.gov.in/"},
+{name:"National Health Authority",category:"Health",location:"India",description:"Official public information from India's National Health Authority.",source:"Government of India — NHA",url:"https://www.nha.gov.in/"},
+{name:"National Disaster Management Authority",category:"Disaster",location:"India",description:"Official disaster-management information and guidance.",source:"Government of India — NDMA",url:"https://ndma.gov.in/"}
+];
+const search=document.getElementById("search"),filter=document.getElementById("filter"),list=document.getElementById("resourceList"),empty=document.getElementById("empty");
+function render(){const q=search.value.toLowerCase().trim(),f=filter.value;const rows=resources.filter(r=>(f==="all"||r.category===f)&&(r.name+" "+r.category+" "+r.location+" "+r.description).toLowerCase().includes(q));list.innerHTML="";rows.forEach(r=>{const c=document.createElement("article");c.className="resource-card";c.innerHTML='<span class="tag">✓ OFFICIAL SOURCE</span><h3>'+r.name+'</h3><p><strong>'+r.category+'</strong> • '+r.location+'</p><p>'+r.description+'</p><a href="'+r.url+'" target="_blank" rel="noopener noreferrer">'+r.source+' ↗</a>';list.appendChild(c)});empty.classList.toggle("hidden",rows.length>0)}
+search.addEventListener("input",render);filter.addEventListener("change",render);render();
