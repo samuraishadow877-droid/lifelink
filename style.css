@@ -1,1 +1,916 @@
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#05070b;color:#f5f7fb;font-family:Arial,Helvetica,sans-serif}a{color:inherit;text-decoration:none}.nav{position:fixed;top:0;left:0;right:0;z-index:20;display:flex;align-items:center;justify-content:space-between;padding:15px 6%;background:#05070bdd;backdrop-filter:blur(14px);border-bottom:1px solid #1d2633}.brand{display:flex;align-items:center;gap:10px}.logo{width:42px;height:42px;display:grid;place-items:center;border-radius:12px;background:linear-gradient(135deg,#347cff,#ff4148)}.brand b{display:block;letter-spacing:1px}.brand small{display:block;color:#8995a8;font-size:9px}.nav nav{display:flex;gap:25px;color:#aeb8c8;font-size:13px}.nav nav a:hover{color:#fff}.call{padding:11px 16px;border-radius:10px;background:#fff;color:#05070b;font-size:12px;font-weight:800}.hero{min-height:100vh;display:grid;place-items:center;text-align:center;padding:130px 20px 70px;background:radial-gradient(circle at center,#112b59 0,#07111f 30%,#05070b 70%)}.hero-inner{max-width:850px}.badge,.eyebrow{color:#74a8ff;font-size:10px;font-weight:900;letter-spacing:1.4px}.badge{display:inline-block;padding:9px 13px;border:1px solid #29446f;border-radius:50px;background:#091426}.hero h1{font-size:clamp(50px,8vw,90px);line-height:.95;letter-spacing:-4px;margin:25px 0}.hero h1 span{background:linear-gradient(90deg,#fff,#70a5ff);-webkit-background-clip:text;background-clip:text;color:transparent}.hero p{max-width:670px;margin:auto;color:#9da9ba;line-height:1.7;font-size:17px}.actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin:30px 0}.btn{display:inline-flex;justify-content:center;align-items:center;padding:13px 18px;border-radius:11px;font-size:12px;font-weight:800}.primary{background:#347cff}.secondary{background:#0c121b;border:1px solid #293548}.danger{background:#e83d45}.stats{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:40px}.stats div{min-width:135px;padding:14px;background:#090e16;border:1px solid #1e2938;border-radius:14px}.stats b{display:block}.stats small{color:#8995a8;font-size:10px}.section{padding:95px 6%}.dark{background:#070b11}.container{max-width:1150px;margin:auto}h2{font-size:42px;letter-spacing:-1.5px;margin:10px 0 13px}.intro{max-width:720px;color:#9da9ba;line-height:1.7}.cards{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:16px;margin-top:35px}.card{padding:25px;border-radius:20px;background:#0b1119;border:1px solid #202b3a}.emergency{border-color:#5b2930;background:linear-gradient(145deg,#241014,#0b1018)}.icon{font-size:30px}.card h3{margin-top:18px}.card p{min-height:65px;color:#9da9ba;line-height:1.6;font-size:13px}.full{width:100%}.source{display:inline-block;margin-top:14px;color:#76aaff;font-size:11px;font-weight:bold}.controls{display:flex;gap:10px;margin:30px 0 20px}#search,#filter{background:#0b1119;border:1px solid #273244;color:#fff;padding:13px;border-radius:10px;outline:0}#search{flex:1}#filter{min-width:180px}.resource-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.resource-card{padding:20px;background:#0b1018;border:1px solid #202b3a;border-radius:17px}.resource-card h3{margin:13px 0 8px;font-size:17px}.resource-card p{color:#9da9ba;font-size:12px;line-height:1.6}.resource-card a{color:#76aaff;font-size:11px;font-weight:bold}.tag{display:inline-block;padding:5px 8px;border-radius:50px;background:#09271f;color:#73dfba;font-size:9px;font-weight:bold}.empty{text-align:center;color:#8995a8}.hidden{display:none}.about,.safety{display:grid;grid-template-columns:1fr 1fr;gap:40px}.about p,.safety p{color:#aeb8c8;line-height:1.8}.safety{padding:28px;border:1px solid #293548;border-radius:20px;background:#0b1119}footer{padding:40px 6%;border-top:1px solid #202938;color:#8995a8;display:flex;justify-content:space-between}footer b{color:#fff}@media(max-width:800px){.nav nav{display:none}.cards,.resource-grid,.about,.safety{grid-template-columns:1fr}.hero h1{letter-spacing:-2px}.section{padding:75px 18px}}@media(max-width:500px){.call{display:none}.controls{flex-direction:column}#filter{min-height:45px}h2{font-size:34px}footer{flex-direction:column;gap:10px}}
+/* =========================================
+   LIFELINK V2 — MAIN STYLES
+========================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    background: #05070b;
+    color: #f5f7fb;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button,
+input,
+select {
+    font: inherit;
+}
+
+
+/* =========================================
+   NAVBAR
+========================================= */
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 20;
+
+    padding: 14px 6%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    background: rgba(5, 7, 11, 0.87);
+    backdrop-filter: blur(14px);
+
+    border-bottom: 1px solid #202938;
+}
+
+
+/* LOGO */
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.brand-icon {
+    width: 42px;
+    height: 42px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 12px;
+
+    background: linear-gradient(
+        135deg,
+        #347cff,
+        #ff4148
+    );
+
+    font-size: 20px;
+}
+
+.brand-text strong,
+.brand-text small {
+    display: block;
+}
+
+.brand-text strong {
+    font-size: 16px;
+}
+
+.brand-text small {
+    margin-top: 3px;
+
+    color: #8995a8;
+
+    font-size: 9px;
+    letter-spacing: 0.5px;
+}
+
+
+/* NAVIGATION */
+
+.navigation {
+    display: flex;
+    gap: 22px;
+
+    color: #aeb8c8;
+
+    font-size: 13px;
+}
+
+.navigation a {
+    transition: 0.2s ease;
+}
+
+.navigation a:hover {
+    color: #ffffff;
+}
+
+
+/* CALL BUTTON */
+
+.call-button {
+    background: #ffffff;
+    color: #05070b;
+
+    padding: 10px 15px;
+
+    border-radius: 9px;
+
+    font-weight: bold;
+    font-size: 12px;
+}
+
+
+/* =========================================
+   HERO
+========================================= */
+
+.hero {
+    min-height: 100vh;
+
+    display: grid;
+    place-items: center;
+
+    text-align: center;
+
+    padding: 130px 20px 70px;
+
+    background:
+        radial-gradient(
+            circle at center,
+            #112b59 0%,
+            #07111f 35%,
+            #05070b 72%
+        );
+}
+
+.hero-content {
+    max-width: 850px;
+}
+
+
+/* VERSION BADGE */
+
+.version-badge {
+    display: inline-block;
+
+    padding: 9px 13px;
+
+    border: 1px solid #29446f;
+    border-radius: 50px;
+
+    background: #091426;
+
+    color: #74a8ff;
+
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 1.4px;
+}
+
+
+/* HERO HEADING */
+
+.hero h1 {
+    margin: 25px 0;
+
+    font-size: clamp(50px, 8vw, 88px);
+
+    line-height: 0.95;
+
+    letter-spacing: -4px;
+}
+
+.hero h1 span {
+    color: #70a5ff;
+}
+
+.hero p {
+    max-width: 700px;
+
+    margin: auto;
+
+    color: #9da9ba;
+
+    font-size: 17px;
+
+    line-height: 1.7;
+}
+
+
+/* HERO BUTTONS */
+
+.hero-buttons {
+    display: flex;
+
+    justify-content: center;
+
+    gap: 12px;
+
+    flex-wrap: wrap;
+
+    margin: 30px 0;
+}
+
+
+/* =========================================
+   BUTTONS
+========================================= */
+
+.button {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 13px 18px;
+
+    border: 0;
+
+    border-radius: 10px;
+
+    font-weight: 800;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        opacity 0.2s ease;
+}
+
+.button:hover {
+    transform: translateY(-2px);
+    opacity: 0.9;
+}
+
+.primary-button {
+    background: #347cff;
+    color: #ffffff;
+}
+
+.secondary-button {
+    background: #0c121b;
+
+    border: 1px solid #293548;
+
+    color: #ffffff;
+}
+
+.danger-button {
+    background: #e83d45;
+    color: #ffffff;
+}
+
+
+/* =========================================
+   HERO STATS
+========================================= */
+
+.hero-stats {
+    display: flex;
+
+    justify-content: center;
+
+    gap: 12px;
+
+    flex-wrap: wrap;
+
+    margin-top: 40px;
+}
+
+.stat {
+    min-width: 135px;
+
+    padding: 14px;
+
+    background: #090e16;
+
+    border: 1px solid #1e2938;
+
+    border-radius: 14px;
+}
+
+.stat strong,
+.stat small {
+    display: block;
+}
+
+.stat strong {
+    font-size: 16px;
+}
+
+.stat small {
+    margin-top: 5px;
+
+    color: #8995a8;
+
+    font-size: 10px;
+}
+
+
+/* =========================================
+   SECTIONS
+========================================= */
+
+.section {
+    padding: 90px 6%;
+}
+
+.dark-section {
+    background: #070b11;
+}
+
+.container {
+    max-width: 1150px;
+
+    margin: auto;
+}
+
+.section-label {
+    color: #74a8ff;
+
+    font-weight: 900;
+
+    letter-spacing: 1.4px;
+
+    font-size: 10px;
+}
+
+h2 {
+    margin: 10px 0 18px;
+
+    font-size: 42px;
+
+    letter-spacing: -1.5px;
+}
+
+.section-description {
+    color: #9da9ba;
+
+    line-height: 1.7;
+
+    max-width: 760px;
+}
+
+
+/* =========================================
+   EMERGENCY CARD
+========================================= */
+
+.emergency-card {
+    display: flex;
+
+    gap: 22px;
+
+    margin-top: 30px;
+
+    padding: 28px;
+
+    border: 1px solid #5b2930;
+
+    border-radius: 20px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #241014,
+            #0b1018
+        );
+}
+
+.emergency-icon {
+    font-size: 40px;
+}
+
+.emergency-content h3 {
+    margin-top: 0;
+
+    font-size: 21px;
+}
+
+.emergency-content p {
+    max-width: 750px;
+
+    color: #aeb8c8;
+
+    line-height: 1.7;
+}
+
+.emergency-actions {
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+    flex-wrap: wrap;
+}
+
+.official-link {
+    color: #76aaff;
+
+    font-size: 11px;
+
+    font-weight: 800;
+}
+
+
+/* =========================================
+   QUICK SERVICES
+========================================= */
+
+.quick-services {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 12px;
+
+    margin-top: 15px;
+}
+
+.quick-service {
+    padding: 18px;
+
+    background: #0b1119;
+
+    border: 1px solid #202b3a;
+
+    border-radius: 16px;
+
+    transition: 0.2s ease;
+}
+
+.quick-service:hover {
+    border-color: #347cff;
+
+    transform: translateY(-2px);
+}
+
+.quick-service span,
+.quick-service strong,
+.quick-service small {
+    display: block;
+}
+
+.quick-service span {
+    font-size: 25px;
+}
+
+.quick-service strong {
+    margin-top: 8px;
+}
+
+.quick-service small {
+    margin-top: 6px;
+
+    color: #8995a8;
+
+    font-size: 10px;
+}
+
+
+/* =========================================
+   LOCATION
+========================================= */
+
+.location-box {
+    display: flex;
+
+    gap: 15px;
+
+    align-items: center;
+
+    margin: 30px 0 18px;
+
+    padding: 18px;
+
+    background: #0b1119;
+
+    border: 1px solid #293548;
+
+    border-radius: 16px;
+}
+
+.location-status {
+    flex: 1;
+
+    color: #aeb8c8;
+
+    font-size: 13px;
+}
+
+
+/* =========================================
+   NEARBY SERVICES
+========================================= */
+
+.nearby-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(5, 1fr);
+
+    gap: 12px;
+}
+
+.nearby-card {
+    padding: 18px;
+
+    background: #0b1018;
+
+    border: 1px solid #202b3a;
+
+    border-radius: 16px;
+
+    transition: 0.2s ease;
+}
+
+.nearby-card:hover {
+    border-color: #347cff;
+
+    transform: translateY(-2px);
+}
+
+.nearby-card strong,
+.nearby-card small {
+    display: block;
+}
+
+.nearby-card strong {
+    font-size: 14px;
+}
+
+.nearby-card small {
+    margin: 8px 0;
+
+    color: #8995a8;
+
+    font-size: 10px;
+
+    line-height: 1.5;
+}
+
+.map-link {
+    color: #76aaff;
+
+    font-size: 11px;
+
+    font-weight: 800;
+}
+
+.small-note {
+    color: #687589;
+
+    font-size: 11px;
+
+    line-height: 1.6;
+}
+
+
+/* =========================================
+   RESOURCE SEARCH
+========================================= */
+
+.resource-controls {
+    display: flex;
+
+    gap: 10px;
+
+    margin: 28px 0 18px;
+}
+
+.resource-controls input,
+.resource-controls select {
+    padding: 13px;
+
+    background: #0b1119;
+
+    color: #ffffff;
+
+    border: 1px solid #293548;
+
+    border-radius: 10px;
+
+    outline: none;
+}
+
+.resource-controls input {
+    flex: 1;
+}
+
+.resource-controls input:focus,
+.resource-controls select:focus {
+    border-color: #347cff;
+}
+
+
+/* =========================================
+   RESOURCE CARDS
+========================================= */
+
+.resource-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 15px;
+}
+
+.resource-card {
+    padding: 18px;
+
+    background: #0b1018;
+
+    border: 1px solid #202b3a;
+
+    border-radius: 16px;
+
+    transition: 0.2s ease;
+}
+
+.resource-card:hover {
+    border-color: #347cff;
+
+    transform: translateY(-2px);
+}
+
+.resource-card h3 {
+    margin: 12px 0 6px;
+
+    font-size: 17px;
+}
+
+.resource-card p {
+    color: #9da9ba;
+
+    font-size: 12px;
+
+    line-height: 1.6;
+}
+
+.resource-card a {
+    color: #76aaff;
+
+    font-size: 11px;
+
+    font-weight: 800;
+}
+
+.resource-tag {
+    display: inline-block;
+
+    padding: 5px 8px;
+
+    border-radius: 50px;
+
+    background: #09271f;
+
+    color: #73dfba;
+
+    font-size: 9px;
+
+    font-weight: bold;
+}
+
+
+/* =========================================
+   EMPTY STATE
+========================================= */
+
+.empty-message {
+    text-align: center;
+
+    color: #8995a8;
+}
+
+.hidden {
+    display: none;
+}
+
+
+/* =========================================
+   LIFELINK GUIDE
+========================================= */
+
+.guide-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(5, 1fr);
+
+    gap: 12px;
+
+    margin-top: 28px;
+}
+
+.guide-card {
+    min-height: 145px;
+
+    padding: 18px;
+
+    text-align: left;
+
+    color: #ffffff;
+
+    background: #0b1119;
+
+    border: 1px solid #202b3a;
+
+    border-radius: 16px;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+.guide-card:hover {
+    border-color: #347cff;
+
+    transform: translateY(-2px);
+}
+
+.guide-card span,
+.guide-card strong,
+.guide-card small {
+    display: block;
+}
+
+.guide-card span {
+    font-size: 25px;
+}
+
+.guide-card strong {
+    margin-top: 10px;
+}
+
+.guide-card small {
+    margin-top: 7px;
+
+    color: #8995a8;
+
+    font-size: 10px;
+
+    line-height: 1.5;
+}
+
+
+/* GUIDE RESULT */
+
+.guide-result {
+    margin-top: 15px;
+
+    padding: 18px;
+
+    background: #0b1018;
+
+    border: 1px solid #293548;
+
+    border-radius: 15px;
+
+    color: #aeb8c8;
+
+    line-height: 1.7;
+}
+
+
+/* =========================================
+   ABOUT + SAFETY
+========================================= */
+
+.about-section,
+.safety-card {
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 40px;
+}
+
+.about-section p,
+.safety-card p {
+    color: #aeb8c8;
+
+    line-height: 1.8;
+}
+
+.safety-card {
+    padding: 28px;
+
+    background: #0b1119;
+
+    border: 1px solid #293548;
+
+    border-radius: 20px;
+}
+
+
+/* =========================================
+   FOOTER
+========================================= */
+
+footer {
+    padding: 40px 6%;
+
+    border-top: 1px solid #202938;
+
+    color: #8995a8;
+
+    display: flex;
+
+    justify-content: space-between;
+}
+
+footer strong {
+    color: #ffffff;
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 900px) {
+
+    .navigation {
+        display: none;
+    }
+
+    .quick-services,
+    .nearby-grid,
+    .guide-grid,
+    .resource-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .hero h1 {
+        letter-spacing: -2px;
+    }
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 600px) {
+
+    .quick-services,
+    .nearby-grid,
+    .guide-grid,
+    .resource-grid,
+    .about-section,
+    .safety-card {
+        grid-template-columns: 1fr;
+    }
+
+    .location-box,
+    .resource-controls {
+        flex-direction: column;
+
+        align-items: stretch;
+    }
+
+    .call-button {
+        display: none;
+    }
+
+    .hero h1 {
+        font-size: 52px;
+    }
+
+    .section {
+        padding: 75px 18px;
+    }
+
+    h2 {
+        font-size: 34px;
+    }
+
+    .emergency-card {
+        flex-direction: column;
+    }
+
+    footer {
+        flex-direction: column;
+
+        gap: 10px;
+    }
+}
