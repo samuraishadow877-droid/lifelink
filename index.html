@@ -1,13 +1,562 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#05070b"><title>LIFELINK — When Help Matters, Connect.</title><link rel="stylesheet" href="style.css"></head><body>
-<header class="nav"><a class="brand" href="#home"><span class="logo">♥</span><span><b>LIFELINK</b><small>WHEN HELP MATTERS, CONNECT.</small></span></a><nav><a href="#home">Home</a><a href="#help">Get Help</a><a href="#resources">Resources</a><a href="#about">About</a></nav><a class="call" href="tel:112">Call 112</a></header>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="theme-color" content="#05070b">
+    <meta name="description"
+          content="LIFELINK — Connect with official emergency information and public resources.">
+
+    <title>LIFELINK V2 — When Help Matters, Connect.</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- =========================
+     NAVIGATION
+========================= -->
+
+<header class="navbar">
+
+    <a href="#home" class="brand">
+        <span class="brand-icon">♥</span>
+
+        <span class="brand-text">
+            <strong>LIFELINK</strong>
+            <small>WHEN HELP MATTERS, CONNECT.</small>
+        </span>
+    </a>
+
+    <nav class="navigation">
+        <a href="#home">Home</a>
+        <a href="#emergency">Emergency</a>
+        <a href="#nearby">Nearby</a>
+        <a href="#resources">Resources</a>
+        <a href="#guide">Guide</a>
+    </nav>
+
+    <a href="tel:112" class="call-button">
+        Call 112
+    </a>
+
+</header>
+
+
+<!-- =========================
+     HERO
+========================= -->
+
 <main>
-<section id="home" class="hero"><div class="hero-inner"><span class="badge">LIFELINK INDIA • SAFETY + RESOURCE CONNECTION</span><h1>When help matters,<br><span>connect.</span></h1><p>Find official emergency information and trusted public resources through one simple interface.</p><div class="actions"><a class="btn primary" href="#help">I Need Help</a><a class="btn secondary" href="#resources">Find Resources</a></div><div class="stats"><div><b>112</b><small>India emergency</small></div><div><b>Official</b><small>Source-labelled</small></div><div><b>24/7</b><small>Information access</small></div></div></div></section>
-<section id="help" class="section"><div class="container"><span class="eyebrow">GET HELP</span><h2>Choose the right path.</h2><p class="intro">For an immediate emergency in India, use the official emergency service. For information and non-emergency needs, explore the resources below.</p><div class="cards">
-<article class="card emergency"><div class="icon">🆘</div><h3>Emergency</h3><p>Police, fire, ambulance and other emergency assistance in India.</p><a class="btn danger full" href="tel:112">Call 112</a><a class="source" href="https://112.gov.in/" target="_blank" rel="noopener noreferrer">Official 112 India ↗</a></article>
-<article class="card"><div class="icon">🏥</div><h3>Health Information</h3><p>Access official information from India's National Health Authority.</p><a class="btn secondary full" href="https://www.nha.gov.in/" target="_blank" rel="noopener noreferrer">Open NHA ↗</a></article>
-<article class="card"><div class="icon">🌪️</div><h3>Disaster Information</h3><p>Find official disaster-management information from India's NDMA.</p><a class="btn secondary full" href="https://ndma.gov.in/" target="_blank" rel="noopener noreferrer">Open NDMA ↗</a></article>
-</div></div></section>
-<section id="resources" class="section dark"><div class="container"><span class="eyebrow">RESOURCE DIRECTORY</span><h2>Verified public resources.</h2><p class="intro">Search the official information currently included in LIFELINK.</p><div class="controls"><input id="search" type="search" placeholder="Search resources..."><select id="filter"><option value="all">All categories</option><option value="Emergency">Emergency</option><option value="Health">Health</option><option value="Disaster">Disaster</option></select></div><div id="resourceList" class="resource-grid"></div><p id="empty" class="empty hidden">No matching resources found.</p></div></section>
-<section id="about" class="section"><div class="container about"><div><span class="eyebrow">OUR MISSION</span><h2>A calmer bridge between people and help.</h2></div><p>LIFELINK makes important information easier to discover while clearly separating verified public information from future live services.</p></div></section>
-<section class="section"><div class="container safety"><div><span class="eyebrow">SAFETY FIRST</span><h2>No fake live data.</h2></div><p>LIFELINK does not currently provide emergency dispatch, live incident tracking or real-time hospital availability. Those features require verified services and secure backend infrastructure.</p></div></section>
-</main><footer><b>LIFELINK</b><span>When help matters, connect. • Early prototype</span></footer><script src="script.js"></script></body></html>
+
+<section id="home" class="hero">
+
+    <div class="hero-content">
+
+        <div class="version-badge">
+            LIFELINK V2 • SAFETY + RESOURCE CONNECTION
+        </div>
+
+        <h1>
+            When help matters,
+            <span>connect.</span>
+        </h1>
+
+        <p>
+            Find official emergency information, nearby public services
+            and trusted resources through one simple interface.
+        </p>
+
+        <div class="hero-buttons">
+
+            <a href="#emergency" class="button primary-button">
+                🚨 I Need Help
+            </a>
+
+            <a href="#nearby" class="button secondary-button">
+                📍 Find Help Near Me
+            </a>
+
+        </div>
+
+        <div class="hero-stats">
+
+            <div class="stat">
+                <strong>112</strong>
+                <small>India emergency</small>
+            </div>
+
+            <div class="stat">
+                <strong>Official</strong>
+                <small>Source labelled</small>
+            </div>
+
+            <div class="stat">
+                <strong>V2</strong>
+                <small>Nearby + Guide</small>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     EMERGENCY CENTER
+========================= -->
+
+<section id="emergency" class="section">
+
+    <div class="container">
+
+        <div class="section-label">
+            EMERGENCY COMMAND CENTER
+        </div>
+
+        <h2>Need help now?</h2>
+
+        <p class="section-description">
+            If you are in immediate danger or need urgent assistance
+            in India, use the official emergency service.
+        </p>
+
+
+        <div class="emergency-card">
+
+            <div class="emergency-icon">
+                🚨
+            </div>
+
+            <div class="emergency-content">
+
+                <h3>112 India Emergency Response</h3>
+
+                <p>
+                    India's unified emergency response number for
+                    police, fire, ambulance and other emergency
+                    assistance.
+                </p>
+
+                <div class="emergency-actions">
+
+                    <a href="tel:112"
+                       class="button danger-button">
+                        CALL 112
+                    </a>
+
+                    <a href="https://112.gov.in/"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       class="official-link">
+                        Official 112 India ↗
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="quick-services">
+
+            <a href="https://112.gov.in/"
+               target="_blank"
+               rel="noopener noreferrer"
+               class="quick-service">
+
+                <span>🚓</span>
+                <strong>Police</strong>
+                <small>Official 112 service</small>
+
+            </a>
+
+
+            <a href="https://112.gov.in/"
+               target="_blank"
+               rel="noopener noreferrer"
+               class="quick-service">
+
+                <span>🚑</span>
+                <strong>Ambulance</strong>
+                <small>Official 112 service</small>
+
+            </a>
+
+
+            <a href="https://112.gov.in/"
+               target="_blank"
+               rel="noopener noreferrer"
+               class="quick-service">
+
+                <span>🚒</span>
+                <strong>Fire</strong>
+                <small>Official 112 service</small>
+
+            </a>
+
+
+            <a href="https://ndma.gov.in/"
+               target="_blank"
+               rel="noopener noreferrer"
+               class="quick-service">
+
+                <span>🌪️</span>
+                <strong>Disaster</strong>
+                <small>NDMA information</small>
+
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     NEARBY HELP
+========================= -->
+
+<section id="nearby" class="section dark-section">
+
+    <div class="container">
+
+        <div class="section-label">
+            NEARBY HELP
+        </div>
+
+        <h2>Find services around you.</h2>
+
+        <p class="section-description">
+
+            Allow location access and LIFELINK will create map
+            searches for nearby hospitals, police stations,
+            fire stations, pharmacies and government services.
+
+        </p>
+
+
+        <div class="location-box">
+
+            <div id="locationStatus" class="location-status">
+
+                📍 Location has not been requested.
+
+            </div>
+
+            <button id="locationButton"
+                    class="button primary-button">
+
+                Use My Location
+
+            </button>
+
+        </div>
+
+
+        <div id="nearbyServices"
+             class="nearby-grid">
+
+            <!-- JavaScript will add services here -->
+
+        </div>
+
+
+        <p class="small-note">
+
+            Your location is used in your browser to create
+            map searches. LIFELINK does not claim live hospital
+            availability or live emergency incidents.
+
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     RESOURCE DIRECTORY
+========================= -->
+
+<section id="resources" class="section">
+
+    <div class="container">
+
+        <div class="section-label">
+            RESOURCE DIRECTORY
+        </div>
+
+        <h2>Official public resources.</h2>
+
+        <p class="section-description">
+
+            Search official information included in LIFELINK.
+
+        </p>
+
+
+        <div class="resource-controls">
+
+            <input
+                id="resourceSearch"
+                type="search"
+                placeholder="🔎 Search resources..."
+                aria-label="Search resources"
+            >
+
+
+            <select id="resourceFilter"
+                    aria-label="Filter resources">
+
+                <option value="all">
+                    All categories
+                </option>
+
+                <option value="Emergency">
+                    Emergency
+                </option>
+
+                <option value="Health">
+                    Health
+                </option>
+
+                <option value="Disaster">
+                    Disaster
+                </option>
+
+                <option value="Government">
+                    Government
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div id="resourceList"
+             class="resource-grid">
+
+            <!-- JavaScript will add resources -->
+
+        </div>
+
+
+        <p id="noResources"
+           class="empty-message hidden">
+
+            No matching resources found.
+
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     LIFELINK GUIDE
+========================= -->
+
+<section id="guide" class="section dark-section">
+
+    <div class="container">
+
+        <div class="section-label">
+            LIFELINK GUIDE
+        </div>
+
+        <h2>What kind of help do you need?</h2>
+
+        <p class="section-description">
+
+            Choose an option and LIFELINK will guide you
+            toward the appropriate official resource.
+
+        </p>
+
+
+        <div class="guide-grid">
+
+            <button class="guide-card"
+                    data-guide="Emergency">
+
+                <span>🚨</span>
+
+                <strong>Emergency</strong>
+
+                <small>
+                    Immediate urgent assistance
+                </small>
+
+            </button>
+
+
+            <button class="guide-card"
+                    data-guide="Medical">
+
+                <span>🏥</span>
+
+                <strong>Medical</strong>
+
+                <small>
+                    Health information and services
+                </small>
+
+            </button>
+
+
+            <button class="guide-card"
+                    data-guide="Disaster">
+
+                <span>🌪️</span>
+
+                <strong>Disaster</strong>
+
+                <small>
+                    Official disaster guidance
+                </small>
+
+            </button>
+
+
+            <button class="guide-card"
+                    data-guide="Nearby">
+
+                <span>📍</span>
+
+                <strong>Nearby Help</strong>
+
+                <small>
+                    Find services around you
+                </small>
+
+            </button>
+
+
+            <button class="guide-card"
+                    data-guide="Government">
+
+                <span>🏛️</span>
+
+                <strong>Government</strong>
+
+                <small>
+                    Official public information
+                </small>
+
+            </button>
+
+        </div>
+
+
+        <div id="guideResult"
+             class="guide-result">
+
+            Choose an option above.
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     ABOUT
+========================= -->
+
+<section class="section">
+
+    <div class="container about-section">
+
+        <div>
+
+            <div class="section-label">
+                OUR MISSION
+            </div>
+
+            <h2>
+                A calmer bridge between
+                people and help.
+            </h2>
+
+        </div>
+
+
+        <p>
+
+            LIFELINK makes important information easier
+            to discover while clearly separating verified
+            public information from future live services.
+
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     SAFETY
+========================= -->
+
+<section class="section">
+
+    <div class="container safety-card">
+
+        <div>
+
+            <div class="section-label">
+                SAFETY FIRST
+            </div>
+
+            <h2>
+                No fake live data.
+            </h2>
+
+        </div>
+
+
+        <p>
+
+            LIFELINK does not currently provide emergency
+            dispatch, live incident tracking or real-time
+            hospital availability.
+
+            Those features require verified services,
+            secure infrastructure and appropriate APIs.
+
+        </p>
+
+    </div>
+
+</section>
+
+</main>
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+
+    <strong>LIFELINK V2</strong>
+
+    <span>
+        When help matters, connect.
+    </span>
+
+</footer>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>
