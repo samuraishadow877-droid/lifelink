@@ -949,7 +949,175 @@ document.addEventListener(
 renderMap();
 
 updateNavigation();
+/* =====================================================
+   SMART GUIDE — V2.3 FIX
+===================================================== */
 
+const guideCards =
+    document.querySelectorAll(".guide-card");
+
+const guideResult =
+    document.getElementById("guideResult");
+
+
+const guideData = {
+
+    Emergency: `
+        <strong>🚨 Emergency Help</strong>
+        <br><br>
+        If you are facing an immediate emergency
+        in India, use the official emergency
+        response service.
+        <br><br>
+
+        <a
+            class="official-link"
+            href="tel:112"
+        >
+            📞 Call 112
+        </a>
+
+        &nbsp;&nbsp;
+
+        <a
+            class="official-link"
+            href="https://112.gov.in/"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            Official 112 India ↗
+        </a>
+    `,
+
+
+    Medical: `
+        <strong>🏥 Medical Help</strong>
+        <br><br>
+        You can use the LIFELINK map to look for
+        hospitals and pharmacies. For official
+        health information, visit the National
+        Health Authority.
+        <br><br>
+
+        <a
+            class="official-link"
+            href="#lifelink-map"
+        >
+            🗺️ Open LIFELINK Map ↓
+        </a>
+
+        &nbsp;&nbsp;
+
+        <a
+            class="official-link"
+            href="https://www.nha.gov.in/"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            National Health Authority ↗
+        </a>
+    `,
+
+
+    Disaster: `
+        <strong>🌪️ Disaster Information</strong>
+        <br><br>
+        For official disaster preparedness,
+        response and management information,
+        use the National Disaster Management
+        Authority.
+        <br><br>
+
+        <a
+            class="official-link"
+            href="https://ndma.gov.in/"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            Visit NDMA ↗
+        </a>
+    `,
+
+
+    Nearby: `
+        <strong>📍 Nearby Help</strong>
+        <br><br>
+        Use the LIFELINK Map to explore
+        hospitals, pharmacies, police stations,
+        fire stations, government services and
+        shelters.
+        <br><br>
+
+        <a
+            class="official-link"
+            href="#lifelink-map"
+        >
+            🗺️ Open LIFELINK Map ↓
+        </a>
+    `,
+
+
+    Government: `
+        <strong>🏛️ Government Services</strong>
+        <br><br>
+        Find official Government of India
+        information and public services through
+        the National Portal of India.
+        <br><br>
+
+        <a
+            class="official-link"
+            href="https://www.india.gov.in/"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            Visit India.gov.in ↗
+        </a>
+    `
+
+};
+
+
+guideCards.forEach(function(card) {
+
+    card.addEventListener(
+        "click",
+        function() {
+
+            const guideType =
+                card.dataset.guide;
+
+
+            if (
+                !guideResult ||
+                !guideData[guideType]
+            ) {
+                return;
+            }
+
+
+            guideResult.innerHTML = `
+
+                <span class="result-icon">
+                    💡
+                </span>
+
+                <span>
+                    ${guideData[guideType]}
+                </span>
+
+            `;
+
+
+            guideResult.scrollIntoView({
+                behavior: "smooth",
+                block: "nearest"
+            });
+
+        }
+    );
+
+});
 
 /* =====================================================
    CONSOLE
