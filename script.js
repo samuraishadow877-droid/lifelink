@@ -1,1133 +1,485 @@
-"use strict";
-
-/* =====================================================
-   LIFELINK V2.3 — INTERACTIVE MAP
-===================================================== */
-
-
-/* =====================================================
-   DEMONSTRATION MAP DATA
-   IMPORTANT:
-   These are clearly marked prototype locations.
-   They are NOT live emergency locations.
-===================================================== */
-
-const mapPlaces = [
-
-    {
-        id: 1,
-        name: "LIFELINK Medical Centre",
-        category: "hospital",
-        icon: "🏥",
-        description:
-            "Demonstration hospital marker for the LIFELINK map prototype.",
-        x: 27,
-        y: 32
-    },
-
-    {
-        id: 2,
-        name: "Community Pharmacy",
-        category: "pharmacy",
-        icon: "💊",
-        description:
-            "Demonstration pharmacy marker for the LIFELINK map prototype.",
-        x: 63,
-        y: 25
-    },
-
-    {
-        id: 3,
-        name: "Central Police Station",
-        category: "police",
-        icon: "🚓",
-        description:
-            "Demonstration police-station marker for the LIFELINK map prototype.",
-        x: 76,
-        y: 57
-    },
-
-    {
-        id: 4,
-        name: "Central Fire Station",
-        category: "fire",
-        icon: "🚒",
-        description:
-            "Demonstration fire-station marker for the LIFELINK map prototype.",
-        x: 22,
-        y: 70
-    },
-
-    {
-        id: 5,
-        name: "Public Services Centre",
-        category: "government",
-        icon: "🏛️",
-        description:
-            "Demonstration government-service marker for the LIFELINK map prototype.",
-        x: 52,
-        y: 65
-    },
-
-    {
-        id: 6,
-        name: "Community Relief Centre",
-        category: "shelter",
-        icon: "🏫",
-        description:
-            "Demonstration community shelter marker for the LIFELINK map prototype.",
-        x: 80,
-        y: 20
-    },
-
-    {
-        id: 7,
-        name: "LIFELINK Health Point",
-        category: "hospital",
-        icon: "🏥",
-        description:
-            "Demonstration health-service marker for the LIFELINK map prototype.",
-        x: 42,
-        y: 82
-    }
-
-];
-
-
-/* =====================================================
-   CATEGORY INFORMATION
-===================================================== */
-
-const categoryNames = {
-
-    all: "ALL SERVICES",
-
-    hospital: "HOSPITAL",
-
-    pharmacy: "PHARMACY",
-
-    police: "POLICE",
-
-    fire: "FIRE STATION",
-
-    government: "GOVERNMENT",
-
-    shelter: "SHELTER"
-
-};
-
-
-/* =====================================================
-   DOM ELEMENTS
-===================================================== */
-
-const mapCanvas =
-    document.getElementById("mapCanvas");
-
-const mapMarkers =
-    document.getElementById("mapMarkers");
-
-const mapSearch =
-    document.getElementById("mapSearch");
-
-const mapFilters =
-    document.getElementById("mapFilters");
-
-const mapLocationButton =
-    document.getElementById("mapLocationButton");
-
-const mapStatus =
-    document.getElementById("mapStatus");
-
-const mapEmptyState =
-    document.getElementById("mapEmptyState");
-
-const userMarker =
-    document.getElementById("userMarker");
-
-const locationCard =
-    document.getElementById("locationCard");
-
-const locationCardIcon =
-    document.getElementById("locationCardIcon");
-
-const locationCardCategory =
-    document.getElementById("locationCardCategory");
-
-const locationCardTitle =
-    document.getElementById("locationCardTitle");
-
-const locationCardDescription =
-    document.getElementById("locationCardDescription");
-
-const locationDirections =
-    document.getElementById("locationDirections");
-
-const locationClose =
-    document.getElementById("locationClose");
-
-
-/* =====================================================
-   STATE
-===================================================== */
-
-let activeCategory = "all";
-
-let searchQuery = "";
-
-let selectedPlace = null;
-
-let userCoordinates = null;
-
-
-/* =====================================================
-   SAFETY
-===================================================== */
-
-function escapeHTML(value) {
-
-    return String(value)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
-
-}
-
-
-/* =====================================================
-   UPDATE MAP STATUS
-===================================================== */
-
-function updateMapStatus(
-    title,
-    message,
-    icon = "📍"
-) {
-
-    if (!mapStatus) {
-        return;
-    }
-
-    mapStatus.innerHTML = `
-
-        <span>
-            ${icon}
-        </span>
-
-        <div>
-
-            <strong>
-                ${escapeHTML(title)}
-            </strong>
-
-            <small>
-                ${escapeHTML(message)}
-            </small>
-
-        </div>
-
-    `;
-
-}
-
-
-/* =====================================================
-   FILTER PLACES
-===================================================== */
-
-function getFilteredPlaces() {
-
-    return mapPlaces.filter(function(place) {
-
-        const matchesCategory =
-            activeCategory === "all" ||
-            place.category === activeCategory;
-
-        const searchableText = (
-
-            place.name +
-            " " +
-            place.category +
-            " " +
-            place.description
-
-        ).toLowerCase();
-
-        const matchesSearch =
-            searchableText.includes(
-                searchQuery.toLowerCase()
-            );
-
-        return (
-            matchesCategory &&
-            matchesSearch
-        );
-
-    });
-
-}
-
-
-/* =====================================================
-   CREATE MAP MARKER
-===================================================== */
-
-function createMarker(place) {
-
-    const marker =
-        document.createElement("button");
-
-    marker.type = "button";
-
-    marker.className =
-        "map-marker marker-" +
-        place.category;
-
-    marker.style.left =
-        place.x + "%";
-
-    marker.style.top =
-        place.y + "%";
-
-    marker.setAttribute(
-        "aria-label",
-        place.name
-    );
-
-    marker.innerHTML = `
-
-        <span>
-            ${place.icon}
-        </span>
-
-    `;
-
-
-    marker.addEventListener(
-        "click",
-        function(event) {
-
-            event.stopPropagation();
-
-            showPlace(place);
-
-        }
-    );
-
-
-    return marker;
-
-}
-
-
-/* =====================================================
-   RENDER MAP
-===================================================== */
-
-function renderMap() {
-
-    if (!mapMarkers) {
-        return;
-    }
-
-
-    mapMarkers.innerHTML = "";
-
-
-    const filteredPlaces =
-        getFilteredPlaces();
-
-
-    filteredPlaces.forEach(
-        function(place) {
-
-            const marker =
-                createMarker(place);
-
-            mapMarkers.appendChild(marker);
-
-        }
-    );
-
-
-    if (mapEmptyState) {
-
-        mapEmptyState.classList.toggle(
-            "hidden",
-            filteredPlaces.length !== 0
-        );
-
-    }
-
-
-    if (filteredPlaces.length === 0) {
-
-        updateMapStatus(
-            "No locations found",
-            "Try another search or category.",
-            "🔎"
-        );
-
-    }
-
-    else {
-
-        updateMapStatus(
-            filteredPlaces.length +
-            " service" +
-            (
-                filteredPlaces.length === 1
-                    ? ""
-                    : "s"
-            ) +
-            " shown",
-            "Select a map marker for more information.",
-            "📍"
-        );
-
-    }
-
-}
-
-
-/* =====================================================
-   SHOW LOCATION CARD
-===================================================== */
-
-function showPlace(place) {
-
-    selectedPlace = place;
-
-
-    if (!locationCard) {
-        return;
-    }
-
-
-    locationCardIcon.textContent =
-        place.icon;
-
-
-    locationCardCategory.textContent =
-        categoryNames[place.category] ||
-        "SERVICE";
-
-
-    locationCardTitle.textContent =
-        place.name;
-
-
-    locationCardDescription.textContent =
-        place.description;
-
-
-    locationCard.classList.remove(
-        "hidden"
-    );
-
-
-    updateMapStatus(
-        place.name,
-        "Demonstration map location selected.",
-        place.icon
-    );
-
-
-    locationCard.scrollIntoView({
-        behavior: "smooth",
-        block: "nearest"
-    });
-
-}
-
-
-/* =====================================================
-   CLOSE LOCATION CARD
-===================================================== */
-
-function closeLocationCard() {
-
-    selectedPlace = null;
-
-
-    if (locationCard) {
-
-        locationCard.classList.add(
-            "hidden"
-        );
-
-    }
-
-
-    updateMapStatus(
-        "Map ready",
-        "Select a marker to explore a location.",
-        "📍"
-    );
-
-}
-
-
-if (locationClose) {
-
-    locationClose.addEventListener(
-        "click",
-        closeLocationCard
-    );
-
-}
-
-
-/* =====================================================
-   DIRECTIONS
-===================================================== */
-
-if (locationDirections) {
-
-    locationDirections.addEventListener(
-        "click",
-        function() {
-
-            if (!selectedPlace) {
-                return;
-            }
-
-
-            let destination =
-                encodeURIComponent(
-                    selectedPlace.name
-                );
-
-
-            let url;
-
-
-            if (userCoordinates) {
-
-                url =
-                    "https://www.google.com/maps/dir/?api=1" +
-                    "&origin=" +
-                    userCoordinates.latitude +
-                    "," +
-                    userCoordinates.longitude +
-                    "&destination=" +
-                    destination;
-
-            }
-
-            else {
-
-                url =
-                    "https://www.google.com/maps/search/" +
-                    destination;
-
-            }
-
-
-            window.open(
-                url,
-                "_blank",
-                "noopener,noreferrer"
-            );
-
-        }
-    );
-
-}
-
-
-/* =====================================================
-   CATEGORY FILTERS
-===================================================== */
-
-if (mapFilters) {
-
-    const filterButtons =
-        mapFilters.querySelectorAll(
-            ".map-filter"
-        );
-
-
-    filterButtons.forEach(
-        function(button) {
-
-            button.addEventListener(
-                "click",
-                function() {
-
-                    filterButtons.forEach(
-                        function(item) {
-
-                            item.classList.remove(
-                                "active"
-                            );
-
-                        }
-                    );
-
-
-                    button.classList.add(
-                        "active"
-                    );
-
-
-                    activeCategory =
-                        button.dataset.category ||
-                        "all";
-
-
-                    renderMap();
-
-                }
-            );
-
-        }
-    );
-
-}
-
-
-/* =====================================================
-   MAP SEARCH
-===================================================== */
-
-if (mapSearch) {
-
-    mapSearch.addEventListener(
-        "input",
-        function() {
-
-            searchQuery =
-                mapSearch.value.trim();
-
-            renderMap();
-
-        }
-    );
-
-}
-
-
-/* =====================================================
-   USER LOCATION
-===================================================== */
-
-function requestUserLocation() {
-
-    if (!navigator.geolocation) {
-
-        updateMapStatus(
-            "Location unavailable",
-            "Your browser does not support location services.",
-            "⚠️"
-        );
-
-        return;
-
-    }
-
-
-    if (mapLocationButton) {
-
-        mapLocationButton.disabled =
-            true;
-
-        mapLocationButton.innerHTML =
-            "📍 Finding location…";
-
-    }
-
-
-    updateMapStatus(
-        "Requesting location",
-        "Please allow location access if your browser asks.",
-        "⏳"
-    );
-
-
-    navigator.geolocation.getCurrentPosition(
-
-        function(position) {
-
-            userCoordinates = {
-
-                latitude:
-                    position.coords.latitude,
-
-                longitude:
-                    position.coords.longitude
-
-            };
-
-
-            if (userMarker) {
-
-                userMarker.classList.remove(
-                    "hidden"
-                );
-
-            }
-
-
-            if (mapLocationButton) {
-
-                mapLocationButton.disabled =
-                    false;
-
-                mapLocationButton.innerHTML =
-                    "📍 Location Ready ✓";
-
-            }
-
-
-            updateMapStatus(
-                "Your location is ready",
-                "Your location is shown locally in this browser.",
-                "✅"
-            );
-
-        },
-
-
-        function(error) {
-
-            let message =
-                "Location permission was not granted.";
-
-
-            if (error.code === 1) {
-
-                message =
-                    "Location permission was denied.";
-
-            }
-
-            else if (error.code === 2) {
-
-                message =
-                    "Your location could not be determined.";
-
-            }
-
-            else if (error.code === 3) {
-
-                message =
-                    "The location request timed out.";
-
-            }
-
-
-            if (mapLocationButton) {
-
-                mapLocationButton.disabled =
-                    false;
-
-                mapLocationButton.innerHTML =
-                    "📍 Try Again";
-
-            }
-
-
-            updateMapStatus(
-                "Location unavailable",
-                message,
-                "⚠️"
-            );
-
-        },
-
+```javascript
+// ==========================================
+// SPACE EXPLORER V2.4
+// FILE 3 — script.js
+// ==========================================
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    // ---------- ELEMENTS ----------
+    const map = document.getElementById("spaceMap");
+    const guideBtn = document.getElementById("guideBtn");
+    const upgradeBtn = document.getElementById("upgradeBtn");
+    const searchInput = document.getElementById("searchInput");
+
+    // ---------- SPACE LOCATIONS ----------
+    const locations = [
         {
-
-            enableHighAccuracy: false,
-
-            timeout: 10000,
-
-            maximumAge: 300000
-
+            name: "Sun",
+            type: "Star",
+            x: 50,
+            y: 50,
+            description:
+                "The Sun is the star at the center of our Solar System. Almost all the energy reaching Earth comes from the Sun."
+        },
+        {
+            name: "Mercury",
+            type: "Planet",
+            x: 58,
+            y: 50,
+            description:
+                "Mercury is the closest planet to the Sun and the smallest planet in the Solar System."
+        },
+        {
+            name: "Venus",
+            type: "Planet",
+            x: 64,
+            y: 50,
+            description:
+                "Venus is the hottest planet in our Solar System because of its powerful greenhouse effect."
+        },
+        {
+            name: "Earth",
+            type: "Planet",
+            x: 70,
+            y: 50,
+            description:
+                "Earth is our home planet and the only known world with life."
+        },
+        {
+            name: "Mars",
+            type: "Planet",
+            x: 76,
+            y: 50,
+            description:
+                "Mars is known as the Red Planet because iron minerals on its surface give it a reddish appearance."
+        },
+        {
+            name: "Jupiter",
+            type: "Planet",
+            x: 84,
+            y: 50,
+            description:
+                "Jupiter is the largest planet in the Solar System."
+        },
+        {
+            name: "Saturn",
+            type: "Planet",
+            x: 91,
+            y: 50,
+            description:
+                "Saturn is famous for its spectacular system of icy rings."
+        },
+        {
+            name: "Milky Way",
+            type: "Galaxy",
+            x: 35,
+            y: 25,
+            description:
+                "The Milky Way is the galaxy containing our Solar System."
+        },
+        {
+            name: "Andromeda",
+            type: "Galaxy",
+            x: 20,
+            y: 20,
+            description:
+                "Andromeda is the nearest major galaxy to the Milky Way."
+        },
+        {
+            name: "Sagittarius A*",
+            type: "Black Hole",
+            x: 35,
+            y: 70,
+            description:
+                "Sagittarius A* is the supermassive black hole located at the center of the Milky Way."
         }
-
-    );
-
-}
+    ];
 
 
-if (mapLocationButton) {
+    // ---------- CREATE MAP ----------
+    function createMap() {
 
-    mapLocationButton.addEventListener(
-        "click",
-        requestUserLocation
-    );
-
-}
-
-
-/* =====================================================
-   MAP CLICK
-===================================================== */
-
-if (mapCanvas) {
-
-    mapCanvas.addEventListener(
-        "click",
-        function(event) {
-
-            if (
-                event.target.closest(
-                    ".map-marker"
-                )
-            ) {
-
-                return;
-
-            }
-
-
-            closeLocationCard();
-
-        }
-    );
-
-}
-
-
-/* =====================================================
-   KEYBOARD SUPPORT
-===================================================== */
-
-document.addEventListener(
-    "keydown",
-    function(event) {
-
-        if (event.key === "Escape") {
-
-            closeLocationCard();
-
-        }
-
-    }
-);
-
-
-/* =====================================================
-   NAVIGATION
-===================================================== */
-
-const navigationLinks =
-    document.querySelectorAll(
-        ".navigation a"
-    );
-
-
-const sections =
-    document.querySelectorAll(
-        "section[id]"
-    );
-
-
-function updateNavigation() {
-
-    let currentSection = "";
-
-
-    sections.forEach(
-        function(section) {
-
-            const sectionTop =
-                section.offsetTop - 180;
-
-
-            if (
-                window.scrollY >=
-                sectionTop
-            ) {
-
-                currentSection =
-                    section.id;
-
-            }
-
-        }
-    );
-
-
-    navigationLinks.forEach(
-        function(link) {
-
-            link.classList.remove(
-                "active"
-            );
-
-
-            if (
-                link.getAttribute("href") ===
-                "#" + currentSection
-            ) {
-
-                link.classList.add(
-                    "active"
-                );
-
-            }
-
-        }
-    );
-
-}
-
-
-window.addEventListener(
-    "scroll",
-    updateNavigation,
-    {
-        passive: true
-    }
-);
-
-
-/* =====================================================
-   SMOOTH SCROLL
-===================================================== */
-
-document.addEventListener(
-    "click",
-    function(event) {
-
-        const link =
-            event.target.closest(
-                'a[href^="#"]'
-            );
-
-
-        if (!link) {
+        if (!map) {
+            console.warn("Map element not found.");
             return;
         }
 
+        map.innerHTML = "";
 
-        const targetID =
-            link.getAttribute("href");
+        locations.forEach((location, index) => {
 
+            const marker = document.createElement("button");
 
-        if (
-            !targetID ||
-            targetID === "#"
-        ) {
+            marker.className = "space-marker";
+            marker.dataset.name = location.name.toLowerCase();
 
-            return;
+            marker.style.left = `${location.x}%`;
+            marker.style.top = `${location.y}%`;
 
-        }
-
-
-        const target =
-            document.querySelector(
-                targetID
-            );
-
-
-        if (!target) {
-            return;
-        }
-
-
-        event.preventDefault();
-
-
-        target.scrollIntoView({
-            behavior: "smooth",
-            block: "start"
-        });
-
-    }
-);
-
-
-/* =====================================================
-   START MAP
-===================================================== */
-
-renderMap();
-
-updateNavigation();
-/* =====================================================
-   SMART GUIDE — V2.3 FIX
-===================================================== */
-
-const guideCards =
-    document.querySelectorAll(".guide-card");
-
-const guideResult =
-    document.getElementById("guideResult");
-
-
-const guideData = {
-
-    Emergency: `
-        <strong>🚨 Emergency Help</strong>
-        <br><br>
-        If you are facing an immediate emergency
-        in India, use the official emergency
-        response service.
-        <br><br>
-
-        <a
-            class="official-link"
-            href="tel:112"
-        >
-            📞 Call 112
-        </a>
-
-        &nbsp;&nbsp;
-
-        <a
-            class="official-link"
-            href="https://112.gov.in/"
-            target="_blank"
-            rel="noopener noreferrer"
-        >
-            Official 112 India ↗
-        </a>
-    `,
-
-
-    Medical: `
-        <strong>🏥 Medical Help</strong>
-        <br><br>
-        You can use the LIFELINK map to look for
-        hospitals and pharmacies. For official
-        health information, visit the National
-        Health Authority.
-        <br><br>
-
-        <a
-            class="official-link"
-            href="#lifelink-map"
-        >
-            🗺️ Open LIFELINK Map ↓
-        </a>
-
-        &nbsp;&nbsp;
-
-        <a
-            class="official-link"
-            href="https://www.nha.gov.in/"
-            target="_blank"
-            rel="noopener noreferrer"
-        >
-            National Health Authority ↗
-        </a>
-    `,
-
-
-    Disaster: `
-        <strong>🌪️ Disaster Information</strong>
-        <br><br>
-        For official disaster preparedness,
-        response and management information,
-        use the National Disaster Management
-        Authority.
-        <br><br>
-
-        <a
-            class="official-link"
-            href="https://ndma.gov.in/"
-            target="_blank"
-            rel="noopener noreferrer"
-        >
-            Visit NDMA ↗
-        </a>
-    `,
-
-
-    Nearby: `
-        <strong>📍 Nearby Help</strong>
-        <br><br>
-        Use the LIFELINK Map to explore
-        hospitals, pharmacies, police stations,
-        fire stations, government services and
-        shelters.
-        <br><br>
-
-        <a
-            class="official-link"
-            href="#lifelink-map"
-        >
-            🗺️ Open LIFELINK Map ↓
-        </a>
-    `,
-
-
-    Government: `
-        <strong>🏛️ Government Services</strong>
-        <br><br>
-        Find official Government of India
-        information and public services through
-        the National Portal of India.
-        <br><br>
-
-        <a
-            class="official-link"
-            href="https://www.india.gov.in/"
-            target="_blank"
-            rel="noopener noreferrer"
-        >
-            Visit India.gov.in ↗
-        </a>
-    `
-
-};
-
-
-guideCards.forEach(function(card) {
-
-    card.addEventListener(
-        "click",
-        function() {
-
-            const guideType =
-                card.dataset.guide;
-
-
-            if (
-                !guideResult ||
-                !guideData[guideType]
-            ) {
-                return;
-            }
-
-
-            guideResult.innerHTML = `
-
-                <span class="result-icon">
-                    💡
-                </span>
-
-                <span>
-                    ${guideData[guideType]}
-                </span>
-
+            marker.innerHTML = `
+                <span class="marker-dot"></span>
+                <span class="marker-label">${location.name}</span>
             `;
 
-
-            guideResult.scrollIntoView({
-                behavior: "smooth",
-                block: "nearest"
+            marker.addEventListener("click", () => {
+                openLocation(location);
             });
 
+            map.appendChild(marker);
+        });
+    }
+
+
+    // ---------- LOCATION PANEL ----------
+    function openLocation(location) {
+
+        let panel = document.getElementById("locationPanel");
+
+        if (!panel) {
+
+            panel = document.createElement("div");
+
+            panel.id = "locationPanel";
+            panel.className = "location-panel";
+
+            document.body.appendChild(panel);
         }
+
+        panel.innerHTML = `
+            <div class="location-content">
+
+                <button class="close-location" id="closeLocation">
+                    ✕
+                </button>
+
+                <div class="location-type">
+                    ${location.type}
+                </div>
+
+                <h2>${location.name}</h2>
+
+                <p>${location.description}</p>
+
+                <button class="explore-location">
+                    🚀 Explore ${location.name}
+                </button>
+
+            </div>
+        `;
+
+        panel.classList.add("show");
+
+        document
+            .getElementById("closeLocation")
+            .addEventListener("click", () => {
+                panel.classList.remove("show");
+            });
+
+        const exploreButton =
+            panel.querySelector(".explore-location");
+
+        exploreButton.addEventListener("click", () => {
+
+            alert(
+                `🚀 Exploration mode activated for ${location.name}!`
+            );
+
+        });
+    }
+
+
+    // ---------- SEARCH ----------
+    function searchSpace() {
+
+        if (!searchInput) return;
+
+        const query =
+            searchInput.value.trim().toLowerCase();
+
+        const markers =
+            document.querySelectorAll(".space-marker");
+
+        markers.forEach(marker => {
+
+            const name =
+                marker.dataset.name;
+
+            if (!query || name.includes(query)) {
+
+                marker.style.display = "block";
+
+                if (query && name === query) {
+                    marker.classList.add("highlight");
+                } else {
+                    marker.classList.remove("highlight");
+                }
+
+            } else {
+
+                marker.style.display = "none";
+            }
+        });
+    }
+
+
+    if (searchInput) {
+
+        searchInput.addEventListener(
+            "input",
+            searchSpace
+        );
+    }
+
+
+    // ---------- GUIDE ----------
+    if (guideBtn) {
+
+        guideBtn.addEventListener("click", () => {
+
+            const guide =
+                document.getElementById("guidePanel");
+
+            if (guide) {
+
+                guide.classList.toggle("show");
+
+            } else {
+
+                showGuide();
+            }
+        });
+    }
+
+
+    function showGuide() {
+
+        const guide = document.createElement("div");
+
+        guide.id = "guidePanel";
+
+        guide.innerHTML = `
+            <div class="guide-box">
+
+                <button id="closeGuide">
+                    ✕
+                </button>
+
+                <h2>🧭 Space Explorer Guide</h2>
+
+                <p>
+                    Welcome to Space Explorer!
+                    Click any object on the map to learn more.
+                </p>
+
+                <div class="guide-step">
+                    <strong>1️⃣ Explore</strong>
+                    <span>Click a glowing marker.</span>
+                </div>
+
+                <div class="guide-step">
+                    <strong>2️⃣ Search</strong>
+                    <span>Use the search box to find objects.</span>
+                </div>
+
+                <div class="guide-step">
+                    <strong>3️⃣ Discover</strong>
+                    <span>Open different locations and learn about them.</span>
+                </div>
+
+                <div class="guide-step">
+                    <strong>4️⃣ Upgrade</strong>
+                    <span>Unlock more features in future versions.</span>
+                </div>
+
+            </div>
+        `;
+
+        document.body.appendChild(guide);
+
+        requestAnimationFrame(() => {
+            guide.classList.add("show");
+        });
+
+        document
+            .getElementById("closeGuide")
+            .addEventListener("click", () => {
+
+                guide.classList.remove("show");
+
+                setTimeout(() => {
+                    guide.remove();
+                }, 300);
+            });
+    }
+
+
+    // ---------- UPGRADE ----------
+    if (upgradeBtn) {
+
+        upgradeBtn.addEventListener("click", () => {
+
+            showUpgradeMessage();
+
+        });
+    }
+
+
+    function showUpgradeMessage() {
+
+        const existing =
+            document.getElementById("upgradeMessage");
+
+        if (existing) {
+            existing.remove();
+        }
+
+        const box =
+            document.createElement("div");
+
+        box.id = "upgradeMessage";
+
+        box.innerHTML = `
+            <div class="upgrade-box">
+
+                <button id="closeUpgrade">
+                    ✕
+                </button>
+
+                <div class="upgrade-icon">
+                    🚀
+                </div>
+
+                <h2>Coming Soon</h2>
+
+                <p>
+                    Advanced Space Explorer features
+                    are being developed.
+                </p>
+
+                <ul>
+                    <li>🌌 More galaxies</li>
+                    <li>🕳️ More black holes</li>
+                    <li>🪐 Detailed planetary systems</li>
+                    <li>🔭 Deep-space exploration</li>
+                    <li>⭐ Interactive missions</li>
+                </ul>
+
+            </div>
+        `;
+
+        document.body.appendChild(box);
+
+        requestAnimationFrame(() => {
+            box.classList.add("show");
+        });
+
+        document
+            .getElementById("closeUpgrade")
+            .addEventListener("click", () => {
+
+                box.classList.remove("show");
+
+                setTimeout(() => {
+                    box.remove();
+                }, 300);
+            });
+    }
+
+
+    // ---------- MAP DRAGGING ----------
+    let isDragging = false;
+    let startX = 0;
+    let startY = 0;
+    let offsetX = 0;
+    let offsetY = 0;
+
+    if (map) {
+
+        map.addEventListener("pointerdown", (event) => {
+
+            if (
+                event.target.closest(".space-marker")
+            ) return;
+
+            isDragging = true;
+
+            startX =
+                event.clientX - offsetX;
+
+            startY =
+                event.clientY - offsetY;
+
+            map.setPointerCapture(event.pointerId);
+
+        });
+
+
+        map.addEventListener("pointermove", (event) => {
+
+            if (!isDragging) return;
+
+            offsetX =
+                event.clientX - startX;
+
+            offsetY =
+                event.clientY - startY;
+
+            map.style.transform =
+                `translate(${offsetX}px, ${offsetY}px)`;
+
+        });
+
+
+        map.addEventListener("pointerup", () => {
+
+            isDragging = false;
+
+        });
+
+
+        map.addEventListener("pointercancel", () => {
+
+            isDragging = false;
+
+        });
+    }
+
+
+    // ---------- ESCAPE KEY ----------
+    document.addEventListener("keydown", (event) => {
+
+        if (event.key !== "Escape") return;
+
+        const locationPanel =
+            document.getElementById("locationPanel");
+
+        const guidePanel =
+            document.getElementById("guidePanel");
+
+        const upgradeMessage =
+            document.getElementById("upgradeMessage");
+
+        if (locationPanel) {
+            locationPanel.classList.remove("show");
+        }
+
+        if (guidePanel) {
+            guidePanel.remove();
+        }
+
+        if (upgradeMessage) {
+            upgradeMessage.remove();
+        }
+    });
+
+
+    // ---------- INITIALIZE ----------
+    createMap();
+
+    console.log(
+        "🚀 Space Explorer V2.4 loaded successfully!"
     );
 
 });
-
-/* =====================================================
-   CONSOLE
-===================================================== */
-
-console.log(
-    "LIFELINK V2.3 Map loaded successfully 🗺️"
-);
-
-console.log(
-    "Prototype locations:",
-    mapPlaces.length
-);
+```
