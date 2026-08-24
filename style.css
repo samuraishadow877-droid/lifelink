@@ -1,5 +1,5 @@
 /* =====================================================
-   LIFELINK V2.1 — PREMIUM UI
+   LIFELINK V2.2 — STYLE
 ===================================================== */
 
 * {
@@ -30,9 +30,13 @@ select {
     font: inherit;
 }
 
+button {
+    cursor: pointer;
+}
+
 
 /* =====================================================
-   BACKGROUND EFFECTS
+   BACKGROUND
 ===================================================== */
 
 .background-glow {
@@ -68,7 +72,6 @@ select {
     top: 0;
     left: 0;
     right: 0;
-
     z-index: 100;
 
     padding: 14px 6%;
@@ -77,8 +80,7 @@ select {
     align-items: center;
     justify-content: space-between;
 
-    background: rgba(5, 7, 11, 0.86);
-
+    background: rgba(5, 7, 11, 0.88);
     backdrop-filter: blur(18px);
 
     border-bottom: 1px solid #202938;
@@ -135,7 +137,6 @@ select {
     gap: 24px;
 
     color: #aeb8c8;
-
     font-size: 13px;
 }
 
@@ -202,7 +203,6 @@ select {
     padding: 9px 14px;
 
     border: 1px solid #29446f;
-
     border-radius: 50px;
 
     background: rgba(9, 20, 38, 0.85);
@@ -225,7 +225,6 @@ select {
     font-size: clamp(52px, 8vw, 92px);
 
     line-height: 0.94;
-
     letter-spacing: -5px;
 }
 
@@ -238,19 +237,16 @@ select {
 
 .hero p {
     max-width: 700px;
-
     margin: auto;
 
     color: #9da9ba;
 
     font-size: 17px;
-
     line-height: 1.8;
 }
 
 .hero-buttons {
     display: flex;
-
     justify-content: center;
 
     gap: 12px;
@@ -262,19 +258,15 @@ select {
 
 .button {
     display: inline-flex;
-
     align-items: center;
     justify-content: center;
 
     padding: 13px 19px;
 
     border: 0;
-
     border-radius: 10px;
 
     font-weight: 800;
-
-    cursor: pointer;
 
     transition:
         transform 0.2s ease,
@@ -285,6 +277,12 @@ select {
 .button:hover {
     transform: translateY(-3px);
     opacity: 0.95;
+}
+
+.button:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+    transform: none;
 }
 
 .primary-button {
@@ -318,7 +316,6 @@ select {
 
 .hero-trust {
     display: flex;
-
     justify-content: center;
 
     flex-wrap: wrap;
@@ -328,13 +325,11 @@ select {
     margin-top: 20px;
 
     color: #7e8da2;
-
     font-size: 11px;
 }
 
 .hero-stats {
     display: flex;
-
     justify-content: center;
 
     gap: 12px;
@@ -382,7 +377,6 @@ select {
 
 .section {
     position: relative;
-
     padding: 95px 6%;
 }
 
@@ -393,7 +387,6 @@ select {
 .container {
     width: 100%;
     max-width: 1150px;
-
     margin: auto;
 }
 
@@ -413,7 +406,6 @@ h2 {
     font-size: 43px;
 
     line-height: 1.05;
-
     letter-spacing: -2px;
 }
 
@@ -515,7 +507,6 @@ h2 {
 
 .emergency-content h3 {
     margin: 10px 0;
-
     font-size: 24px;
 }
 
@@ -579,7 +570,6 @@ h2 {
 
 .quick-service:hover {
     border-color: #347cff;
-
     transform: translateY(-4px);
 }
 
@@ -609,8 +599,31 @@ h2 {
 
 
 /* =====================================================
-   LOCATION
+   NEARBY HELP V2.2
 ===================================================== */
+
+.nearby-search-panel {
+    margin-top: 25px;
+}
+
+.nearby-search-heading {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 5px;
+
+    margin-bottom: 15px;
+}
+
+.nearby-search-heading strong {
+    font-size: 14px;
+}
+
+.nearby-search-heading small {
+    color: #718096;
+    font-size: 10px;
+}
 
 .location-box {
     display: flex;
@@ -633,6 +646,8 @@ h2 {
 .location-symbol {
     width: 43px;
     height: 43px;
+
+    flex-shrink: 0;
 
     display: grid;
     place-items: center;
@@ -663,6 +678,8 @@ h2 {
     color: #8995a8;
 
     font-size: 11px;
+
+    line-height: 1.5;
 }
 
 .nearby-grid {
@@ -688,20 +705,20 @@ h2 {
 
 .nearby-card:hover {
     border-color: #347cff;
-
     transform: translateY(-3px);
 }
 
-.nearby-card strong,
+.nearby-card strong {
+    display: block;
+
+    font-size: 14px;
+
+    line-height: 1.4;
+}
+
 .nearby-card small {
     display: block;
-}
 
-.nearby-card strong {
-    font-size: 14px;
-}
-
-.nearby-card small {
     margin: 9px 0;
 
     color: #8995a8;
@@ -712,11 +729,54 @@ h2 {
 }
 
 .map-link {
+    display: inline-block;
+
     color: #76aaff;
 
     font-size: 11px;
 
     font-weight: 800;
+}
+
+.nearby-result {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    margin-top: 16px;
+
+    padding: 17px 20px;
+
+    background: #0b1018;
+
+    border: 1px solid #293548;
+
+    border-radius: 16px;
+}
+
+.nearby-result > span {
+    font-size: 22px;
+}
+
+.nearby-result strong,
+.nearby-result small {
+    display: block;
+}
+
+.nearby-result strong {
+    font-size: 12px;
+}
+
+.nearby-result small {
+    margin-top: 4px;
+
+    color: #8995a8;
+
+    font-size: 10px;
+
+    line-height: 1.5;
 }
 
 .privacy-note {
@@ -776,10 +836,13 @@ h2 {
     background: transparent;
 
     border: 0;
-
     outline: none;
 
     color: #ffffff;
+}
+
+.search-box input::placeholder {
+    color: #687589;
 }
 
 .search-box:focus-within {
@@ -800,6 +863,10 @@ h2 {
     border-radius: 10px;
 
     outline: none;
+}
+
+.resource-controls select:focus {
+    border-color: #347cff;
 }
 
 .resource-grid {
@@ -825,7 +892,6 @@ h2 {
 
 .resource-card:hover {
     border-color: #347cff;
-
     transform: translateY(-3px);
 }
 
@@ -933,12 +999,15 @@ h2 {
     transition: 0.2s ease;
 }
 
-.guide-card:hover {
+.guide-card:hover,
+.guide-card:focus-visible {
     border-color: #347cff;
 
     transform: translateY(-4px);
 
     background: #0d1521;
+
+    outline: none;
 }
 
 .guide-card span,
@@ -1227,7 +1296,7 @@ h2 {
 
 
 /* =====================================================
-   FLOATING EMERGENCY BUTTON
+   FLOATING EMERGENCY
 ===================================================== */
 
 .floating-emergency {
@@ -1306,7 +1375,6 @@ footer div:first-child small {
 
 footer strong {
     color: #ffffff;
-
     font-size: 14px;
 }
 
@@ -1325,8 +1393,16 @@ footer small {
         display: none;
     }
 
-    .quick-services,
-    .nearby-grid,
+    .quick-services {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .nearby-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
     .guide-grid {
         grid-template-columns:
             repeat(2, 1fr);
@@ -1364,7 +1440,6 @@ footer small {
 
     .hero h1 {
         font-size: 52px;
-
         letter-spacing: -3px;
     }
 
@@ -1374,7 +1449,6 @@ footer small {
 
     .hero-trust {
         gap: 10px;
-
         font-size: 9px;
     }
 
@@ -1384,7 +1458,6 @@ footer small {
 
     h2 {
         font-size: 34px;
-
         letter-spacing: -1px;
     }
 
@@ -1404,7 +1477,6 @@ footer small {
 
     .location-box {
         align-items: stretch;
-
         flex-direction: column;
     }
 
@@ -1422,7 +1494,6 @@ footer small {
 
     .trust-card {
         align-items: flex-start;
-
         flex-direction: column;
     }
 
