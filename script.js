@@ -1,61 +1,187 @@
-/* =====================================================
-   LIFELINK V2.2 — MAIN JAVASCRIPT
-===================================================== */
-
 "use strict";
 
-
 /* =====================================================
-   OFFICIAL RESOURCE DATABASE
+   LIFELINK V2.3 — INTERACTIVE MAP
 ===================================================== */
 
-const resources = [
+
+/* =====================================================
+   DEMONSTRATION MAP DATA
+   IMPORTANT:
+   These are clearly marked prototype locations.
+   They are NOT live emergency locations.
+===================================================== */
+
+const mapPlaces = [
 
     {
-        name: "112 India Emergency Response",
-        category: "Emergency",
-        location: "India",
+        id: 1,
+        name: "LIFELINK Medical Centre",
+        category: "hospital",
+        icon: "🏥",
         description:
-            "Unified emergency response service for police, fire, ambulance and other emergency assistance.",
-        source: "Government of India — 112 India",
-        url: "https://112.gov.in/"
+            "Demonstration hospital marker for the LIFELINK map prototype.",
+        x: 27,
+        y: 32
     },
 
     {
-        name: "National Health Authority",
-        category: "Health",
-        location: "India",
+        id: 2,
+        name: "Community Pharmacy",
+        category: "pharmacy",
+        icon: "💊",
         description:
-            "Official information about India's public health and healthcare initiatives.",
-        source: "Government of India — NHA",
-        url: "https://www.nha.gov.in/"
+            "Demonstration pharmacy marker for the LIFELINK map prototype.",
+        x: 63,
+        y: 25
     },
 
     {
-        name: "National Disaster Management Authority",
-        category: "Disaster",
-        location: "India",
+        id: 3,
+        name: "Central Police Station",
+        category: "police",
+        icon: "🚓",
         description:
-            "Official disaster preparedness, response and management information.",
-        source: "Government of India — NDMA",
-        url: "https://ndma.gov.in/"
+            "Demonstration police-station marker for the LIFELINK map prototype.",
+        x: 76,
+        y: 57
     },
 
     {
-        name: "National Portal of India",
-        category: "Government",
-        location: "India",
+        id: 4,
+        name: "Central Fire Station",
+        category: "fire",
+        icon: "🚒",
         description:
-            "Official Government of India portal for public information and services.",
-        source: "Government of India — India.gov.in",
-        url: "https://www.india.gov.in/"
+            "Demonstration fire-station marker for the LIFELINK map prototype.",
+        x: 22,
+        y: 70
+    },
+
+    {
+        id: 5,
+        name: "Public Services Centre",
+        category: "government",
+        icon: "🏛️",
+        description:
+            "Demonstration government-service marker for the LIFELINK map prototype.",
+        x: 52,
+        y: 65
+    },
+
+    {
+        id: 6,
+        name: "Community Relief Centre",
+        category: "shelter",
+        icon: "🏫",
+        description:
+            "Demonstration community shelter marker for the LIFELINK map prototype.",
+        x: 80,
+        y: 20
+    },
+
+    {
+        id: 7,
+        name: "LIFELINK Health Point",
+        category: "hospital",
+        icon: "🏥",
+        description:
+            "Demonstration health-service marker for the LIFELINK map prototype.",
+        x: 42,
+        y: 82
     }
 
 ];
 
 
 /* =====================================================
-   SAFE HTML
+   CATEGORY INFORMATION
+===================================================== */
+
+const categoryNames = {
+
+    all: "ALL SERVICES",
+
+    hospital: "HOSPITAL",
+
+    pharmacy: "PHARMACY",
+
+    police: "POLICE",
+
+    fire: "FIRE STATION",
+
+    government: "GOVERNMENT",
+
+    shelter: "SHELTER"
+
+};
+
+
+/* =====================================================
+   DOM ELEMENTS
+===================================================== */
+
+const mapCanvas =
+    document.getElementById("mapCanvas");
+
+const mapMarkers =
+    document.getElementById("mapMarkers");
+
+const mapSearch =
+    document.getElementById("mapSearch");
+
+const mapFilters =
+    document.getElementById("mapFilters");
+
+const mapLocationButton =
+    document.getElementById("mapLocationButton");
+
+const mapStatus =
+    document.getElementById("mapStatus");
+
+const mapEmptyState =
+    document.getElementById("mapEmptyState");
+
+const userMarker =
+    document.getElementById("userMarker");
+
+const locationCard =
+    document.getElementById("locationCard");
+
+const locationCardIcon =
+    document.getElementById("locationCardIcon");
+
+const locationCardCategory =
+    document.getElementById("locationCardCategory");
+
+const locationCardTitle =
+    document.getElementById("locationCardTitle");
+
+const locationCardDescription =
+    document.getElementById("locationCardDescription");
+
+const locationDirections =
+    document.getElementById("locationDirections");
+
+const locationClose =
+    document.getElementById("locationClose");
+
+
+/* =====================================================
+   STATE
+===================================================== */
+
+let activeCategory = "all";
+
+let searchQuery = "";
+
+let selectedPlace = null;
+
+let userCoordinates = null;
+
+
+/* =====================================================
+   SAFETY
 ===================================================== */
 
 function escapeHTML(value) {
@@ -70,278 +196,21 @@ function escapeHTML(value) {
 }
 
 
-
 /* =====================================================
-   RESOURCE DIRECTORY
+   UPDATE MAP STATUS
 ===================================================== */
 
-const resourceSearch =
-    document.getElementById("resourceSearch");
-
-const resourceFilter =
-    document.getElementById("resourceFilter");
-
-const resourceList =
-    document.getElementById("resourceList");
-
-const noResources =
-    document.getElementById("noResources");
-
-
-function renderResources() {
-
-    if (!resourceList) {
-        return;
-    }
-
-
-    const searchText =
-        resourceSearch
-            ? resourceSearch.value.toLowerCase().trim()
-            : "";
-
-
-    const selectedCategory =
-        resourceFilter
-            ? resourceFilter.value
-            : "all";
-
-
-    const filteredResources =
-        resources.filter(function(resource) {
-
-            const searchableText = (
-
-                resource.name +
-                " " +
-                resource.category +
-                " " +
-                resource.location +
-                " " +
-                resource.description
-
-            ).toLowerCase();
-
-
-            const matchesSearch =
-                searchableText.includes(searchText);
-
-
-            const matchesCategory =
-                selectedCategory === "all" ||
-                resource.category === selectedCategory;
-
-
-            return matchesSearch &&
-                   matchesCategory;
-
-        });
-
-
-    resourceList.innerHTML = "";
-
-
-    filteredResources.forEach(function(resource) {
-
-        const card =
-            document.createElement("article");
-
-
-        card.className =
-            "resource-card";
-
-
-        card.innerHTML = `
-
-            <span class="resource-tag">
-                ✓ OFFICIAL SOURCE
-            </span>
-
-            <h3>
-                ${escapeHTML(resource.name)}
-            </h3>
-
-            <p>
-                <strong>
-                    ${escapeHTML(resource.category)}
-                </strong>
-                •
-                ${escapeHTML(resource.location)}
-            </p>
-
-            <p>
-                ${escapeHTML(resource.description)}
-            </p>
-
-            <a
-                href="${resource.url}"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-                ${escapeHTML(resource.source)} ↗
-            </a>
-
-        `;
-
-
-        resourceList.appendChild(card);
-
-    });
-
-
-    if (noResources) {
-
-        noResources.classList.toggle(
-            "hidden",
-            filteredResources.length !== 0
-        );
-
-    }
-
-}
-
-
-if (resourceSearch) {
-
-    resourceSearch.addEventListener(
-        "input",
-        renderResources
-    );
-
-}
-
-
-if (resourceFilter) {
-
-    resourceFilter.addEventListener(
-        "change",
-        renderResources
-    );
-
-}
-
-
-renderResources();
-
-
-
-/* =====================================================
-   NEARBY SERVICES
-===================================================== */
-
-const services = [
-
-    {
-        name: "Hospitals",
-        icon: "🏥",
-        query: "hospital"
-    },
-
-    {
-        name: "Pharmacies",
-        icon: "💊",
-        query: "pharmacy"
-    },
-
-    {
-        name: "Police Stations",
-        icon: "🚓",
-        query: "police station"
-    },
-
-    {
-        name: "Fire Stations",
-        icon: "🚒",
-        query: "fire station"
-    },
-
-    {
-        name: "Government Offices",
-        icon: "🏛️",
-        query: "government office"
-    }
-
-];
-
-
-const nearbyServices =
-    document.getElementById(
-        "nearbyServices"
-    );
-
-
-const locationStatus =
-    document.getElementById(
-        "locationStatus"
-    );
-
-
-const locationButton =
-    document.getElementById(
-        "locationButton"
-    );
-
-
-const nearbyResult =
-    document.getElementById(
-        "nearbyResult"
-    );
-
-
-let userCoordinates = null;
-
-
-
-/* =====================================================
-   MAP SEARCH URL
-===================================================== */
-
-function createMapURL(query) {
-
-    const encodedQuery =
-        encodeURIComponent(query);
-
-
-    if (userCoordinates) {
-
-        return (
-            "https://www.google.com/maps/search/" +
-            encodedQuery +
-            "/@" +
-            userCoordinates.latitude +
-            "," +
-            userCoordinates.longitude +
-            ",14z"
-        );
-
-    }
-
-
-    return (
-        "https://www.google.com/maps/search/" +
-        encodedQuery
-    );
-
-}
-
-
-
-/* =====================================================
-   UPDATE RESULT STATUS
-===================================================== */
-
-function updateNearbyResult(
+function updateMapStatus(
     title,
     message,
     icon = "📍"
 ) {
 
-    if (!nearbyResult) {
+    if (!mapStatus) {
         return;
     }
 
-
-    nearbyResult.innerHTML = `
+    mapStatus.innerHTML = `
 
         <span>
             ${icon}
@@ -364,119 +233,392 @@ function updateNearbyResult(
 }
 
 
-
 /* =====================================================
-   RENDER NEARBY SERVICES
+   FILTER PLACES
 ===================================================== */
 
-function renderNearbyServices() {
+function getFilteredPlaces() {
 
-    if (!nearbyServices) {
-        return;
-    }
+    return mapPlaces.filter(function(place) {
 
+        const matchesCategory =
+            activeCategory === "all" ||
+            place.category === activeCategory;
 
-    nearbyServices.innerHTML = "";
+        const searchableText = (
 
+            place.name +
+            " " +
+            place.category +
+            " " +
+            place.description
 
-    services.forEach(function(service) {
+        ).toLowerCase();
 
-        const card =
-            document.createElement("article");
-
-
-        card.className =
-            "nearby-card";
-
-
-        const mapURL =
-            createMapURL(service.query);
-
-
-        const locationText =
-            userCoordinates
-
-                ? "Search around your location."
-
-                : "Search this service on Google Maps.";
-
-
-        card.innerHTML = `
-
-            <strong>
-                ${service.icon}
-                ${escapeHTML(service.name)}
-            </strong>
-
-            <small>
-                ${escapeHTML(locationText)}
-            </small>
-
-            <a
-                class="map-link"
-                href="${mapURL}"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-                Find Nearby ↗
-            </a>
-
-        `;
-
-
-        const mapLink =
-            card.querySelector(".map-link");
-
-
-        if (mapLink) {
-
-            mapLink.addEventListener(
-                "click",
-                function() {
-
-                    updateNearbyResult(
-                        "Opening map search",
-                        "Searching for " +
-                        service.name.toLowerCase() +
-                        " near you.",
-                        service.icon
-                    );
-
-                }
+        const matchesSearch =
+            searchableText.includes(
+                searchQuery.toLowerCase()
             );
 
-        }
-
-
-        nearbyServices.appendChild(card);
+        return (
+            matchesCategory &&
+            matchesSearch
+        );
 
     });
 
 }
 
 
-renderNearbyServices();
+/* =====================================================
+   CREATE MAP MARKER
+===================================================== */
 
+function createMarker(place) {
+
+    const marker =
+        document.createElement("button");
+
+    marker.type = "button";
+
+    marker.className =
+        "map-marker marker-" +
+        place.category;
+
+    marker.style.left =
+        place.x + "%";
+
+    marker.style.top =
+        place.y + "%";
+
+    marker.setAttribute(
+        "aria-label",
+        place.name
+    );
+
+    marker.innerHTML = `
+
+        <span>
+            ${place.icon}
+        </span>
+
+    `;
+
+
+    marker.addEventListener(
+        "click",
+        function(event) {
+
+            event.stopPropagation();
+
+            showPlace(place);
+
+        }
+    );
+
+
+    return marker;
+
+}
 
 
 /* =====================================================
-   LOCATION PERMISSION
+   RENDER MAP
 ===================================================== */
 
-function requestLocation() {
+function renderMap() {
 
-    if (!locationStatus) {
+    if (!mapMarkers) {
         return;
     }
 
 
+    mapMarkers.innerHTML = "";
+
+
+    const filteredPlaces =
+        getFilteredPlaces();
+
+
+    filteredPlaces.forEach(
+        function(place) {
+
+            const marker =
+                createMarker(place);
+
+            mapMarkers.appendChild(marker);
+
+        }
+    );
+
+
+    if (mapEmptyState) {
+
+        mapEmptyState.classList.toggle(
+            "hidden",
+            filteredPlaces.length !== 0
+        );
+
+    }
+
+
+    if (filteredPlaces.length === 0) {
+
+        updateMapStatus(
+            "No locations found",
+            "Try another search or category.",
+            "🔎"
+        );
+
+    }
+
+    else {
+
+        updateMapStatus(
+            filteredPlaces.length +
+            " service" +
+            (
+                filteredPlaces.length === 1
+                    ? ""
+                    : "s"
+            ) +
+            " shown",
+            "Select a map marker for more information.",
+            "📍"
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   SHOW LOCATION CARD
+===================================================== */
+
+function showPlace(place) {
+
+    selectedPlace = place;
+
+
+    if (!locationCard) {
+        return;
+    }
+
+
+    locationCardIcon.textContent =
+        place.icon;
+
+
+    locationCardCategory.textContent =
+        categoryNames[place.category] ||
+        "SERVICE";
+
+
+    locationCardTitle.textContent =
+        place.name;
+
+
+    locationCardDescription.textContent =
+        place.description;
+
+
+    locationCard.classList.remove(
+        "hidden"
+    );
+
+
+    updateMapStatus(
+        place.name,
+        "Demonstration map location selected.",
+        place.icon
+    );
+
+
+    locationCard.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest"
+    });
+
+}
+
+
+/* =====================================================
+   CLOSE LOCATION CARD
+===================================================== */
+
+function closeLocationCard() {
+
+    selectedPlace = null;
+
+
+    if (locationCard) {
+
+        locationCard.classList.add(
+            "hidden"
+        );
+
+    }
+
+
+    updateMapStatus(
+        "Map ready",
+        "Select a marker to explore a location.",
+        "📍"
+    );
+
+}
+
+
+if (locationClose) {
+
+    locationClose.addEventListener(
+        "click",
+        closeLocationCard
+    );
+
+}
+
+
+/* =====================================================
+   DIRECTIONS
+===================================================== */
+
+if (locationDirections) {
+
+    locationDirections.addEventListener(
+        "click",
+        function() {
+
+            if (!selectedPlace) {
+                return;
+            }
+
+
+            let destination =
+                encodeURIComponent(
+                    selectedPlace.name
+                );
+
+
+            let url;
+
+
+            if (userCoordinates) {
+
+                url =
+                    "https://www.google.com/maps/dir/?api=1" +
+                    "&origin=" +
+                    userCoordinates.latitude +
+                    "," +
+                    userCoordinates.longitude +
+                    "&destination=" +
+                    destination;
+
+            }
+
+            else {
+
+                url =
+                    "https://www.google.com/maps/search/" +
+                    destination;
+
+            }
+
+
+            window.open(
+                url,
+                "_blank",
+                "noopener,noreferrer"
+            );
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   CATEGORY FILTERS
+===================================================== */
+
+if (mapFilters) {
+
+    const filterButtons =
+        mapFilters.querySelectorAll(
+            ".map-filter"
+        );
+
+
+    filterButtons.forEach(
+        function(button) {
+
+            button.addEventListener(
+                "click",
+                function() {
+
+                    filterButtons.forEach(
+                        function(item) {
+
+                            item.classList.remove(
+                                "active"
+                            );
+
+                        }
+                    );
+
+
+                    button.classList.add(
+                        "active"
+                    );
+
+
+                    activeCategory =
+                        button.dataset.category ||
+                        "all";
+
+
+                    renderMap();
+
+                }
+            );
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   MAP SEARCH
+===================================================== */
+
+if (mapSearch) {
+
+    mapSearch.addEventListener(
+        "input",
+        function() {
+
+            searchQuery =
+                mapSearch.value.trim();
+
+            renderMap();
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   USER LOCATION
+===================================================== */
+
+function requestUserLocation() {
+
     if (!navigator.geolocation) {
 
-        locationStatus.textContent =
-            "⚠️ Geolocation is not supported by this browser.";
-
-
-        updateNearbyResult(
+        updateMapStatus(
             "Location unavailable",
             "Your browser does not support location services.",
             "⚠️"
@@ -487,18 +629,22 @@ function requestLocation() {
     }
 
 
-    locationStatus.textContent =
-        "📍 Requesting your location…";
+    if (mapLocationButton) {
 
+        mapLocationButton.disabled =
+            true;
 
-    if (locationButton) {
-
-        locationButton.disabled = true;
-
-        locationButton.textContent =
-            "Finding Location…";
+        mapLocationButton.innerHTML =
+            "📍 Finding location…";
 
     }
+
+
+    updateMapStatus(
+        "Requesting location",
+        "Please allow location access if your browser asks.",
+        "⏳"
+    );
 
 
     navigator.geolocation.getCurrentPosition(
@@ -516,28 +662,31 @@ function requestLocation() {
             };
 
 
-            locationStatus.textContent =
-                "Location ready. Nearby searches are now centred around you.";
+            if (userMarker) {
 
-
-            if (locationButton) {
-
-                locationButton.disabled = false;
-
-                locationButton.textContent =
-                    "Location Ready ✓";
+                userMarker.classList.remove(
+                    "hidden"
+                );
 
             }
 
 
-            updateNearbyResult(
-                "Location ready",
-                "Choose a service to search near your current location.",
+            if (mapLocationButton) {
+
+                mapLocationButton.disabled =
+                    false;
+
+                mapLocationButton.innerHTML =
+                    "📍 Location Ready ✓";
+
+            }
+
+
+            updateMapStatus(
+                "Your location is ready",
+                "Your location is shown locally in this browser.",
                 "✅"
             );
-
-
-            renderNearbyServices();
 
         },
 
@@ -551,44 +700,41 @@ function requestLocation() {
             if (error.code === 1) {
 
                 message =
-                    "Location permission was denied. You can still search manually.";
+                    "Location permission was denied.";
 
             }
 
             else if (error.code === 2) {
 
                 message =
-                    "Your location could not be determined. Please try again.";
+                    "Your location could not be determined.";
 
             }
 
             else if (error.code === 3) {
 
                 message =
-                    "The location request timed out. Please try again.";
+                    "The location request timed out.";
 
             }
 
 
-            locationStatus.textContent =
-                "⚠️ " + message;
+            if (mapLocationButton) {
+
+                mapLocationButton.disabled =
+                    false;
+
+                mapLocationButton.innerHTML =
+                    "📍 Try Again";
+
+            }
 
 
-            updateNearbyResult(
-                "Location not available",
+            updateMapStatus(
+                "Location unavailable",
                 message,
                 "⚠️"
             );
-
-
-            if (locationButton) {
-
-                locationButton.disabled = false;
-
-                locationButton.textContent =
-                    "Try Again";
-
-            }
 
         },
 
@@ -607,177 +753,66 @@ function requestLocation() {
 }
 
 
-if (locationButton) {
+if (mapLocationButton) {
 
-    locationButton.addEventListener(
+    mapLocationButton.addEventListener(
         "click",
-        requestLocation
+        requestUserLocation
     );
 
 }
 
 
-
 /* =====================================================
-   SMART GUIDE
+   MAP CLICK
 ===================================================== */
 
-const guideMessages = {
+if (mapCanvas) {
 
-    Emergency: `
-        <strong>Emergency help</strong>
-        <br><br>
-        If you are facing an immediate emergency
-        in India, use the official emergency
-        response service.
-        <br><br>
-        <a
-            class="official-link"
-            href="tel:112"
-        >
-            📞 Call 112
-        </a>
-        &nbsp;&nbsp;
-        <a
-            class="official-link"
-            href="https://112.gov.in/"
-            target="_blank"
-            rel="noopener noreferrer"
-        >
-            Official 112 India ↗
-        </a>
-    `,
-
-
-    Medical: `
-        <strong>Medical information</strong>
-        <br><br>
-        For official health information, visit
-        the National Health Authority.
-        You can also search for nearby hospitals
-        and pharmacies.
-        <br><br>
-        <a
-            class="official-link"
-            href="https://www.nha.gov.in/"
-            target="_blank"
-            rel="noopener noreferrer"
-        >
-            Visit NHA ↗
-        </a>
-    `,
-
-
-    Disaster: `
-        <strong>Disaster information</strong>
-        <br><br>
-        For official disaster preparedness and
-        response information, use NDMA.
-        <br><br>
-        <a
-            class="official-link"
-            href="https://ndma.gov.in/"
-            target="_blank"
-            rel="noopener noreferrer"
-        >
-            Visit NDMA ↗
-        </a>
-    `,
-
-
-    Nearby: `
-        <strong>Nearby services</strong>
-        <br><br>
-        Use Nearby Help to search for hospitals,
-        pharmacies, police stations, fire stations
-        and government offices.
-        <br><br>
-        <a
-            class="official-link"
-            href="#nearby"
-        >
-            Go to Nearby Help ↓
-        </a>
-    `,
-
-
-    Government: `
-        <strong>Government information</strong>
-        <br><br>
-        The National Portal of India provides
-        official information about Government
-        of India services and resources.
-        <br><br>
-        <a
-            class="official-link"
-            href="https://www.india.gov.in/"
-            target="_blank"
-            rel="noopener noreferrer"
-        >
-            Visit India.gov.in ↗
-        </a>
-    `
-
-};
-
-
-const guideCards =
-    document.querySelectorAll(
-        ".guide-card"
-    );
-
-
-const guideResult =
-    document.getElementById(
-        "guideResult"
-    );
-
-
-guideCards.forEach(function(card) {
-
-    card.addEventListener(
+    mapCanvas.addEventListener(
         "click",
-        function() {
-
-            const selectedGuide =
-                card.dataset.guide;
-
+        function(event) {
 
             if (
-                guideResult &&
-                guideMessages[selectedGuide]
+                event.target.closest(
+                    ".map-marker"
+                )
             ) {
 
-                guideResult.innerHTML = `
-
-                    <span class="result-icon">
-                        💡
-                    </span>
-
-                    <span>
-                        ${guideMessages[selectedGuide]}
-                    </span>
-
-                `;
+                return;
 
             }
+
+
+            closeLocationCard();
 
         }
     );
 
-});
-
+}
 
 
 /* =====================================================
-   ACTIVE NAVIGATION
+   KEYBOARD SUPPORT
 ===================================================== */
 
-const sections =
-    document.querySelectorAll(
-        "section[id]"
-    );
+document.addEventListener(
+    "keydown",
+    function(event) {
 
+        if (event.key === "Escape") {
+
+            closeLocationCard();
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   NAVIGATION
+===================================================== */
 
 const navigationLinks =
     document.querySelectorAll(
@@ -785,27 +820,36 @@ const navigationLinks =
     );
 
 
-function updateActiveNavigation() {
+const sections =
+    document.querySelectorAll(
+        "section[id]"
+    );
+
+
+function updateNavigation() {
 
     let currentSection = "";
 
 
-    sections.forEach(function(section) {
+    sections.forEach(
+        function(section) {
 
-        const sectionTop =
-            section.offsetTop - 180;
+            const sectionTop =
+                section.offsetTop - 180;
 
 
-        if (
-            window.scrollY >= sectionTop
-        ) {
+            if (
+                window.scrollY >=
+                sectionTop
+            ) {
 
-            currentSection =
-                section.getAttribute("id");
+                currentSection =
+                    section.id;
+
+            }
 
         }
-
-    });
+    );
 
 
     navigationLinks.forEach(
@@ -816,12 +860,8 @@ function updateActiveNavigation() {
             );
 
 
-            const target =
-                link.getAttribute("href");
-
-
             if (
-                target ===
+                link.getAttribute("href") ===
                 "#" + currentSection
             ) {
 
@@ -839,19 +879,15 @@ function updateActiveNavigation() {
 
 window.addEventListener(
     "scroll",
-    updateActiveNavigation,
+    updateNavigation,
     {
         passive: true
     }
 );
 
 
-updateActiveNavigation();
-
-
-
 /* =====================================================
-   SMOOTH GUIDE LINKS
+   SMOOTH SCROLL
 ===================================================== */
 
 document.addEventListener(
@@ -877,7 +913,9 @@ document.addEventListener(
             !targetID ||
             targetID === "#"
         ) {
+
             return;
+
         }
 
 
@@ -887,103 +925,41 @@ document.addEventListener(
             );
 
 
-        if (target) {
-
-            event.preventDefault();
-
-
-            target.scrollIntoView({
-                behavior: "smooth",
-                block: "start"
-            });
-
+        if (!target) {
+            return;
         }
+
+
+        event.preventDefault();
+
+
+        target.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
 
     }
 );
 
 
-
 /* =====================================================
-   KEYBOARD ACCESSIBILITY
+   START MAP
 ===================================================== */
 
-document.addEventListener(
-    "keydown",
-    function(event) {
+renderMap();
 
-        if (event.key === "Escape") {
-
-            if (
-                document.activeElement &&
-                typeof document.activeElement.blur ===
-                "function"
-            ) {
-
-                document.activeElement.blur();
-
-            }
-
-        }
-
-    }
-);
-
+updateNavigation();
 
 
 /* =====================================================
-   SERVICE WORKER
-===================================================== */
-
-if (
-    "serviceWorker" in navigator &&
-    window.location.protocol === "https:"
-) {
-
-    window.addEventListener(
-        "load",
-        function() {
-
-            fetch(
-                "./service-worker.js",
-                {
-                    method: "HEAD"
-                }
-            )
-
-            .then(function(response) {
-
-                if (response.ok) {
-
-                    return navigator.serviceWorker
-                        .register("./service-worker.js");
-
-                }
-
-                return null;
-
-            })
-
-            .catch(function() {
-
-                /*
-                    No service worker is installed.
-                    LIFELINK works normally without it.
-                */
-
-            });
-
-        }
-    );
-
-}
-
-
-
-/* =====================================================
-   STARTUP
+   CONSOLE
 ===================================================== */
 
 console.log(
-    "LIFELINK V2.2 loaded successfully 🚀"
+    "LIFELINK V2.3 Map loaded successfully 🗺️"
+);
+
+console.log(
+    "Prototype locations:",
+    mapPlaces.length
 );
