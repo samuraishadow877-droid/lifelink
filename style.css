@@ -1,6 +1,6 @@
-/* =========================================
-   LIFELINK V2 — MAIN STYLES
-========================================= */
+/* =====================================================
+   LIFELINK V2.1 — PREMIUM UI
+===================================================== */
 
 * {
     box-sizing: border-box;
@@ -16,6 +16,7 @@ body {
     color: #f5f7fb;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 15px;
+    overflow-x: hidden;
 }
 
 a {
@@ -30,16 +31,45 @@ select {
 }
 
 
-/* =========================================
+/* =====================================================
+   BACKGROUND EFFECTS
+===================================================== */
+
+.background-glow {
+    position: fixed;
+    width: 450px;
+    height: 450px;
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.12;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.glow-one {
+    top: 10%;
+    left: -180px;
+    background: #347cff;
+}
+
+.glow-two {
+    right: -180px;
+    top: 50%;
+    background: #ff3e4d;
+}
+
+
+/* =====================================================
    NAVBAR
-========================================= */
+===================================================== */
 
 .navbar {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
-    z-index: 20;
+
+    z-index: 100;
 
     padding: 14px 6%;
 
@@ -47,14 +77,12 @@ select {
     align-items: center;
     justify-content: space-between;
 
-    background: rgba(5, 7, 11, 0.87);
-    backdrop-filter: blur(14px);
+    background: rgba(5, 7, 11, 0.86);
+
+    backdrop-filter: blur(18px);
 
     border-bottom: 1px solid #202938;
 }
-
-
-/* LOGO */
 
 .brand {
     display: flex;
@@ -77,6 +105,9 @@ select {
         #ff4148
     );
 
+    box-shadow:
+        0 0 25px rgba(52, 124, 255, 0.25);
+
     font-size: 20px;
 }
 
@@ -87,6 +118,7 @@ select {
 
 .brand-text strong {
     font-size: 16px;
+    letter-spacing: 0.5px;
 }
 
 .brand-text small {
@@ -94,16 +126,13 @@ select {
 
     color: #8995a8;
 
-    font-size: 9px;
-    letter-spacing: 0.5px;
+    font-size: 8px;
+    letter-spacing: 0.7px;
 }
-
-
-/* NAVIGATION */
 
 .navigation {
     display: flex;
-    gap: 22px;
+    gap: 24px;
 
     color: #aeb8c8;
 
@@ -114,29 +143,33 @@ select {
     transition: 0.2s ease;
 }
 
-.navigation a:hover {
+.navigation a:hover,
+.navigation a.active {
     color: #ffffff;
 }
 
-
-/* CALL BUTTON */
-
 .call-button {
+    padding: 10px 15px;
+
     background: #ffffff;
     color: #05070b;
 
-    padding: 10px 15px;
-
     border-radius: 9px;
 
-    font-weight: bold;
+    font-weight: 800;
     font-size: 12px;
+
+    transition: 0.2s ease;
+}
+
+.call-button:hover {
+    transform: translateY(-2px);
 }
 
 
-/* =========================================
+/* =====================================================
    HERO
-========================================= */
+===================================================== */
 
 .hero {
     min-height: 100vh;
@@ -146,56 +179,61 @@ select {
 
     text-align: center;
 
-    padding: 130px 20px 70px;
+    padding: 140px 20px 80px;
 
     background:
         radial-gradient(
-            circle at center,
-            #112b59 0%,
-            #07111f 35%,
+            circle at 50% 40%,
+            #102b58 0%,
+            #081424 32%,
             #05070b 72%
         );
 }
 
 .hero-content {
-    max-width: 850px;
+    max-width: 900px;
 }
 
-
-/* VERSION BADGE */
-
 .version-badge {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
 
-    padding: 9px 13px;
+    padding: 9px 14px;
 
     border: 1px solid #29446f;
+
     border-radius: 50px;
 
-    background: #091426;
+    background: rgba(9, 20, 38, 0.85);
 
     color: #74a8ff;
 
     font-size: 10px;
     font-weight: 900;
-    letter-spacing: 1.4px;
+
+    letter-spacing: 1.3px;
 }
 
-
-/* HERO HEADING */
+.version-badge span {
+    color: #66758c;
+}
 
 .hero h1 {
-    margin: 25px 0;
+    margin: 28px 0 24px;
 
-    font-size: clamp(50px, 8vw, 88px);
+    font-size: clamp(52px, 8vw, 92px);
 
-    line-height: 0.95;
+    line-height: 0.94;
 
-    letter-spacing: -4px;
+    letter-spacing: -5px;
 }
 
 .hero h1 span {
     color: #70a5ff;
+
+    text-shadow:
+        0 0 35px rgba(112, 165, 255, 0.2);
 }
 
 .hero p {
@@ -207,11 +245,8 @@ select {
 
     font-size: 17px;
 
-    line-height: 1.7;
+    line-height: 1.8;
 }
-
-
-/* HERO BUTTONS */
 
 .hero-buttons {
     display: flex;
@@ -222,13 +257,8 @@ select {
 
     flex-wrap: wrap;
 
-    margin: 30px 0;
+    margin: 34px 0 20px;
 }
-
-
-/* =========================================
-   BUTTONS
-========================================= */
 
 .button {
     display: inline-flex;
@@ -236,7 +266,7 @@ select {
     align-items: center;
     justify-content: center;
 
-    padding: 13px 18px;
+    padding: 13px 19px;
 
     border: 0;
 
@@ -248,21 +278,30 @@ select {
 
     transition:
         transform 0.2s ease,
+        box-shadow 0.2s ease,
         opacity 0.2s ease;
 }
 
 .button:hover {
-    transform: translateY(-2px);
-    opacity: 0.9;
+    transform: translateY(-3px);
+    opacity: 0.95;
 }
 
 .primary-button {
     background: #347cff;
     color: #ffffff;
+
+    box-shadow:
+        0 8px 25px rgba(52, 124, 255, 0.2);
+}
+
+.primary-button:hover {
+    box-shadow:
+        0 12px 35px rgba(52, 124, 255, 0.35);
 }
 
 .secondary-button {
-    background: #0c121b;
+    background: rgba(12, 18, 27, 0.85);
 
     border: 1px solid #293548;
 
@@ -272,12 +311,26 @@ select {
 .danger-button {
     background: #e83d45;
     color: #ffffff;
+
+    box-shadow:
+        0 8px 25px rgba(232, 61, 69, 0.2);
 }
 
+.hero-trust {
+    display: flex;
 
-/* =========================================
-   HERO STATS
-========================================= */
+    justify-content: center;
+
+    flex-wrap: wrap;
+
+    gap: 18px;
+
+    margin-top: 20px;
+
+    color: #7e8da2;
+
+    font-size: 11px;
+}
 
 .hero-stats {
     display: flex;
@@ -288,19 +341,21 @@ select {
 
     flex-wrap: wrap;
 
-    margin-top: 40px;
+    margin-top: 42px;
 }
 
 .stat {
-    min-width: 135px;
+    min-width: 140px;
 
-    padding: 14px;
+    padding: 15px 18px;
 
-    background: #090e16;
+    background: rgba(9, 14, 22, 0.75);
 
     border: 1px solid #1e2938;
 
     border-radius: 14px;
+
+    backdrop-filter: blur(10px);
 }
 
 .stat strong,
@@ -309,7 +364,7 @@ select {
 }
 
 .stat strong {
-    font-size: 16px;
+    font-size: 17px;
 }
 
 .stat small {
@@ -321,12 +376,14 @@ select {
 }
 
 
-/* =========================================
+/* =====================================================
    SECTIONS
-========================================= */
+===================================================== */
 
 .section {
-    padding: 90px 6%;
+    position: relative;
+
+    padding: 95px 6%;
 }
 
 .dark-section {
@@ -334,6 +391,7 @@ select {
 }
 
 .container {
+    width: 100%;
     max-width: 1150px;
 
     margin: auto;
@@ -344,7 +402,7 @@ select {
 
     font-weight: 900;
 
-    letter-spacing: 1.4px;
+    letter-spacing: 1.5px;
 
     font-size: 10px;
 }
@@ -352,36 +410,42 @@ select {
 h2 {
     margin: 10px 0 18px;
 
-    font-size: 42px;
+    font-size: 43px;
 
-    letter-spacing: -1.5px;
+    line-height: 1.05;
+
+    letter-spacing: -2px;
 }
 
 .section-description {
+    max-width: 760px;
+
     color: #9da9ba;
 
-    line-height: 1.7;
-
-    max-width: 760px;
+    line-height: 1.75;
 }
 
 
-/* =========================================
-   EMERGENCY CARD
-========================================= */
+/* =====================================================
+   EMERGENCY
+===================================================== */
 
 .emergency-card {
+    position: relative;
+
     display: flex;
 
-    gap: 22px;
+    gap: 24px;
 
-    margin-top: 30px;
+    margin-top: 32px;
 
-    padding: 28px;
+    padding: 30px;
+
+    overflow: hidden;
 
     border: 1px solid #5b2930;
 
-    border-radius: 20px;
+    border-radius: 22px;
 
     background:
         linear-gradient(
@@ -389,16 +453,70 @@ h2 {
             #241014,
             #0b1018
         );
+
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.2);
+}
+
+.emergency-card::after {
+    content: "";
+
+    position: absolute;
+
+    right: -100px;
+    top: -100px;
+
+    width: 250px;
+    height: 250px;
+
+    border-radius: 50%;
+
+    background: #e83d45;
+
+    filter: blur(110px);
+
+    opacity: 0.12;
 }
 
 .emergency-icon {
-    font-size: 40px;
+    font-size: 44px;
+}
+
+.emergency-content {
+    position: relative;
+    z-index: 2;
+}
+
+.live-indicator {
+    display: flex;
+    align-items: center;
+
+    gap: 7px;
+
+    color: #ff7a82;
+
+    font-size: 9px;
+    font-weight: 900;
+
+    letter-spacing: 1px;
+}
+
+.live-indicator span {
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: #ff4c58;
+
+    box-shadow:
+        0 0 12px #ff4c58;
 }
 
 .emergency-content h3 {
-    margin-top: 0;
+    margin: 10px 0;
 
-    font-size: 21px;
+    font-size: 24px;
 }
 
 .emergency-content p {
@@ -417,6 +535,8 @@ h2 {
     gap: 14px;
 
     flex-wrap: wrap;
+
+    margin-top: 18px;
 }
 
 .official-link {
@@ -428,9 +548,9 @@ h2 {
 }
 
 
-/* =========================================
+/* =====================================================
    QUICK SERVICES
-========================================= */
+===================================================== */
 
 .quick-services {
     display: grid;
@@ -444,7 +564,7 @@ h2 {
 }
 
 .quick-service {
-    padding: 18px;
+    padding: 19px;
 
     background: #0b1119;
 
@@ -452,13 +572,15 @@ h2 {
 
     border-radius: 16px;
 
-    transition: 0.2s ease;
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease;
 }
 
 .quick-service:hover {
     border-color: #347cff;
 
-    transform: translateY(-2px);
+    transform: translateY(-4px);
 }
 
 .quick-service span,
@@ -468,56 +590,80 @@ h2 {
 }
 
 .quick-service span {
-    font-size: 25px;
+    font-size: 27px;
 }
 
 .quick-service strong {
-    margin-top: 8px;
+    margin-top: 9px;
 }
 
 .quick-service small {
-    margin-top: 6px;
+    margin-top: 7px;
 
     color: #8995a8;
 
     font-size: 10px;
+
+    line-height: 1.5;
 }
 
 
-/* =========================================
+/* =====================================================
    LOCATION
-========================================= */
+===================================================== */
 
 .location-box {
     display: flex;
 
-    gap: 15px;
-
     align-items: center;
 
-    margin: 30px 0 18px;
+    gap: 15px;
 
-    padding: 18px;
+    margin: 30px 0 20px;
+
+    padding: 18px 20px;
 
     background: #0b1119;
 
     border: 1px solid #293548;
 
-    border-radius: 16px;
+    border-radius: 17px;
 }
 
-.location-status {
+.location-symbol {
+    width: 43px;
+    height: 43px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 12px;
+
+    background: #111c2c;
+
+    font-size: 20px;
+}
+
+.location-information {
     flex: 1;
+}
 
-    color: #aeb8c8;
+.location-information strong,
+.location-information span {
+    display: block;
+}
 
+.location-information strong {
     font-size: 13px;
 }
 
+.location-information span {
+    margin-top: 4px;
 
-/* =========================================
-   NEARBY SERVICES
-========================================= */
+    color: #8995a8;
+
+    font-size: 11px;
+}
 
 .nearby-grid {
     display: grid;
@@ -529,7 +675,7 @@ h2 {
 }
 
 .nearby-card {
-    padding: 18px;
+    padding: 19px;
 
     background: #0b1018;
 
@@ -543,7 +689,7 @@ h2 {
 .nearby-card:hover {
     border-color: #347cff;
 
-    transform: translateY(-2px);
+    transform: translateY(-3px);
 }
 
 .nearby-card strong,
@@ -556,7 +702,7 @@ h2 {
 }
 
 .nearby-card small {
-    margin: 8px 0;
+    margin: 9px 0;
 
     color: #8995a8;
 
@@ -573,29 +719,76 @@ h2 {
     font-weight: 800;
 }
 
-.small-note {
+.privacy-note {
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    margin-top: 18px;
+
     color: #687589;
 
-    font-size: 11px;
+    font-size: 10px;
 
     line-height: 1.6;
 }
 
 
-/* =========================================
-   RESOURCE SEARCH
-========================================= */
+/* =====================================================
+   RESOURCES
+===================================================== */
 
 .resource-controls {
     display: flex;
 
     gap: 10px;
 
-    margin: 28px 0 18px;
+    margin: 30px 0 20px;
 }
 
-.resource-controls input,
+.search-box {
+    flex: 1;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 0 13px;
+
+    background: #0b1119;
+
+    border: 1px solid #293548;
+
+    border-radius: 10px;
+
+    color: #718096;
+}
+
+.search-box input {
+    width: 100%;
+
+    padding: 13px 0;
+
+    background: transparent;
+
+    border: 0;
+
+    outline: none;
+
+    color: #ffffff;
+}
+
+.search-box:focus-within {
+    border-color: #347cff;
+}
+
 .resource-controls select {
+    min-width: 170px;
+
     padding: 13px;
 
     background: #0b1119;
@@ -609,20 +802,6 @@ h2 {
     outline: none;
 }
 
-.resource-controls input {
-    flex: 1;
-}
-
-.resource-controls input:focus,
-.resource-controls select:focus {
-    border-color: #347cff;
-}
-
-
-/* =========================================
-   RESOURCE CARDS
-========================================= */
-
 .resource-grid {
     display: grid;
 
@@ -633,13 +812,13 @@ h2 {
 }
 
 .resource-card {
-    padding: 18px;
+    padding: 20px;
 
     background: #0b1018;
 
     border: 1px solid #202b3a;
 
-    border-radius: 16px;
+    border-radius: 17px;
 
     transition: 0.2s ease;
 }
@@ -647,11 +826,11 @@ h2 {
 .resource-card:hover {
     border-color: #347cff;
 
-    transform: translateY(-2px);
+    transform: translateY(-3px);
 }
 
 .resource-card h3 {
-    margin: 12px 0 6px;
+    margin: 13px 0 7px;
 
     font-size: 17px;
 }
@@ -688,25 +867,40 @@ h2 {
     font-weight: bold;
 }
 
-
-/* =========================================
-   EMPTY STATE
-========================================= */
-
 .empty-message {
-    text-align: center;
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 6px;
+
+    padding: 40px;
 
     color: #8995a8;
 }
 
+.empty-message span {
+    font-size: 30px;
+}
+
+.empty-message strong {
+    color: #ffffff;
+}
+
+.empty-message small {
+    font-size: 11px;
+}
+
 .hidden {
-    display: none;
+    display: none !important;
 }
 
 
-/* =========================================
-   LIFELINK GUIDE
-========================================= */
+/* =====================================================
+   SMART GUIDE
+===================================================== */
 
 .guide-grid {
     display: grid;
@@ -716,13 +910,13 @@ h2 {
 
     gap: 12px;
 
-    margin-top: 28px;
+    margin-top: 30px;
 }
 
 .guide-card {
-    min-height: 145px;
+    min-height: 155px;
 
-    padding: 18px;
+    padding: 19px;
 
     text-align: left;
 
@@ -732,7 +926,7 @@ h2 {
 
     border: 1px solid #202b3a;
 
-    border-radius: 16px;
+    border-radius: 17px;
 
     cursor: pointer;
 
@@ -742,7 +936,9 @@ h2 {
 .guide-card:hover {
     border-color: #347cff;
 
-    transform: translateY(-2px);
+    transform: translateY(-4px);
+
+    background: #0d1521;
 }
 
 .guide-card span,
@@ -752,11 +948,11 @@ h2 {
 }
 
 .guide-card span {
-    font-size: 25px;
+    font-size: 28px;
 }
 
 .guide-card strong {
-    margin-top: 10px;
+    margin-top: 12px;
 }
 
 .guide-card small {
@@ -769,84 +965,361 @@ h2 {
     line-height: 1.5;
 }
 
-
-/* GUIDE RESULT */
-
 .guide-result {
-    margin-top: 15px;
+    display: flex;
 
-    padding: 18px;
+    align-items: flex-start;
+
+    gap: 12px;
+
+    margin-top: 16px;
+
+    padding: 20px;
 
     background: #0b1018;
 
     border: 1px solid #293548;
 
-    border-radius: 15px;
+    border-radius: 16px;
 
     color: #aeb8c8;
 
     line-height: 1.7;
 }
 
+.result-icon {
+    font-size: 20px;
+}
 
-/* =========================================
-   ABOUT + SAFETY
-========================================= */
 
-.about-section,
-.safety-card {
+/* =====================================================
+   HOW IT WORKS
+===================================================== */
+
+.steps-grid {
     display: grid;
 
     grid-template-columns:
-        1fr 1fr;
+        repeat(3, 1fr);
 
-    gap: 40px;
+    gap: 15px;
+
+    margin-top: 30px;
 }
 
-.about-section p,
-.safety-card p {
-    color: #aeb8c8;
+.step-card {
+    position: relative;
 
-    line-height: 1.8;
+    padding: 25px;
+
+    background: #0b1018;
+
+    border: 1px solid #202b3a;
+
+    border-radius: 18px;
 }
 
-.safety-card {
-    padding: 28px;
+.step-number {
+    position: absolute;
+
+    top: 18px;
+    right: 18px;
+
+    color: #26354c;
+
+    font-size: 12px;
+
+    font-weight: 900;
+}
+
+.step-card > span {
+    display: block;
+
+    font-size: 30px;
+
+    margin-bottom: 15px;
+}
+
+.step-card h3 {
+    margin: 0 0 8px;
+}
+
+.step-card p {
+    margin: 0;
+
+    color: #8995a8;
+
+    font-size: 12px;
+
+    line-height: 1.7;
+}
+
+
+/* =====================================================
+   TRUST
+===================================================== */
+
+.trust-section {
+    background:
+        linear-gradient(
+            180deg,
+            #070b11,
+            #05070b
+        );
+}
+
+.trust-card {
+    display: flex;
+
+    align-items: center;
+
+    gap: 22px;
+
+    padding: 30px;
+
+    border: 1px solid #293548;
+
+    border-radius: 20px;
 
     background: #0b1119;
+}
+
+.trust-icon {
+    width: 65px;
+    height: 65px;
+
+    flex-shrink: 0;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 18px;
+
+    background: #10203a;
+
+    font-size: 30px;
+}
+
+.trust-card h2 {
+    margin-bottom: 10px;
+}
+
+.trust-card p {
+    margin: 0;
+
+    color: #8995a8;
+
+    line-height: 1.7;
+}
+
+.trust-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 12px;
+
+    margin-top: 12px;
+}
+
+.trust-item {
+    padding: 20px;
+
+    background: #0b1018;
+
+    border: 1px solid #202b3a;
+
+    border-radius: 16px;
+}
+
+.trust-item > span {
+    display: grid;
+
+    width: 28px;
+    height: 28px;
+
+    place-items: center;
+
+    border-radius: 50%;
+
+    background: #09271f;
+
+    color: #73dfba;
+
+    font-weight: bold;
+}
+
+.trust-item strong,
+.trust-item small {
+    display: block;
+}
+
+.trust-item strong {
+    margin-top: 12px;
+}
+
+.trust-item small {
+    margin-top: 6px;
+
+    color: #8995a8;
+
+    font-size: 10px;
+
+    line-height: 1.6;
+}
+
+
+/* =====================================================
+   LIMITATIONS
+===================================================== */
+
+.limitation-card {
+    padding: 30px;
+
+    background: #0b1018;
 
     border: 1px solid #293548;
 
     border-radius: 20px;
 }
 
+.limitations-list {
+    display: grid;
 
-/* =========================================
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 10px;
+
+    margin: 25px 0;
+}
+
+.limitations-list div {
+    padding: 13px;
+
+    background: #090d13;
+
+    border-radius: 10px;
+
+    color: #aeb8c8;
+
+    font-size: 11px;
+}
+
+.limitations-list span {
+    margin-right: 7px;
+
+    color: #ff6a73;
+
+    font-weight: bold;
+}
+
+.limitation-card > p {
+    max-width: 800px;
+
+    color: #687589;
+
+    font-size: 11px;
+
+    line-height: 1.7;
+}
+
+
+/* =====================================================
+   FLOATING EMERGENCY BUTTON
+===================================================== */
+
+.floating-emergency {
+    position: fixed;
+
+    right: 25px;
+    bottom: 25px;
+
+    z-index: 90;
+
+    width: 62px;
+    height: 62px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 1px;
+
+    border-radius: 50%;
+
+    background: #e83d45;
+
+    color: #ffffff;
+
+    box-shadow:
+        0 8px 30px rgba(232, 61, 69, 0.35);
+
+    transition: 0.2s ease;
+}
+
+.floating-emergency span {
+    font-size: 17px;
+}
+
+.floating-emergency strong {
+    font-size: 12px;
+}
+
+.floating-emergency:hover {
+    transform: scale(1.08);
+
+    box-shadow:
+        0 12px 40px rgba(232, 61, 69, 0.5);
+}
+
+
+/* =====================================================
    FOOTER
-========================================= */
+===================================================== */
 
 footer {
     padding: 40px 6%;
 
     border-top: 1px solid #202938;
 
-    color: #8995a8;
-
     display: flex;
 
     justify-content: space-between;
+
+    gap: 20px;
+
+    color: #8995a8;
+
+    font-size: 11px;
+}
+
+footer div:first-child strong,
+footer div:first-child small {
+    display: block;
 }
 
 footer strong {
     color: #ffffff;
+
+    font-size: 14px;
+}
+
+footer small {
+    margin-top: 4px;
 }
 
 
-/* =========================================
+/* =====================================================
    TABLET
-========================================= */
+===================================================== */
 
-@media (max-width: 900px) {
+@media (max-width: 1000px) {
 
     .navigation {
         display: none;
@@ -854,46 +1327,55 @@ footer strong {
 
     .quick-services,
     .nearby-grid,
-    .guide-grid,
+    .guide-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
     .resource-grid {
         grid-template-columns:
             repeat(2, 1fr);
     }
 
     .hero h1 {
-        letter-spacing: -2px;
+        letter-spacing: -3px;
     }
+
 }
 
 
-/* =========================================
+/* =====================================================
    MOBILE
-========================================= */
+===================================================== */
 
-@media (max-width: 600px) {
+@media (max-width: 650px) {
 
-    .quick-services,
-    .nearby-grid,
-    .guide-grid,
-    .resource-grid,
-    .about-section,
-    .safety-card {
-        grid-template-columns: 1fr;
-    }
-
-    .location-box,
-    .resource-controls {
-        flex-direction: column;
-
-        align-items: stretch;
+    .navbar {
+        padding: 12px 18px;
     }
 
     .call-button {
         display: none;
     }
 
+    .hero {
+        padding: 125px 18px 65px;
+    }
+
     .hero h1 {
         font-size: 52px;
+
+        letter-spacing: -3px;
+    }
+
+    .hero p {
+        font-size: 15px;
+    }
+
+    .hero-trust {
+        gap: 10px;
+
+        font-size: 9px;
     }
 
     .section {
@@ -902,15 +1384,58 @@ footer strong {
 
     h2 {
         font-size: 34px;
+
+        letter-spacing: -1px;
+    }
+
+    .quick-services,
+    .nearby-grid,
+    .guide-grid,
+    .resource-grid,
+    .steps-grid,
+    .trust-grid,
+    .limitations-list {
+        grid-template-columns: 1fr;
     }
 
     .emergency-card {
         flex-direction: column;
     }
 
+    .location-box {
+        align-items: stretch;
+
+        flex-direction: column;
+    }
+
+    .location-information {
+        margin-bottom: 5px;
+    }
+
+    .resource-controls {
+        flex-direction: column;
+    }
+
+    .resource-controls select {
+        width: 100%;
+    }
+
+    .trust-card {
+        align-items: flex-start;
+
+        flex-direction: column;
+    }
+
+    .floating-emergency {
+        right: 18px;
+        bottom: 18px;
+
+        width: 57px;
+        height: 57px;
+    }
+
     footer {
         flex-direction: column;
-
-        gap: 10px;
     }
+
 }
