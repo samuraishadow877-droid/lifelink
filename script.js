@@ -1,14 +1,12 @@
 /* =====================================================
-   LIFELINK V2.1
-   MAIN JAVASCRIPT
+   LIFELINK V2.2 — MAIN JAVASCRIPT
 ===================================================== */
 
 "use strict";
 
 
 /* =====================================================
-   RESOURCE DATABASE
-   Official/public sources only
+   OFFICIAL RESOURCE DATABASE
 ===================================================== */
 
 const resources = [
@@ -57,6 +55,23 @@ const resources = [
 
 
 /* =====================================================
+   SAFE HTML
+===================================================== */
+
+function escapeHTML(value) {
+
+    return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+
+}
+
+
+
+/* =====================================================
    RESOURCE DIRECTORY
 ===================================================== */
 
@@ -79,10 +94,12 @@ function renderResources() {
         return;
     }
 
+
     const searchText =
         resourceSearch
             ? resourceSearch.value.toLowerCase().trim()
             : "";
+
 
     const selectedCategory =
         resourceFilter
@@ -115,7 +132,8 @@ function renderResources() {
                 resource.category === selectedCategory;
 
 
-            return matchesSearch && matchesCategory;
+            return matchesSearch &&
+                   matchesCategory;
 
         });
 
@@ -208,28 +226,6 @@ renderResources();
 
 
 /* =====================================================
-   SAFE HTML HELPER
-===================================================== */
-
-function escapeHTML(value) {
-
-    return String(value)
-
-        .replaceAll("&", "&amp;")
-
-        .replaceAll("<", "&lt;")
-
-        .replaceAll(">", "&gt;")
-
-        .replaceAll('"', "&quot;")
-
-        .replaceAll("'", "&#039;");
-
-}
-
-
-
-/* =====================================================
    NEARBY SERVICES
 ===================================================== */
 
@@ -239,6 +235,12 @@ const services = [
         name: "Hospitals",
         icon: "🏥",
         query: "hospital"
+    },
+
+    {
+        name: "Pharmacies",
+        icon: "💊",
+        query: "pharmacy"
     },
 
     {
@@ -254,13 +256,7 @@ const services = [
     },
 
     {
-        name: "Pharmacies",
-        icon: "💊",
-        query: "pharmacy"
-    },
-
-    {
-        name: "Government Services",
+        name: "Government Offices",
         icon: "🏛️",
         query: "government office"
     }
@@ -286,12 +282,18 @@ const locationButton =
     );
 
 
+const nearbyResult =
+    document.getElementById(
+        "nearbyResult"
+    );
+
+
 let userCoordinates = null;
 
 
 
 /* =====================================================
-   CREATE MAP SEARCH
+   MAP SEARCH URL
 ===================================================== */
 
 function createMapURL(query) {
@@ -325,6 +327,45 @@ function createMapURL(query) {
 
 
 /* =====================================================
+   UPDATE RESULT STATUS
+===================================================== */
+
+function updateNearbyResult(
+    title,
+    message,
+    icon = "📍"
+) {
+
+    if (!nearbyResult) {
+        return;
+    }
+
+
+    nearbyResult.innerHTML = `
+
+        <span>
+            ${icon}
+        </span>
+
+        <div>
+
+            <strong>
+                ${escapeHTML(title)}
+            </strong>
+
+            <small>
+                ${escapeHTML(message)}
+            </small>
+
+        </div>
+
+    `;
+
+}
+
+
+
+/* =====================================================
    RENDER NEARBY SERVICES
 ===================================================== */
 
@@ -341,7 +382,7 @@ function renderNearbyServices() {
     services.forEach(function(service) {
 
         const card =
-            document.createElement("div");
+            document.createElement("article");
 
 
         card.className =
@@ -352,6 +393,14 @@ function renderNearbyServices() {
             createMapURL(service.query);
 
 
+        const locationText =
+            userCoordinates
+
+                ? "Search around your location."
+
+                : "Search this service on Google Maps.";
+
+
         card.innerHTML = `
 
             <strong>
@@ -360,13 +409,7 @@ function renderNearbyServices() {
             </strong>
 
             <small>
-                ${
-                    userCoordinates
-                    ?
-                    "Search around your location."
-                    :
-                    "Open a map search for this service."
-                }
+                ${escapeHTML(locationText)}
             </small>
 
             <a
@@ -375,10 +418,34 @@ function renderNearbyServices() {
                 target="_blank"
                 rel="noopener noreferrer"
             >
-                Open Map ↗
+                Find Nearby ↗
             </a>
 
         `;
+
+
+        const mapLink =
+            card.querySelector(".map-link");
+
+
+        if (mapLink) {
+
+            mapLink.addEventListener(
+                "click",
+                function() {
+
+                    updateNearbyResult(
+                        "Opening map search",
+                        "Searching for " +
+                        service.name.toLowerCase() +
+                        " near you.",
+                        service.icon
+                    );
+
+                }
+            );
+
+        }
 
 
         nearbyServices.appendChild(card);
@@ -393,7 +460,7 @@ renderNearbyServices();
 
 
 /* =====================================================
-   LOCATION
+   LOCATION PERMISSION
 ===================================================== */
 
 function requestLocation() {
@@ -407,6 +474,13 @@ function requestLocation() {
 
         locationStatus.textContent =
             "⚠️ Geolocation is not supported by this browser.";
+
+
+        updateNearbyResult(
+            "Location unavailable",
+            "Your browser does not support location services.",
+            "⚠️"
+        );
 
         return;
 
@@ -443,7 +517,7 @@ function requestLocation() {
 
 
             locationStatus.textContent =
-                "✅ Location ready. Choose a service below.";
+                "Location ready. Nearby searches are now centred around you.";
 
 
             if (locationButton) {
@@ -456,6 +530,13 @@ function requestLocation() {
             }
 
 
+            updateNearbyResult(
+                "Location ready",
+                "Choose a service to search near your current location.",
+                "✅"
+            );
+
+
             renderNearbyServices();
 
         },
@@ -464,33 +545,40 @@ function requestLocation() {
         function(error) {
 
             let message =
-                "⚠️ Location permission was not granted.";
+                "Location permission was not granted.";
 
 
             if (error.code === 1) {
 
                 message =
-                    "⚠️ Location permission was denied. You can still search maps manually.";
+                    "Location permission was denied. You can still search manually.";
 
             }
 
             else if (error.code === 2) {
 
                 message =
-                    "⚠️ Your location could not be determined. Try again.";
+                    "Your location could not be determined. Please try again.";
 
             }
 
             else if (error.code === 3) {
 
                 message =
-                    "⚠️ Location request timed out. Try again.";
+                    "The location request timed out. Please try again.";
 
             }
 
 
             locationStatus.textContent =
-                message;
+                "⚠️ " + message;
+
+
+            updateNearbyResult(
+                "Location not available",
+                message,
+                "⚠️"
+            );
 
 
             if (locationButton) {
@@ -537,26 +625,19 @@ if (locationButton) {
 const guideMessages = {
 
     Emergency: `
-
         <strong>Emergency help</strong>
-
         <br><br>
-
         If you are facing an immediate emergency
         in India, use the official emergency
         response service.
-
         <br><br>
-
         <a
             class="official-link"
             href="tel:112"
         >
             📞 Call 112
         </a>
-
         &nbsp;&nbsp;
-
         <a
             class="official-link"
             href="https://112.gov.in/"
@@ -565,24 +646,17 @@ const guideMessages = {
         >
             Official 112 India ↗
         </a>
-
     `,
 
 
     Medical: `
-
         <strong>Medical information</strong>
-
         <br><br>
-
-        For official health information,
-        visit the National Health Authority.
-
-        You can also use Nearby Help to search
-        for hospitals and pharmacies.
-
+        For official health information, visit
+        the National Health Authority.
+        You can also search for nearby hospitals
+        and pharmacies.
         <br><br>
-
         <a
             class="official-link"
             href="https://www.nha.gov.in/"
@@ -591,21 +665,15 @@ const guideMessages = {
         >
             Visit NHA ↗
         </a>
-
     `,
 
 
     Disaster: `
-
         <strong>Disaster information</strong>
-
         <br><br>
-
-        For official disaster preparedness
-        and response information, use NDMA.
-
+        For official disaster preparedness and
+        response information, use NDMA.
         <br><br>
-
         <a
             class="official-link"
             href="https://ndma.gov.in/"
@@ -614,44 +682,32 @@ const guideMessages = {
         >
             Visit NDMA ↗
         </a>
-
     `,
 
 
     Nearby: `
-
         <strong>Nearby services</strong>
-
         <br><br>
-
-        Use the Nearby Help section and allow
-        location access if you want map searches
-        centred around your current location.
-
+        Use Nearby Help to search for hospitals,
+        pharmacies, police stations, fire stations
+        and government offices.
         <br><br>
-
         <a
             class="official-link"
             href="#nearby"
         >
             Go to Nearby Help ↓
         </a>
-
     `,
 
 
     Government: `
-
         <strong>Government information</strong>
-
         <br><br>
-
         The National Portal of India provides
         official information about Government
         of India services and resources.
-
         <br><br>
-
         <a
             class="official-link"
             href="https://www.india.gov.in/"
@@ -660,7 +716,6 @@ const guideMessages = {
         >
             Visit India.gov.in ↗
         </a>
-
     `
 
 };
@@ -796,6 +851,60 @@ updateActiveNavigation();
 
 
 /* =====================================================
+   SMOOTH GUIDE LINKS
+===================================================== */
+
+document.addEventListener(
+    "click",
+    function(event) {
+
+        const link =
+            event.target.closest(
+                'a[href^="#"]'
+            );
+
+
+        if (!link) {
+            return;
+        }
+
+
+        const targetID =
+            link.getAttribute("href");
+
+
+        if (
+            !targetID ||
+            targetID === "#"
+        ) {
+            return;
+        }
+
+
+        const target =
+            document.querySelector(
+                targetID
+            );
+
+
+        if (target) {
+
+            event.preventDefault();
+
+
+            target.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+
+        }
+
+    }
+);
+
+
+
+/* =====================================================
    KEYBOARD ACCESSIBILITY
 ===================================================== */
 
@@ -803,12 +912,17 @@ document.addEventListener(
     "keydown",
     function(event) {
 
-        if (
-            event.key === "Escape" &&
-            document.activeElement
-        ) {
+        if (event.key === "Escape") {
 
-            document.activeElement.blur();
+            if (
+                document.activeElement &&
+                typeof document.activeElement.blur ===
+                "function"
+            ) {
+
+                document.activeElement.blur();
+
+            }
 
         }
 
@@ -819,7 +933,6 @@ document.addEventListener(
 
 /* =====================================================
    SERVICE WORKER
-   Only register if a service-worker.js exists.
 ===================================================== */
 
 if (
@@ -847,13 +960,15 @@ if (
 
                 }
 
+                return null;
+
             })
 
             .catch(function() {
 
                 /*
-                    No service worker installed.
-                    This is completely fine.
+                    No service worker is installed.
+                    LIFELINK works normally without it.
                 */
 
             });
@@ -866,9 +981,9 @@ if (
 
 
 /* =====================================================
-   STARTUP CHECK
+   STARTUP
 ===================================================== */
 
 console.log(
-    "LIFELINK V2.1 loaded successfully 🚀"
+    "LIFELINK V2.2 loaded successfully 🚀"
 );
