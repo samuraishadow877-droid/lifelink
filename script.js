@@ -1,484 +1,1098 @@
 ```javascript
-// ==========================================
-// SPACE EXPLORER V2.4
-// FILE 3 — script.js
-// ==========================================
+/* =========================================================
+   LIFELINK V2.4
+   FILE 3 — CORRECTED JAVASCRIPT
+========================================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    // ---------- ELEMENTS ----------
-    const map = document.getElementById("spaceMap");
-    const guideBtn = document.getElementById("guideBtn");
-    const upgradeBtn = document.getElementById("upgradeBtn");
-    const searchInput = document.getElementById("searchInput");
+    console.log("🚑 LIFELINK V2.4 starting...");
 
-    // ---------- SPACE LOCATIONS ----------
-    const locations = [
-        {
-            name: "Sun",
-            type: "Star",
-            x: 50,
-            y: 50,
-            description:
-                "The Sun is the star at the center of our Solar System. Almost all the energy reaching Earth comes from the Sun."
-        },
-        {
-            name: "Mercury",
-            type: "Planet",
-            x: 58,
-            y: 50,
-            description:
-                "Mercury is the closest planet to the Sun and the smallest planet in the Solar System."
-        },
-        {
-            name: "Venus",
-            type: "Planet",
-            x: 64,
-            y: 50,
-            description:
-                "Venus is the hottest planet in our Solar System because of its powerful greenhouse effect."
-        },
-        {
-            name: "Earth",
-            type: "Planet",
-            x: 70,
-            y: 50,
-            description:
-                "Earth is our home planet and the only known world with life."
-        },
-        {
-            name: "Mars",
-            type: "Planet",
-            x: 76,
-            y: 50,
-            description:
-                "Mars is known as the Red Planet because iron minerals on its surface give it a reddish appearance."
-        },
-        {
-            name: "Jupiter",
-            type: "Planet",
-            x: 84,
-            y: 50,
-            description:
-                "Jupiter is the largest planet in the Solar System."
-        },
-        {
-            name: "Saturn",
-            type: "Planet",
-            x: 91,
-            y: 50,
-            description:
-                "Saturn is famous for its spectacular system of icy rings."
-        },
-        {
-            name: "Milky Way",
-            type: "Galaxy",
-            x: 35,
-            y: 25,
-            description:
-                "The Milky Way is the galaxy containing our Solar System."
-        },
-        {
-            name: "Andromeda",
-            type: "Galaxy",
-            x: 20,
-            y: 20,
-            description:
-                "Andromeda is the nearest major galaxy to the Milky Way."
-        },
-        {
-            name: "Sagittarius A*",
-            type: "Black Hole",
-            x: 35,
-            y: 70,
-            description:
-                "Sagittarius A* is the supermassive black hole located at the center of the Milky Way."
+
+    /* =====================================================
+       MAP
+    ===================================================== */
+
+    const mapCanvas = document.getElementById("mapCanvas");
+
+    if (!mapCanvas) {
+        console.error("❌ mapCanvas not found.");
+        return;
+    }
+
+    if (typeof L === "undefined") {
+        console.error("❌ Leaflet is not loaded.");
+
+        const status = document.getElementById("mapStatus");
+
+        if (status) {
+            status.innerHTML = `
+                <span>⚠️</span>
+                <div>
+                    <strong>Map unavailable</strong>
+                    <small>
+                        Leaflet could not be loaded. Check your internet connection.
+                    </small>
+                </div>
+            `;
         }
+
+        return;
+    }
+
+
+    /* =====================================================
+       CREATE MAP
+    ===================================================== */
+
+    const map = L.map("mapCanvas").setView(
+        [19.0760, 72.8777],
+        12
+    );
+
+
+    /* =====================================================
+       OPENSTREETMAP
+    ===================================================== */
+
+    L.tileLayer(
+        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+        {
+            maxZoom: 19,
+            attribution:
+                '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>'
+        }
+    ).addTo(map);
+
+
+    /* =====================================================
+       LOCATION DATA
+    ===================================================== */
+
+    const locations = [
+
+        {
+            name: "Kokilaben Dhirubhai Ambani Hospital",
+            category: "hospital",
+            icon: "🏥",
+            lat: 19.1400,
+            lng: 72.8347,
+            description:
+                "Major multi-speciality hospital in Mumbai."
+        },
+
+        {
+            name: "Lilavati Hospital",
+            category: "hospital",
+            icon: "🏥",
+            lat: 19.0509,
+            lng: 72.8286,
+            description:
+                "Multi-speciality hospital in Bandra."
+        },
+
+        {
+            name: "Nanavati Max Super Speciality Hospital",
+            category: "hospital",
+            icon: "🏥",
+            lat: 19.0896,
+            lng: 72.8397,
+            description:
+                "Major hospital in Vile Parle."
+        },
+
+        {
+            name: "Hinduja Hospital",
+            category: "hospital",
+            icon: "🏥",
+            lat: 19.0330,
+            lng: 72.8397,
+            description:
+                "Hospital and healthcare facility in Mahim."
+        },
+
+        {
+            name: "Apollo Pharmacy",
+            category: "pharmacy",
+            icon: "💊",
+            lat: 19.0750,
+            lng: 72.8777,
+            description:
+                "Pharmacy location. Verify opening hours before visiting."
+        },
+
+        {
+            name: "Mumbai Police Headquarters",
+            category: "police",
+            icon: "🚓",
+            lat: 18.9322,
+            lng: 72.8374,
+            description:
+                "Mumbai Police headquarters."
+        },
+
+        {
+            name: "Bandra Police Station",
+            category: "police",
+            icon: "🚓",
+            lat: 19.0550,
+            lng: 72.8320,
+            description:
+                "Local police station in Bandra."
+        },
+
+        {
+            name: "Bandra Fire Station",
+            category: "fire",
+            icon: "🚒",
+            lat: 19.0600,
+            lng: 72.8330,
+            description:
+                "Fire and emergency response facility."
+        },
+
+        {
+            name: "BMC Headquarters",
+            category: "government",
+            icon: "🏛️",
+            lat: 18.9322,
+            lng: 72.8264,
+            description:
+                "Municipal Corporation of Greater Mumbai headquarters."
+        },
+
+        {
+            name: "Nehru Centre",
+            category: "shelter",
+            icon: "🏫",
+            lat: 18.9820,
+            lng: 72.8150,
+            description:
+                "Public facility. Emergency shelter availability should be independently verified."
+        }
+
     ];
 
 
-    // ---------- CREATE MAP ----------
-    function createMap() {
+    /* =====================================================
+       CUSTOM MARKER ICON
+    ===================================================== */
 
-        if (!map) {
-            console.warn("Map element not found.");
-            return;
-        }
+    function createMarkerIcon(location) {
 
-        map.innerHTML = "";
+        return L.divIcon({
 
-        locations.forEach((location, index) => {
+            className: "",
 
-            const marker = document.createElement("button");
-
-            marker.className = "space-marker";
-            marker.dataset.name = location.name.toLowerCase();
-
-            marker.style.left = `${location.x}%`;
-            marker.style.top = `${location.y}%`;
-
-            marker.innerHTML = `
-                <span class="marker-dot"></span>
-                <span class="marker-label">${location.name}</span>
-            `;
-
-            marker.addEventListener("click", () => {
-                openLocation(location);
-            });
-
-            map.appendChild(marker);
-        });
-    }
-
-
-    // ---------- LOCATION PANEL ----------
-    function openLocation(location) {
-
-        let panel = document.getElementById("locationPanel");
-
-        if (!panel) {
-
-            panel = document.createElement("div");
-
-            panel.id = "locationPanel";
-            panel.className = "location-panel";
-
-            document.body.appendChild(panel);
-        }
-
-        panel.innerHTML = `
-            <div class="location-content">
-
-                <button class="close-location" id="closeLocation">
-                    ✕
-                </button>
-
-                <div class="location-type">
-                    ${location.type}
+            html: `
+                <div class="lifelink-marker ${location.category}">
+                    <span>${location.icon}</span>
                 </div>
+            `,
 
-                <h2>${location.name}</h2>
+            iconSize: [42, 42],
 
-                <p>${location.description}</p>
+            iconAnchor: [21, 42],
 
-                <button class="explore-location">
-                    🚀 Explore ${location.name}
-                </button>
-
-            </div>
-        `;
-
-        panel.classList.add("show");
-
-        document
-            .getElementById("closeLocation")
-            .addEventListener("click", () => {
-                panel.classList.remove("show");
-            });
-
-        const exploreButton =
-            panel.querySelector(".explore-location");
-
-        exploreButton.addEventListener("click", () => {
-
-            alert(
-                `🚀 Exploration mode activated for ${location.name}!`
-            );
+            popupAnchor: [0, -40]
 
         });
+
     }
 
 
-    // ---------- SEARCH ----------
-    function searchSpace() {
+    /* =====================================================
+       CREATE MARKERS
+    ===================================================== */
 
-        if (!searchInput) return;
+    const markerObjects = [];
 
-        const query =
-            searchInput.value.trim().toLowerCase();
 
-        const markers =
-            document.querySelectorAll(".space-marker");
+    locations.forEach((location, index) => {
 
-        markers.forEach(marker => {
-
-            const name =
-                marker.dataset.name;
-
-            if (!query || name.includes(query)) {
-
-                marker.style.display = "block";
-
-                if (query && name === query) {
-                    marker.classList.add("highlight");
-                } else {
-                    marker.classList.remove("highlight");
-                }
-
-            } else {
-
-                marker.style.display = "none";
+        const marker = L.marker(
+            [location.lat, location.lng],
+            {
+                icon: createMarkerIcon(location)
             }
-        });
-    }
-
-
-    if (searchInput) {
-
-        searchInput.addEventListener(
-            "input",
-            searchSpace
         );
-    }
 
 
-    // ---------- GUIDE ----------
-    if (guideBtn) {
+        marker.locationData = location;
 
-        guideBtn.addEventListener("click", () => {
 
-            const guide =
-                document.getElementById("guidePanel");
+        marker.bindPopup(`
 
-            if (guide) {
+            <div>
 
-                guide.classList.toggle("show");
+                <div class="lifelink-popup-category">
+                    ${location.category.toUpperCase()}
+                </div>
 
-            } else {
+                <div class="lifelink-popup-title">
+                    ${location.icon} ${location.name}
+                </div>
 
-                showGuide();
+                <div class="lifelink-popup-description">
+                    ${location.description}
+                </div>
+
+                <button
+                    class="lifelink-popup-button"
+                    data-location-index="${index}"
+                >
+                    View Details
+                </button>
+
+            </div>
+
+        `);
+
+
+        marker.on("popupopen", () => {
+
+            const button =
+                document.querySelector(
+                    `.lifelink-popup-button[data-location-index="${index}"]`
+                );
+
+
+            if (button) {
+
+                button.addEventListener(
+                    "click",
+                    () => {
+
+                        showLocationCard(location);
+
+                    }
+                );
+
             }
-        });
-    }
-
-
-    function showGuide() {
-
-        const guide = document.createElement("div");
-
-        guide.id = "guidePanel";
-
-        guide.innerHTML = `
-            <div class="guide-box">
-
-                <button id="closeGuide">
-                    ✕
-                </button>
-
-                <h2>🧭 Space Explorer Guide</h2>
-
-                <p>
-                    Welcome to Space Explorer!
-                    Click any object on the map to learn more.
-                </p>
-
-                <div class="guide-step">
-                    <strong>1️⃣ Explore</strong>
-                    <span>Click a glowing marker.</span>
-                </div>
-
-                <div class="guide-step">
-                    <strong>2️⃣ Search</strong>
-                    <span>Use the search box to find objects.</span>
-                </div>
-
-                <div class="guide-step">
-                    <strong>3️⃣ Discover</strong>
-                    <span>Open different locations and learn about them.</span>
-                </div>
-
-                <div class="guide-step">
-                    <strong>4️⃣ Upgrade</strong>
-                    <span>Unlock more features in future versions.</span>
-                </div>
-
-            </div>
-        `;
-
-        document.body.appendChild(guide);
-
-        requestAnimationFrame(() => {
-            guide.classList.add("show");
-        });
-
-        document
-            .getElementById("closeGuide")
-            .addEventListener("click", () => {
-
-                guide.classList.remove("show");
-
-                setTimeout(() => {
-                    guide.remove();
-                }, 300);
-            });
-    }
-
-
-    // ---------- UPGRADE ----------
-    if (upgradeBtn) {
-
-        upgradeBtn.addEventListener("click", () => {
-
-            showUpgradeMessage();
-
-        });
-    }
-
-
-    function showUpgradeMessage() {
-
-        const existing =
-            document.getElementById("upgradeMessage");
-
-        if (existing) {
-            existing.remove();
-        }
-
-        const box =
-            document.createElement("div");
-
-        box.id = "upgradeMessage";
-
-        box.innerHTML = `
-            <div class="upgrade-box">
-
-                <button id="closeUpgrade">
-                    ✕
-                </button>
-
-                <div class="upgrade-icon">
-                    🚀
-                </div>
-
-                <h2>Coming Soon</h2>
-
-                <p>
-                    Advanced Space Explorer features
-                    are being developed.
-                </p>
-
-                <ul>
-                    <li>🌌 More galaxies</li>
-                    <li>🕳️ More black holes</li>
-                    <li>🪐 Detailed planetary systems</li>
-                    <li>🔭 Deep-space exploration</li>
-                    <li>⭐ Interactive missions</li>
-                </ul>
-
-            </div>
-        `;
-
-        document.body.appendChild(box);
-
-        requestAnimationFrame(() => {
-            box.classList.add("show");
-        });
-
-        document
-            .getElementById("closeUpgrade")
-            .addEventListener("click", () => {
-
-                box.classList.remove("show");
-
-                setTimeout(() => {
-                    box.remove();
-                }, 300);
-            });
-    }
-
-
-    // ---------- MAP DRAGGING ----------
-    let isDragging = false;
-    let startX = 0;
-    let startY = 0;
-    let offsetX = 0;
-    let offsetY = 0;
-
-    if (map) {
-
-        map.addEventListener("pointerdown", (event) => {
-
-            if (
-                event.target.closest(".space-marker")
-            ) return;
-
-            isDragging = true;
-
-            startX =
-                event.clientX - offsetX;
-
-            startY =
-                event.clientY - offsetY;
-
-            map.setPointerCapture(event.pointerId);
 
         });
 
 
-        map.addEventListener("pointermove", (event) => {
+        marker.addTo(map);
 
-            if (!isDragging) return;
+        markerObjects.push(marker);
 
-            offsetX =
-                event.clientX - startX;
-
-            offsetY =
-                event.clientY - startY;
-
-            map.style.transform =
-                `translate(${offsetX}px, ${offsetY}px)`;
-
-        });
-
-
-        map.addEventListener("pointerup", () => {
-
-            isDragging = false;
-
-        });
-
-
-        map.addEventListener("pointercancel", () => {
-
-            isDragging = false;
-
-        });
-    }
-
-
-    // ---------- ESCAPE KEY ----------
-    document.addEventListener("keydown", (event) => {
-
-        if (event.key !== "Escape") return;
-
-        const locationPanel =
-            document.getElementById("locationPanel");
-
-        const guidePanel =
-            document.getElementById("guidePanel");
-
-        const upgradeMessage =
-            document.getElementById("upgradeMessage");
-
-        if (locationPanel) {
-            locationPanel.classList.remove("show");
-        }
-
-        if (guidePanel) {
-            guidePanel.remove();
-        }
-
-        if (upgradeMessage) {
-            upgradeMessage.remove();
-        }
     });
 
 
-    // ---------- INITIALIZE ----------
-    createMap();
+    /* =====================================================
+       LOCATION CARD
+    ===================================================== */
+
+    const locationCard =
+        document.getElementById("locationCard");
+
+    const locationCardIcon =
+        document.getElementById("locationCardIcon");
+
+    const locationCardCategory =
+        document.getElementById("locationCardCategory");
+
+    const locationCardTitle =
+        document.getElementById("locationCardTitle");
+
+    const locationCardDescription =
+        document.getElementById("locationCardDescription");
+
+    const locationDirections =
+        document.getElementById("locationDirections");
+
+    const locationClose =
+        document.getElementById("locationClose");
+
+
+    let selectedLocation = null;
+
+
+    function showLocationCard(location) {
+
+        selectedLocation = location;
+
+
+        locationCardIcon.textContent =
+            location.icon;
+
+        locationCardCategory.textContent =
+            location.category.toUpperCase();
+
+        locationCardTitle.textContent =
+            location.name;
+
+        locationCardDescription.textContent =
+            location.description;
+
+
+        locationCard.classList.remove("hidden");
+
+
+        map.setView(
+            [location.lat, location.lng],
+            15,
+            {
+                animate: true
+            }
+        );
+
+    }
+
+
+    if (locationClose) {
+
+        locationClose.addEventListener(
+            "click",
+            () => {
+
+                locationCard.classList.add("hidden");
+
+                selectedLocation = null;
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       DIRECTIONS
+    ===================================================== */
+
+    if (locationDirections) {
+
+        locationDirections.addEventListener(
+            "click",
+            () => {
+
+                if (!selectedLocation) return;
+
+
+                const destination =
+                    `${selectedLocation.lat},${selectedLocation.lng}`;
+
+
+                const url =
+                    `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(destination)}`;
+
+
+                window.open(
+                    url,
+                    "_blank",
+                    "noopener,noreferrer"
+                );
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       FILTERS
+    ===================================================== */
+
+    const filterButtons =
+        document.querySelectorAll(".map-filter");
+
+
+    filterButtons.forEach(button => {
+
+        button.addEventListener(
+            "click",
+            () => {
+
+                filterButtons.forEach(btn => {
+
+                    btn.classList.remove("active");
+
+                });
+
+
+                button.classList.add("active");
+
+
+                const category =
+                    button.dataset.category;
+
+
+                markerObjects.forEach(marker => {
+
+                    const location =
+                        marker.locationData;
+
+
+                    const show =
+                        category === "all" ||
+                        location.category === category;
+
+
+                    if (show) {
+
+                        if (!map.hasLayer(marker)) {
+
+                            marker.addTo(map);
+
+                        }
+
+                    } else {
+
+                        if (map.hasLayer(marker)) {
+
+                            map.removeLayer(marker);
+
+                        }
+
+                    }
+
+                });
+
+
+                const count =
+                    locations.filter(location => {
+
+                        return (
+                            category === "all" ||
+                            location.category === category
+                        );
+
+                    }).length;
+
+
+                updateMapStatus(
+                    "Filter active",
+                    `${count} location${count === 1 ? "" : "s"} shown.`
+                );
+
+            }
+        );
+
+    });
+
+
+    /* =====================================================
+       SEARCH
+    ===================================================== */
+
+    const mapSearch =
+        document.getElementById("mapSearch");
+
+
+    if (mapSearch) {
+
+        mapSearch.addEventListener(
+            "input",
+            () => {
+
+                const query =
+                    mapSearch.value
+                        .trim()
+                        .toLowerCase();
+
+
+                if (!query) {
+
+                    updateMapStatus(
+                        "Map ready",
+                        "Search for a location or use My Location."
+                    );
+
+                    return;
+
+                }
+
+
+                const results =
+                    locations.filter(location => {
+
+                        return (
+
+                            location.name
+                                .toLowerCase()
+                                .includes(query)
+
+                            ||
+
+                            location.category
+                                .toLowerCase()
+                                .includes(query)
+
+                        );
+
+                    });
+
+
+                if (results.length === 0) {
+
+                    updateMapStatus(
+                        "No results",
+                        "Try another location or category."
+                    );
+
+                    return;
+
+                }
+
+
+                const location =
+                    results[0];
+
+
+                map.setView(
+                    [location.lat, location.lng],
+                    15,
+                    {
+                        animate: true
+                    }
+                );
+
+
+                const marker =
+                    markerObjects.find(
+                        item =>
+                            item.locationData === location
+                    );
+
+
+                if (marker) {
+
+                    marker.openPopup();
+
+                }
+
+
+                updateMapStatus(
+                    "Location found",
+                    `${results.length} matching result${results.length === 1 ? "" : "s"} found.`
+                );
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       MY LOCATION
+    ===================================================== */
+
+    const locationButton =
+        document.getElementById("mapLocationButton");
+
+
+    if (locationButton) {
+
+        locationButton.addEventListener(
+            "click",
+            () => {
+
+                if (!navigator.geolocation) {
+
+                    updateMapStatus(
+                        "Unavailable",
+                        "Your browser does not support location access."
+                    );
+
+                    return;
+
+                }
+
+
+                locationButton.disabled = true;
+
+
+                updateMapStatus(
+                    "Finding you...",
+                    "Please allow location access."
+                );
+
+
+                navigator.geolocation.getCurrentPosition(
+
+                    position => {
+
+                        const lat =
+                            position.coords.latitude;
+
+                        const lng =
+                            position.coords.longitude;
+
+
+                        map.setView(
+                            [lat, lng],
+                            15,
+                            {
+                                animate: true
+                            }
+                        );
+
+
+                        L.circleMarker(
+                            [lat, lng],
+                            {
+                                radius: 9,
+                                fillOpacity: 0.9
+                            }
+                        )
+                        .addTo(map)
+                        .bindPopup(
+                            "📍 Your approximate location"
+                        )
+                        .openPopup();
+
+
+                        updateMapStatus(
+                            "Location found",
+                            "The map is centered on your current location."
+                        );
+
+
+                        locationButton.disabled = false;
+
+                    },
+
+
+                    error => {
+
+                        let message =
+                            "Unable to access your location.";
+
+
+                        if (error.code === 1) {
+
+                            message =
+                                "Location permission was denied.";
+
+                        }
+
+
+                        if (error.code === 2) {
+
+                            message =
+                                "Your location could not be determined.";
+
+                        }
+
+
+                        if (error.code === 3) {
+
+                            message =
+                                "Location request timed out.";
+
+                        }
+
+
+                        updateMapStatus(
+                            "Location unavailable",
+                            message
+                        );
+
+
+                        locationButton.disabled = false;
+
+                    },
+
+                    {
+                        enableHighAccuracy: true,
+                        timeout: 10000,
+                        maximumAge: 60000
+                    }
+
+                );
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       MAP STATUS
+    ===================================================== */
+
+    function updateMapStatus(title, message) {
+
+        const status =
+            document.getElementById("mapStatus");
+
+
+        if (!status) return;
+
+
+        status.innerHTML = `
+
+            <span>
+                🗺️
+            </span>
+
+            <div>
+
+                <strong>
+                    ${title}
+                </strong>
+
+                <small>
+                    ${message}
+                </small>
+
+            </div>
+
+        `;
+
+    }
+
+
+    /* =====================================================
+       RESOURCE DIRECTORY
+    ===================================================== */
+
+    const resources = [
+
+        {
+            title: "112 India",
+            category: "Emergency",
+            description:
+                "India's unified emergency response number.",
+            url: "https://112.gov.in/"
+        },
+
+        {
+            title: "National Disaster Management Authority",
+            category: "Disaster",
+            description:
+                "Official disaster management information.",
+            url: "https://ndma.gov.in/"
+        },
+
+        {
+            title: "Ministry of Health and Family Welfare",
+            category: "Health",
+            description:
+                "Official Government of India health information.",
+            url: "https://mohfw.gov.in/"
+        },
+
+        {
+            title: "India.gov.in",
+            category: "Government",
+            description:
+                "National portal for government services.",
+            url: "https://www.india.gov.in/"
+        }
+
+    ];
+
+
+    const resourceList =
+        document.getElementById("resourceList");
+
+    const resourceSearch =
+        document.getElementById("resourceSearch");
+
+    const resourceFilter =
+        document.getElementById("resourceFilter");
+
+    const noResources =
+        document.getElementById("noResources");
+
+
+    function renderResources() {
+
+        if (!resourceList) return;
+
+
+        const search =
+            resourceSearch
+                ? resourceSearch.value
+                    .trim()
+                    .toLowerCase()
+                : "";
+
+
+        const category =
+            resourceFilter
+                ? resourceFilter.value
+                : "all";
+
+
+        const filtered =
+            resources.filter(resource => {
+
+                const searchMatch =
+
+                    !search ||
+
+                    resource.title
+                        .toLowerCase()
+                        .includes(search)
+
+                    ||
+
+                    resource.description
+                        .toLowerCase()
+                        .includes(search);
+
+
+                const categoryMatch =
+                    category === "all" ||
+                    resource.category === category;
+
+
+                return (
+                    searchMatch &&
+                    categoryMatch
+                );
+
+            });
+
+
+        resourceList.innerHTML = "";
+
+
+        filtered.forEach(resource => {
+
+            const card =
+                document.createElement("article");
+
+
+            card.className =
+                "resource-card";
+
+
+            card.innerHTML = `
+
+                <div class="resource-tag">
+                    ${resource.category}
+                </div>
+
+                <h3>
+                    ${resource.title}
+                </h3>
+
+                <p>
+                    ${resource.description}
+                </p>
+
+                <a
+                    href="${resource.url}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Visit official source ↗
+                </a>
+
+            `;
+
+
+            resourceList.appendChild(card);
+
+        });
+
+
+        if (noResources) {
+
+            noResources.classList.toggle(
+                "hidden",
+                filtered.length !== 0
+            );
+
+        }
+
+    }
+
+
+    if (resourceSearch) {
+
+        resourceSearch.addEventListener(
+            "input",
+            renderResources
+        );
+
+    }
+
+
+    if (resourceFilter) {
+
+        resourceFilter.addEventListener(
+            "change",
+            renderResources
+        );
+
+    }
+
+
+    renderResources();
+
+
+    /* =====================================================
+       SMART GUIDE
+    ===================================================== */
+
+    const guideCards =
+        document.querySelectorAll(".guide-card");
+
+    const guideResult =
+        document.getElementById("guideResult");
+
+
+    const guideMessages = {
+
+        Emergency: {
+            icon: "🚨",
+            text:
+                "For an immediate emergency in India, call 112."
+        },
+
+        Medical: {
+            icon: "🏥",
+            text:
+                "Use the map to find nearby hospitals and pharmacies."
+        },
+
+        Disaster: {
+            icon: "🌪️",
+            text:
+                "Check official disaster-management information and follow instructions from authorities."
+        },
+
+        Nearby: {
+            icon: "📍",
+            text:
+                "Open the LIFELINK Map and use My Location to explore nearby services."
+        },
+
+        Government: {
+            icon: "🏛️",
+            text:
+                "Use official government sources for verified public-service information."
+        }
+
+    };
+
+
+    guideCards.forEach(card => {
+
+        card.addEventListener(
+            "click",
+            () => {
+
+                const type =
+                    card.dataset.guide;
+
+
+                const result =
+                    guideMessages[type];
+
+
+                if (!result || !guideResult) return;
+
+
+                guideResult.innerHTML = `
+
+                    <span>
+                        ${result.icon}
+                    </span>
+
+                    <span>
+                        ${result.text}
+                    </span>
+
+                `;
+
+
+                guideCards.forEach(item => {
+
+                    item.classList.remove("active");
+
+                });
+
+
+                card.classList.add("active");
+
+            }
+        );
+
+    });
+
+
+    /* =====================================================
+       SMOOTH NAVIGATION
+    ===================================================== */
+
+    document.querySelectorAll(
+        'a[href^="#"]'
+    ).forEach(link => {
+
+        link.addEventListener(
+            "click",
+            event => {
+
+                const targetID =
+                    link.getAttribute("href");
+
+
+                if (
+                    !targetID ||
+                    targetID === "#"
+                ) return;
+
+
+                const target =
+                    document.querySelector(targetID);
+
+
+                if (!target) return;
+
+
+                event.preventDefault();
+
+
+                target.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                });
+
+            }
+        );
+
+    });
+
+
+    /* =====================================================
+       LEAFLET SIZE FIX
+    ===================================================== */
+
+    setTimeout(() => {
+
+        map.invalidateSize();
+
+    }, 500);
+
+
+    window.addEventListener(
+        "resize",
+        () => {
+
+            map.invalidateSize();
+
+        }
+    );
+
+
+    /* =====================================================
+       READY
+    ===================================================== */
+
+    updateMapStatus(
+        "Map ready",
+        "Search for a location or use My Location."
+    );
+
 
     console.log(
-        "🚀 Space Explorer V2.4 loaded successfully!"
+        "✅ LIFELINK V2.4 is fully loaded."
     );
 
 });
