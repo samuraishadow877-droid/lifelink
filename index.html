@@ -17,13 +17,24 @@
 
     <meta
         name="description"
-        content="LIFELINK — A public safety information and connection platform."
+        content="LIFELINK — Public safety information and map platform."
     >
 
     <title>
-        LIFELINK V2.3 — Public Safety Map
+        LIFELINK V2.4 — Public Safety
     </title>
 
+
+    <!-- Leaflet Map CSS -->
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIINfQ3fZQm9lZ0zN7L1xXxXxXxXxXxXxXx="
+        crossorigin=""
+    >
+
+
+    <!-- LIFELINK CSS -->
     <link
         rel="stylesheet"
         href="style.css"
@@ -35,18 +46,18 @@
 <body>
 
 
-<!-- ==================================================
+<!-- =====================================================
      BACKGROUND
-================================================== -->
+===================================================== -->
 
 <div class="background-glow glow-one"></div>
 <div class="background-glow glow-two"></div>
 
 
 
-<!-- ==================================================
+<!-- =====================================================
      NAVBAR
-================================================== -->
+===================================================== -->
 
 <header class="navbar">
 
@@ -110,12 +121,16 @@
 
 
 
-<!-- ==================================================
-     HERO
-================================================== -->
+<!-- =====================================================
+     MAIN
+===================================================== -->
 
 <main>
 
+
+<!-- =====================================================
+     HERO
+===================================================== -->
 
 <section
     id="home"
@@ -127,10 +142,10 @@
 
         <div class="version-badge">
 
-            ● LIFELINK V2.3
+            ● LIFELINK V2.4
 
             <span>
-                SAFETY MAP
+                REAL MAP
             </span>
 
         </div>
@@ -149,9 +164,10 @@
 
         <p>
 
-            LIFELINK is building a public-safety
-            map designed to connect people with
-            useful services and trusted information.
+            LIFELINK connects people with public
+            safety information, nearby services and
+            trusted resources through one simple
+            interface.
 
         </p>
 
@@ -199,9 +215,9 @@
 
 
 
-<!-- ==================================================
+<!-- =====================================================
      EMERGENCY
-================================================== -->
+===================================================== -->
 
 <section
     id="emergency"
@@ -223,9 +239,9 @@
 
         <p class="section-description">
 
-            If you are facing an immediate emergency
-            in India, use the official emergency
-            response service.
+            For an immediate emergency in India,
+            use the official emergency response
+            service.
 
         </p>
 
@@ -284,11 +300,9 @@
 
                 </div>
 
-
             </div>
 
         </div>
-
 
     </div>
 
@@ -296,9 +310,9 @@
 
 
 
-<!-- ==================================================
-     LIFELINK MAP V2.3
-================================================== -->
+<!-- =====================================================
+     REAL MAP
+===================================================== -->
 
 <section
     id="lifelink-map"
@@ -309,7 +323,7 @@
 
 
         <div class="section-label">
-            LIFELINK MAP • V2.3
+            LIFELINK MAP • V2.4
         </div>
 
 
@@ -320,16 +334,17 @@
 
         <p class="section-description">
 
-            Search public-service categories and
-            explore the LIFELINK map interface.
-            Location access is requested only when
-            you choose to use it.
+            Explore a real geographic map and search
+            for public-service locations. Location
+            access is optional.
 
         </p>
 
 
 
-        <!-- MAP APPLICATION -->
+        <!-- =================================================
+             MAP APPLICATION
+        ================================================= -->
 
         <div class="map-application">
 
@@ -348,7 +363,7 @@
                     <input
                         id="mapSearch"
                         type="search"
-                        placeholder="Search hospitals, police, fire..."
+                        placeholder="Search for a place..."
                         autocomplete="off"
                     >
 
@@ -368,12 +383,11 @@
 
                 </button>
 
-
             </div>
 
 
 
-            <!-- CATEGORY FILTERS -->
+            <!-- MAP FILTERS -->
 
             <div
                 id="mapFilters"
@@ -446,87 +460,22 @@
 
 
 
-            <!-- MAP AREA -->
+            <!-- =================================================
+                 REAL MAP CONTAINER
+            ================================================= -->
 
             <div
                 id="mapCanvas"
-                class="map-canvas"
+                class="map-canvas real-map"
             >
 
-
-                <div class="map-grid"></div>
-
-
-                <div class="map-road road-one"></div>
-
-                <div class="map-road road-two"></div>
-
-                <div class="map-road road-three"></div>
-
-
-                <div class="map-area-label label-one">
-                    NORTH
-                </div>
-
-                <div class="map-area-label label-two">
-                    CENTRAL
-                </div>
-
-                <div class="map-area-label label-three">
-                    SOUTH
-                </div>
-
-
-                <div
-                    id="mapMarkers"
-                    class="map-markers"
-                >
-
-                    <!-- JavaScript creates markers -->
-
-                </div>
-
-
-                <div
-                    id="userMarker"
-                    class="user-marker hidden"
-                >
-
-                    <span></span>
-
-                    <small>
-                        You
-                    </small>
-
-                </div>
-
-
-                <div
-                    id="mapEmptyState"
-                    class="map-empty-state"
-                >
-
-                    <div>
-                        🗺️
-                    </div>
-
-                    <strong>
-                        LIFELINK Map
-                    </strong>
-
-                    <small>
-                        Choose a category or search
-                        to explore available map data.
-                    </small>
-
-                </div>
-
+                <!-- Leaflet will load here -->
 
             </div>
 
 
 
-            <!-- LOCATION INFO -->
+            <!-- MAP STATUS -->
 
             <div
                 id="mapStatus"
@@ -534,7 +483,7 @@
             >
 
                 <span>
-                    📍
+                    🗺️
                 </span>
 
                 <div>
@@ -544,7 +493,7 @@
                     </strong>
 
                     <small>
-                        Location access is optional.
+                        Search for a location or use My Location.
                     </small>
 
                 </div>
@@ -553,7 +502,9 @@
 
 
 
-            <!-- SELECTED LOCATION CARD -->
+            <!-- =================================================
+                 LOCATION CARD
+            ================================================= -->
 
             <div
                 id="locationCard"
@@ -564,7 +515,7 @@
                     id="locationCardIcon"
                     class="location-card-icon"
                 >
-                    🏥
+                    📍
                 </div>
 
 
@@ -574,7 +525,7 @@
                         id="locationCardCategory"
                         class="location-card-category"
                     >
-                        SERVICE
+                        LOCATION
                     </div>
 
 
@@ -584,8 +535,7 @@
 
 
                     <p id="locationCardDescription">
-                        Location information will
-                        appear here.
+                        Location information will appear here.
                     </p>
 
 
@@ -616,7 +566,9 @@
 
 
 
-            <!-- MAP DISCLAIMER -->
+            <!-- =================================================
+                 MAP DISCLAIMER
+            ================================================= -->
 
             <div class="map-disclaimer">
 
@@ -626,12 +578,12 @@
 
                 <p>
 
-                    V2.3 is the LIFELINK map interface
-                    prototype. Location markers shown
-                    in this version are demonstration
-                    data and are clearly labelled.
-                    They are not live emergency
-                    locations.
+                    Map tiles are provided by
+                    OpenStreetMap contributors.
+                    Public-service information may come
+                    from different sources and should be
+                    independently verified before relying
+                    on it during an emergency.
 
                 </p>
 
@@ -640,16 +592,15 @@
 
         </div>
 
-
     </div>
 
 </section>
 
 
 
-<!-- ==================================================
+<!-- =====================================================
      RESOURCES
-================================================== -->
+===================================================== -->
 
 <section
     id="resources"
@@ -753,9 +704,9 @@
 
 
 
-<!-- ==================================================
+<!-- =====================================================
      SMART GUIDE
-================================================== -->
+===================================================== -->
 
 <section
     id="guide"
@@ -908,9 +859,9 @@
 
 
 
-<!-- ==================================================
+<!-- =====================================================
      TRUST
-================================================== -->
+===================================================== -->
 
 <section class="section">
 
@@ -939,9 +890,9 @@
 
                 <p>
 
-                    LIFELINK clearly distinguishes
-                    demonstration map data from
-                    verified real-world information.
+                    LIFELINK is designed to clearly
+                    distinguish official information,
+                    map data and community resources.
 
                 </p>
 
@@ -960,9 +911,9 @@
 
 
 
-<!-- ==================================================
+<!-- =====================================================
      FLOATING EMERGENCY BUTTON
-================================================== -->
+===================================================== -->
 
 <a
     href="tel:112"
@@ -982,16 +933,16 @@
 
 
 
-<!-- ==================================================
+<!-- =====================================================
      FOOTER
-================================================== -->
+===================================================== -->
 
 <footer>
 
     <div>
 
         <strong>
-            LIFELINK V2.3
+            LIFELINK V2.4
         </strong>
 
         <small>
@@ -1004,7 +955,7 @@
     <div>
 
         <span>
-            Public safety map prototype
+            OpenStreetMap-powered map prototype
         </span>
 
     </div>
@@ -1012,6 +963,21 @@
 </footer>
 
 
+
+<!-- =====================================================
+     LEAFLET JAVASCRIPT
+===================================================== -->
+
+<script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""
+></script>
+
+
+<!-- =====================================================
+     LIFELINK JAVASCRIPT
+===================================================== -->
 
 <script src="script.js"></script>
 
