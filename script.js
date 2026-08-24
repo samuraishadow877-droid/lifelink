@@ -1,12 +1,15 @@
-/* =========================================
-   LIFELINK V2
+/* =====================================================
+   LIFELINK V2.1
    MAIN JAVASCRIPT
-========================================= */
+===================================================== */
+
+"use strict";
 
 
-/* =========================================
-   OFFICIAL RESOURCE DATABASE
-========================================= */
+/* =====================================================
+   RESOURCE DATABASE
+   Official/public sources only
+===================================================== */
 
 const resources = [
 
@@ -15,7 +18,7 @@ const resources = [
         category: "Emergency",
         location: "India",
         description:
-            "Unified emergency number for police, fire, ambulance and other emergency assistance.",
+            "Unified emergency response service for police, fire, ambulance and other emergency assistance.",
         source: "Government of India — 112 India",
         url: "https://112.gov.in/"
     },
@@ -25,7 +28,7 @@ const resources = [
         category: "Health",
         location: "India",
         description:
-            "Official public information from India's National Health Authority.",
+            "Official information about India's public health and healthcare initiatives.",
         source: "Government of India — NHA",
         url: "https://www.nha.gov.in/"
     },
@@ -35,7 +38,7 @@ const resources = [
         category: "Disaster",
         location: "India",
         description:
-            "Official disaster-management information, preparedness and guidance.",
+            "Official disaster preparedness, response and management information.",
         source: "Government of India — NDMA",
         url: "https://ndma.gov.in/"
     },
@@ -53,9 +56,9 @@ const resources = [
 ];
 
 
-/* =========================================
+/* =====================================================
    RESOURCE DIRECTORY
-========================================= */
+===================================================== */
 
 const resourceSearch =
     document.getElementById("resourceSearch");
@@ -77,29 +80,34 @@ function renderResources() {
     }
 
     const searchText =
-        resourceSearch.value
-            .toLowerCase()
-            .trim();
+        resourceSearch
+            ? resourceSearch.value.toLowerCase().trim()
+            : "";
 
     const selectedCategory =
-        resourceFilter.value;
+        resourceFilter
+            ? resourceFilter.value
+            : "all";
 
 
     const filteredResources =
         resources.filter(function(resource) {
 
+            const searchableText = (
+
+                resource.name +
+                " " +
+                resource.category +
+                " " +
+                resource.location +
+                " " +
+                resource.description
+
+            ).toLowerCase();
+
+
             const matchesSearch =
-                (
-                    resource.name +
-                    " " +
-                    resource.category +
-                    " " +
-                    resource.location +
-                    " " +
-                    resource.description
-                )
-                .toLowerCase()
-                .includes(searchText);
+                searchableText.includes(searchText);
 
 
             const matchesCategory =
@@ -120,6 +128,7 @@ function renderResources() {
         const card =
             document.createElement("article");
 
+
         card.className =
             "resource-card";
 
@@ -131,19 +140,19 @@ function renderResources() {
             </span>
 
             <h3>
-                ${resource.name}
+                ${escapeHTML(resource.name)}
             </h3>
 
             <p>
                 <strong>
-                    ${resource.category}
+                    ${escapeHTML(resource.category)}
                 </strong>
                 •
-                ${resource.location}
+                ${escapeHTML(resource.location)}
             </p>
 
             <p>
-                ${resource.description}
+                ${escapeHTML(resource.description)}
             </p>
 
             <a
@@ -151,7 +160,7 @@ function renderResources() {
                 target="_blank"
                 rel="noopener noreferrer"
             >
-                ${resource.source} ↗
+                ${escapeHTML(resource.source)} ↗
             </a>
 
         `;
@@ -166,7 +175,7 @@ function renderResources() {
 
         noResources.classList.toggle(
             "hidden",
-            filteredResources.length > 0
+            filteredResources.length !== 0
         );
 
     }
@@ -198,10 +207,31 @@ renderResources();
 
 
 
-/* =========================================
-   NEARBY HELP
-========================================= */
+/* =====================================================
+   SAFE HTML HELPER
+===================================================== */
 
+function escapeHTML(value) {
+
+    return String(value)
+
+        .replaceAll("&", "&amp;")
+
+        .replaceAll("<", "&lt;")
+
+        .replaceAll(">", "&gt;")
+
+        .replaceAll('"', "&quot;")
+
+        .replaceAll("'", "&#039;");
+
+}
+
+
+
+/* =====================================================
+   NEARBY SERVICES
+===================================================== */
 
 const services = [
 
@@ -260,11 +290,45 @@ let userCoordinates = null;
 
 
 
-/* =========================================
-   DRAW NEARBY SERVICES
-========================================= */
+/* =====================================================
+   CREATE MAP SEARCH
+===================================================== */
 
-function drawNearbyServices() {
+function createMapURL(query) {
+
+    const encodedQuery =
+        encodeURIComponent(query);
+
+
+    if (userCoordinates) {
+
+        return (
+            "https://www.google.com/maps/search/" +
+            encodedQuery +
+            "/@" +
+            userCoordinates.latitude +
+            "," +
+            userCoordinates.longitude +
+            ",14z"
+        );
+
+    }
+
+
+    return (
+        "https://www.google.com/maps/search/" +
+        encodedQuery
+    );
+
+}
+
+
+
+/* =====================================================
+   RENDER NEARBY SERVICES
+===================================================== */
+
+function renderNearbyServices() {
 
     if (!nearbyServices) {
         return;
@@ -276,29 +340,6 @@ function drawNearbyServices() {
 
     services.forEach(function(service) {
 
-        let mapURL;
-
-
-        if (userCoordinates) {
-
-            mapURL =
-                "https://www.google.com/maps/search/" +
-                encodeURIComponent(service.query) +
-                "/@" +
-                userCoordinates.latitude +
-                "," +
-                userCoordinates.longitude +
-                ",14z";
-
-        } else {
-
-            mapURL =
-                "https://www.google.com/maps/search/" +
-                encodeURIComponent(service.query);
-
-        }
-
-
         const card =
             document.createElement("div");
 
@@ -307,11 +348,15 @@ function drawNearbyServices() {
             "nearby-card";
 
 
+        const mapURL =
+            createMapURL(service.query);
+
+
         card.innerHTML = `
 
             <strong>
                 ${service.icon}
-                ${service.name}
+                ${escapeHTML(service.name)}
             </strong>
 
             <small>
@@ -320,7 +365,7 @@ function drawNearbyServices() {
                     ?
                     "Search around your location."
                     :
-                    "Allow location for a local search."
+                    "Open a map search for this service."
                 }
             </small>
 
@@ -343,102 +388,174 @@ function drawNearbyServices() {
 }
 
 
-drawNearbyServices();
+renderNearbyServices();
 
 
 
-/* =========================================
-   LOCATION BUTTON
-========================================= */
+/* =====================================================
+   LOCATION
+===================================================== */
 
-if (locationButton) {
+function requestLocation() {
 
-    locationButton.addEventListener(
-        "click",
-        function() {
+    if (!locationStatus) {
+        return;
+    }
 
 
-            /* Browser does not support GPS */
+    if (!navigator.geolocation) {
 
-            if (!navigator.geolocation) {
+        locationStatus.textContent =
+            "⚠️ Geolocation is not supported by this browser.";
 
-                locationStatus.textContent =
-                    "⚠️ Geolocation is not supported by this browser.";
+        return;
 
-                return;
+    }
+
+
+    locationStatus.textContent =
+        "📍 Requesting your location…";
+
+
+    if (locationButton) {
+
+        locationButton.disabled = true;
+
+        locationButton.textContent =
+            "Finding Location…";
+
+    }
+
+
+    navigator.geolocation.getCurrentPosition(
+
+        function(position) {
+
+            userCoordinates = {
+
+                latitude:
+                    position.coords.latitude,
+
+                longitude:
+                    position.coords.longitude
+
+            };
+
+
+            locationStatus.textContent =
+                "✅ Location ready. Choose a service below.";
+
+
+            if (locationButton) {
+
+                locationButton.disabled = false;
+
+                locationButton.textContent =
+                    "Location Ready ✓";
+
+            }
+
+
+            renderNearbyServices();
+
+        },
+
+
+        function(error) {
+
+            let message =
+                "⚠️ Location permission was not granted.";
+
+
+            if (error.code === 1) {
+
+                message =
+                    "⚠️ Location permission was denied. You can still search maps manually.";
+
+            }
+
+            else if (error.code === 2) {
+
+                message =
+                    "⚠️ Your location could not be determined. Try again.";
+
+            }
+
+            else if (error.code === 3) {
+
+                message =
+                    "⚠️ Location request timed out. Try again.";
 
             }
 
 
             locationStatus.textContent =
-                "📍 Requesting your location…";
+                message;
 
 
-            navigator.geolocation.getCurrentPosition(
+            if (locationButton) {
 
-                function(position) {
+                locationButton.disabled = false;
 
-                    userCoordinates = {
+                locationButton.textContent =
+                    "Try Again";
 
-                        latitude:
-                            position.coords.latitude,
+            }
 
-                        longitude:
-                            position.coords.longitude
+        },
 
-                    };
+        {
 
+            enableHighAccuracy: false,
 
-                    locationStatus.textContent =
-                        "✅ Location ready. Choose a service below.";
+            timeout: 10000,
 
-
-                    drawNearbyServices();
-
-                },
-
-
-                function() {
-
-                    locationStatus.textContent =
-                        "⚠️ Location permission was not granted. You can still search maps manually.";
-
-                    drawNearbyServices();
-
-                },
-
-
-                {
-
-                    enableHighAccuracy: false,
-
-                    timeout: 10000,
-
-                    maximumAge: 300000
-
-                }
-
-            );
+            maximumAge: 300000
 
         }
+
+    );
+
+}
+
+
+if (locationButton) {
+
+    locationButton.addEventListener(
+        "click",
+        requestLocation
     );
 
 }
 
 
 
-/* =========================================
-   LIFELINK GUIDE
-========================================= */
-
+/* =====================================================
+   SMART GUIDE
+===================================================== */
 
 const guideMessages = {
 
     Emergency: `
-        For an immediate emergency in India,
-        call <strong>112</strong>.
+
+        <strong>Emergency help</strong>
 
         <br><br>
+
+        If you are facing an immediate emergency
+        in India, use the official emergency
+        response service.
+
+        <br><br>
+
+        <a
+            class="official-link"
+            href="tel:112"
+        >
+            📞 Call 112
+        </a>
+
+        &nbsp;&nbsp;
 
         <a
             class="official-link"
@@ -448,23 +565,44 @@ const guideMessages = {
         >
             Official 112 India ↗
         </a>
+
     `,
 
 
     Medical: `
-        For official health information,
-        visit the <strong>National Health Authority</strong>.
+
+        <strong>Medical information</strong>
 
         <br><br>
 
-        You can also use the Nearby Help section
-        to search for hospitals and pharmacies.
+        For official health information,
+        visit the National Health Authority.
+
+        You can also use Nearby Help to search
+        for hospitals and pharmacies.
+
+        <br><br>
+
+        <a
+            class="official-link"
+            href="https://www.nha.gov.in/"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            Visit NHA ↗
+        </a>
+
     `,
 
 
     Disaster: `
-        For official disaster-management information,
-        visit the <strong>National Disaster Management Authority</strong>.
+
+        <strong>Disaster information</strong>
+
+        <br><br>
+
+        For official disaster preparedness
+        and response information, use NDMA.
 
         <br><br>
 
@@ -476,19 +614,41 @@ const guideMessages = {
         >
             Visit NDMA ↗
         </a>
+
     `,
 
 
     Nearby: `
-        Use the Nearby Help section
-        and allow location access to create
-        map searches around you.
+
+        <strong>Nearby services</strong>
+
+        <br><br>
+
+        Use the Nearby Help section and allow
+        location access if you want map searches
+        centred around your current location.
+
+        <br><br>
+
+        <a
+            class="official-link"
+            href="#nearby"
+        >
+            Go to Nearby Help ↓
+        </a>
+
     `,
 
 
     Government: `
-        For official Government of India
-        information and services, visit:
+
+        <strong>Government information</strong>
+
+        <br><br>
+
+        The National Portal of India provides
+        official information about Government
+        of India services and resources.
 
         <br><br>
 
@@ -498,17 +658,13 @@ const guideMessages = {
             target="_blank"
             rel="noopener noreferrer"
         >
-            National Portal of India ↗
+            Visit India.gov.in ↗
         </a>
+
     `
 
 };
 
-
-
-/* =========================================
-   GUIDE BUTTONS
-========================================= */
 
 const guideCards =
     document.querySelectorAll(
@@ -537,8 +693,17 @@ guideCards.forEach(function(card) {
                 guideMessages[selectedGuide]
             ) {
 
-                guideResult.innerHTML =
-                    guideMessages[selectedGuide];
+                guideResult.innerHTML = `
+
+                    <span class="result-icon">
+                        💡
+                    </span>
+
+                    <span>
+                        ${guideMessages[selectedGuide]}
+                    </span>
+
+                `;
 
             }
 
@@ -549,9 +714,9 @@ guideCards.forEach(function(card) {
 
 
 
-/* =========================================
+/* =====================================================
    ACTIVE NAVIGATION
-========================================= */
+===================================================== */
 
 const sections =
     document.querySelectorAll(
@@ -565,66 +730,145 @@ const navigationLinks =
     );
 
 
-window.addEventListener(
-    "scroll",
-    function() {
+function updateActiveNavigation() {
 
-        let currentSection = "";
+    let currentSection = "";
 
 
-        sections.forEach(function(section) {
+    sections.forEach(function(section) {
 
-            const sectionTop =
-                section.offsetTop - 150;
+        const sectionTop =
+            section.offsetTop - 180;
+
+
+        if (
+            window.scrollY >= sectionTop
+        ) {
+
+            currentSection =
+                section.getAttribute("id");
+
+        }
+
+    });
+
+
+    navigationLinks.forEach(
+        function(link) {
+
+            link.classList.remove(
+                "active"
+            );
+
+
+            const target =
+                link.getAttribute("href");
 
 
             if (
-                window.scrollY >= sectionTop
+                target ===
+                "#" + currentSection
             ) {
 
-                currentSection =
-                    section.getAttribute("id");
-
-            }
-
-        });
-
-
-        navigationLinks.forEach(
-            function(link) {
-
-                link.classList.remove(
+                link.classList.add(
                     "active"
                 );
 
-
-                const target =
-                    link.getAttribute("href");
-
-
-                if (
-                    target ===
-                    "#" + currentSection
-                ) {
-
-                    link.classList.add(
-                        "active"
-                    );
-
-                }
-
             }
-        );
+
+        }
+    );
+
+}
+
+
+window.addEventListener(
+    "scroll",
+    updateActiveNavigation,
+    {
+        passive: true
+    }
+);
+
+
+updateActiveNavigation();
+
+
+
+/* =====================================================
+   KEYBOARD ACCESSIBILITY
+===================================================== */
+
+document.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (
+            event.key === "Escape" &&
+            document.activeElement
+        ) {
+
+            document.activeElement.blur();
+
+        }
 
     }
 );
 
 
 
-/* =========================================
-   SAFETY CHECK
-========================================= */
+/* =====================================================
+   SERVICE WORKER
+   Only register if a service-worker.js exists.
+===================================================== */
+
+if (
+    "serviceWorker" in navigator &&
+    window.location.protocol === "https:"
+) {
+
+    window.addEventListener(
+        "load",
+        function() {
+
+            fetch(
+                "./service-worker.js",
+                {
+                    method: "HEAD"
+                }
+            )
+
+            .then(function(response) {
+
+                if (response.ok) {
+
+                    return navigator.serviceWorker
+                        .register("./service-worker.js");
+
+                }
+
+            })
+
+            .catch(function() {
+
+                /*
+                    No service worker installed.
+                    This is completely fine.
+                */
+
+            });
+
+        }
+    );
+
+}
+
+
+
+/* =====================================================
+   STARTUP CHECK
+===================================================== */
 
 console.log(
-    "LIFELINK V2 loaded successfully 🚀"
+    "LIFELINK V2.1 loaded successfully 🚀"
 );
