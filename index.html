@@ -17,11 +17,11 @@
 
     <meta
         name="description"
-        content="LIFELINK — A trusted bridge between people and public help."
+        content="LIFELINK — Connect people with trusted public help and emergency information."
     >
 
     <title>
-        LIFELINK V2.1 — When Help Matters, Connect.
+        LIFELINK V2.2 — When Help Matters, Connect.
     </title>
 
     <link
@@ -45,7 +45,7 @@
 
 
 <!-- ==================================================
-     NAVBAR
+     NAVIGATION
 ================================================== -->
 
 <header class="navbar">
@@ -132,10 +132,10 @@
 
         <div class="version-badge">
 
-            ● LIFELINK V2.1
+            ● LIFELINK V2.2
 
             <span>
-                SAFETY + CONNECTION
+                REAL-WORLD CONNECTION
             </span>
 
         </div>
@@ -154,10 +154,9 @@
 
         <p>
 
-            One simple place to discover
-            official emergency information,
-            nearby public services and trusted
-            resources.
+            One place to discover official
+            emergency information, nearby
+            public services and trusted resources.
 
         </p>
 
@@ -189,11 +188,11 @@
             </span>
 
             <span>
-                ✓ No fake live data
+                ✓ Location-aware
             </span>
 
             <span>
-                ✓ Built for India
+                ✓ No fabricated live data
             </span>
 
         </div>
@@ -218,11 +217,11 @@
             <div class="stat">
 
                 <strong>
-                    5+
+                    LIVE
                 </strong>
 
                 <small>
-                    Help categories
+                    Location search
                 </small>
 
             </div>
@@ -231,11 +230,11 @@
             <div class="stat">
 
                 <strong>
-                    V2.1
+                    V2.2
                 </strong>
 
                 <small>
-                    Smarter interface
+                    Real-world upgrade
                 </small>
 
             </div>
@@ -251,7 +250,7 @@
 
 
 <!-- ==================================================
-     EMERGENCY COMMAND CENTER
+     EMERGENCY
 ================================================== -->
 
 <section
@@ -286,9 +285,7 @@
 
 
             <div class="emergency-icon">
-
                 🚨
-
             </div>
 
 
@@ -304,9 +301,7 @@
 
 
                 <h3>
-
                     112 India
-
                 </h3>
 
 
@@ -325,9 +320,7 @@
                         href="tel:112"
                         class="button danger-button"
                     >
-
                         📞 CALL 112
-
                     </a>
 
 
@@ -337,9 +330,7 @@
                         rel="noopener noreferrer"
                         class="official-link"
                     >
-
                         Official 112 India ↗
-
                     </a>
 
                 </div>
@@ -456,7 +447,7 @@
 
 
 <!-- ==================================================
-     NEARBY HELP
+     NEARBY HELP — V2.2
 ================================================== -->
 
 <section
@@ -468,23 +459,27 @@
 
 
         <div class="section-label">
-            NEARBY HELP
+            NEARBY HELP • V2.2
         </div>
 
 
         <h2>
-            Find help around you.
+            Find real places around you.
         </h2>
 
 
         <p class="section-description">
 
-            Allow location access to create
-            map searches for nearby public services.
+            Allow location access and choose a service.
+            LIFELINK will use your location to search
+            for nearby places through the selected map
+            service.
 
         </p>
 
 
+
+        <!-- LOCATION CONTROL -->
 
         <div class="location-box">
 
@@ -512,6 +507,7 @@
             <button
                 id="locationButton"
                 class="button primary-button"
+                type="button"
             >
 
                 Use My Location
@@ -523,16 +519,67 @@
 
 
 
-        <div
-            id="nearbyServices"
-            class="nearby-grid"
-        >
+        <!-- SERVICE SEARCH -->
 
-            <!-- JavaScript inserts services -->
+        <div class="nearby-search-panel">
+
+
+            <div class="nearby-search-heading">
+
+                <strong>
+                    What are you looking for?
+                </strong>
+
+                <small>
+                    Choose a service to search nearby.
+                </small>
+
+            </div>
+
+
+            <div
+                id="nearbyServices"
+                class="nearby-grid"
+            >
+
+                <!-- JavaScript creates service cards -->
+
+            </div>
+
 
         </div>
 
 
+
+        <!-- SEARCH RESULT STATUS -->
+
+        <div
+            id="nearbyResult"
+            class="nearby-result"
+        >
+
+            <span>
+                📍
+            </span>
+
+            <div>
+
+                <strong>
+                    Ready to search
+                </strong>
+
+                <small>
+                    Allow location access for
+                    location-centred searches.
+                </small>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- PRIVACY -->
 
         <div class="privacy-note">
 
@@ -540,9 +587,10 @@
 
             <span>
 
-                Your location stays in your browser
-                and is used to create map searches.
-                LIFELINK does not store your coordinates.
+                LIFELINK uses your browser's location
+                permission to create nearby searches.
+                Your coordinates are not stored by
+                this website.
 
             </span>
 
@@ -556,7 +604,7 @@
 
 
 <!-- ==================================================
-     RESOURCE DIRECTORY
+     RESOURCES
 ================================================== -->
 
 <section
@@ -640,7 +688,7 @@
             class="resource-grid"
         >
 
-            <!-- JavaScript inserts resources -->
+            <!-- JavaScript creates resources -->
 
         </div>
 
@@ -696,8 +744,8 @@
         <p class="section-description">
 
             Choose a category and LIFELINK will
-            point you toward the appropriate
-            resource.
+            point you toward an appropriate
+            official resource.
 
         </p>
 
@@ -709,6 +757,7 @@
             <button
                 class="guide-card"
                 data-guide="Emergency"
+                type="button"
             >
 
                 <span>
@@ -730,6 +779,7 @@
             <button
                 class="guide-card"
                 data-guide="Medical"
+                type="button"
             >
 
                 <span>
@@ -751,6 +801,7 @@
             <button
                 class="guide-card"
                 data-guide="Disaster"
+                type="button"
             >
 
                 <span>
@@ -772,6 +823,7 @@
             <button
                 class="guide-card"
                 data-guide="Nearby"
+                type="button"
             >
 
                 <span>
@@ -793,6 +845,7 @@
             <button
                 class="guide-card"
                 data-guide="Government"
+                type="button"
             >
 
                 <span>
@@ -839,7 +892,7 @@
 
 
 <!-- ==================================================
-     HOW LIFELINK WORKS
+     HOW IT WORKS
 ================================================== -->
 
 <section
@@ -869,16 +922,16 @@
                 </div>
 
                 <span>
-                    🧭
+                    📍
                 </span>
 
                 <h3>
-                    Choose
+                    Locate
                 </h3>
 
                 <p>
-                    Select the type of help
-                    you are looking for.
+                    Give your browser permission
+                    to use your current location.
                 </p>
 
             </div>
@@ -892,16 +945,16 @@
                 </div>
 
                 <span>
-                    🔗
+                    🔎
                 </span>
 
                 <h3>
-                    Connect
+                    Search
                 </h3>
 
                 <p>
-                    LIFELINK connects you with
-                    an appropriate official resource.
+                    Choose the type of public service
+                    you want to find.
                 </p>
 
             </div>
@@ -923,8 +976,8 @@
                 </h3>
 
                 <p>
-                    Check the official source before
-                    relying on important information.
+                    Check the destination and official
+                    information before relying on it.
                 </p>
 
             </div>
@@ -940,7 +993,7 @@
 
 
 <!-- ==================================================
-     TRUST SECTION
+     TRUST
 ================================================== -->
 
 <section
@@ -973,8 +1026,9 @@
                 <p>
 
                     LIFELINK clearly separates official
-                    information from features that are
-                    not currently live.
+                    information from location-search
+                    features and does not pretend that
+                    unavailable information is live.
 
                 </p>
 
@@ -999,8 +1053,27 @@
                 </strong>
 
                 <small>
-                    Links point to recognised
-                    public organisations.
+                    Important emergency and government
+                    information links to official sources.
+                </small>
+
+            </div>
+
+
+
+            <div class="trust-item">
+
+                <span>
+                    ✓
+                </span>
+
+                <strong>
+                    Location conscious
+                </strong>
+
+                <small>
+                    Location is requested only when
+                    you choose to use the feature.
                 </small>
 
             </div>
@@ -1018,27 +1091,8 @@
                 </strong>
 
                 <small>
-                    No pretending that unavailable
-                    information is live.
-                </small>
-
-            </div>
-
-
-
-            <div class="trust-item">
-
-                <span>
-                    ✓
-                </span>
-
-                <strong>
-                    Privacy conscious
-                </strong>
-
-                <small>
-                    Location is handled by
-                    your browser.
+                    LIFELINK does not claim to provide
+                    live emergency-dispatch data.
                 </small>
 
             </div>
@@ -1071,7 +1125,7 @@
             </div>
 
             <h2>
-                What LIFELINK doesn't do.
+                Know the limits.
             </h2>
 
         </div>
@@ -1091,7 +1145,7 @@
 
             <div>
                 <span>×</span>
-                Live incident tracking
+                Verified live incident tracking
             </div>
 
         </div>
@@ -1099,10 +1153,10 @@
 
         <p>
 
-            These features would require verified
-            emergency-service integrations,
-            secure infrastructure and authorised
-            data providers.
+            LIFELINK is a connection and information
+            interface. It does not replace emergency
+            services, medical professionals or
+            official authorities.
 
         </p>
 
@@ -1148,7 +1202,7 @@
     <div>
 
         <strong>
-            LIFELINK V2.1
+            LIFELINK V2.2
         </strong>
 
         <small>
