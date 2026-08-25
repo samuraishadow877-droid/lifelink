@@ -788,3 +788,399 @@ document.addEventListener(
 
     }
 );
+/* =========================================================
+   LIFELINK V2.8
+   RESOURCE INTELLIGENCE
+   ========================================================= */
+
+
+/* =========================================================
+   RESOURCE COUNT
+   ========================================================= */
+
+function updateResourceCount() {
+
+    const cards =
+        document.querySelectorAll(
+            ".resource-card"
+        );
+
+    const countElement =
+        document.getElementById(
+            "resourceCount"
+        );
+
+    if (!cards.length || !countElement) {
+        return;
+    }
+
+    const visibleCards =
+        [...cards].filter(
+            (card) =>
+                !card.classList.contains(
+                    "hidden-card"
+                )
+        );
+
+
+    countElement.textContent =
+        `Showing ${visibleCards.length} resource${
+            visibleCards.length === 1
+                ? ""
+                : "s"
+        }`;
+
+}
+
+
+/* =========================================================
+   RESOURCE MODAL
+   ========================================================= */
+
+function initializeResourceModal() {
+
+    const modal =
+        document.getElementById(
+            "resourceModal"
+        );
+
+    const closeButton =
+        document.getElementById(
+            "closeResourceModal"
+        );
+
+    const backdrop =
+        modal?.querySelector(
+            "[data-close-modal]"
+        );
+
+    if (!modal) {
+        return;
+    }
+
+
+    const name =
+        document.getElementById(
+            "modalResourceName"
+        );
+
+    const category =
+        document.getElementById(
+            "modalResourceCategory"
+        );
+
+    const location =
+        document.getElementById(
+            "modalResourceLocation"
+        );
+
+    const phone =
+        document.getElementById(
+            "modalResourcePhone"
+        );
+
+    const services =
+        document.getElementById(
+            "modalResourceServices"
+        );
+
+    const callButton =
+        document.getElementById(
+            "modalCallButton"
+        );
+
+    const copyButton =
+        document.getElementById(
+            "modalCopyButton"
+        );
+
+
+    let currentResource = null;
+
+
+    function closeModal() {
+
+        modal.classList.remove("open");
+
+        modal.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+
+        document.body.style.overflow = "";
+
+    }
+
+
+    function openModal(button) {
+
+        const data = {
+            name:
+                button.dataset.name ||
+                "Resource",
+
+            category:
+                button.dataset.category ||
+                "Resource",
+
+            location:
+                button.dataset.location ||
+                "Not listed",
+
+            phone:
+                button.dataset.phone ||
+                "Not listed",
+
+            services:
+                button.dataset.services ||
+                "Not listed"
+        };
+
+
+        currentResource = data;
+
+
+        name.textContent =
+            data.name;
+
+        category.textContent =
+            data.category;
+
+        location.textContent =
+            data.location;
+
+        phone.textContent =
+            data.phone;
+
+        services.textContent =
+            data.services;
+
+
+        if (
+            data.phone &&
+            data.phone !== "Not listed"
+        ) {
+
+            callButton.href =
+                `tel:${data.phone}`;
+
+            callButton.classList.remove(
+                "hidden"
+            );
+
+        } else {
+
+            callButton.classList.add(
+                "hidden"
+            );
+
+        }
+
+
+        modal.classList.add("open");
+
+        modal.setAttribute(
+            "aria-hidden",
+            "false"
+        );
+
+        document.body.style.overflow =
+            "hidden";
+
+    }
+
+
+    document.addEventListener(
+        "click",
+        (event) => {
+
+            const detailsButton =
+                event.target.closest(
+                    ".resource-details"
+                );
+
+            if (!detailsButton) {
+                return;
+            }
+
+            openModal(detailsButton);
+
+        }
+    );
+
+
+    closeButton?.addEventListener(
+        "click",
+        closeModal
+    );
+
+
+    backdrop?.addEventListener(
+        "click",
+        closeModal
+    );
+
+
+    document.addEventListener(
+        "keydown",
+        (event) => {
+
+            if (
+                event.key === "Escape" &&
+                modal.classList.contains("open")
+            ) {
+
+                closeModal();
+
+            }
+
+        }
+    );
+
+
+    copyButton?.addEventListener(
+        "click",
+        async () => {
+
+            if (!currentResource) {
+                return;
+            }
+
+
+            const text =
+                `${currentResource.name}
+Category: ${currentResource.category}
+Location: ${currentResource.location}
+Phone: ${currentResource.phone}
+Services: ${currentResource.services}`;
+
+
+            try {
+
+                await navigator.clipboard.writeText(
+                    text
+                );
+
+                copyButton.textContent =
+                    "✓ Copied";
+
+                setTimeout(
+                    () => {
+
+                        copyButton.textContent =
+                            "📋 Copy Information";
+
+                    },
+                    1500
+                );
+
+            } catch (error) {
+
+                copyButton.textContent =
+                    "Copy unavailable";
+
+                setTimeout(
+                    () => {
+
+                        copyButton.textContent =
+                            "📋 Copy Information";
+
+                    },
+                    1500
+                );
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   CONNECT V2.8 TO EXISTING FILTERS
+   ========================================================= */
+
+function initializeResourceIntelligence() {
+
+    const grid =
+        document.getElementById(
+            "resourceGrid"
+        );
+
+    if (!grid) {
+        return;
+    }
+
+
+    /*
+     * Update count whenever a filter/search
+     * changes.
+     */
+
+    const search =
+        document.getElementById(
+            "resourceSearch"
+        );
+
+    const filters =
+        document.querySelectorAll(
+            ".resource-filter"
+        );
+
+
+    search?.addEventListener(
+        "input",
+        () => {
+
+            setTimeout(
+                updateResourceCount,
+                0
+            );
+
+        }
+    );
+
+
+    filters.forEach(
+        (filter) => {
+
+            filter.addEventListener(
+                "click",
+                () => {
+
+                    setTimeout(
+                        updateResourceCount,
+                        0
+                    );
+
+                }
+            );
+
+        }
+    );
+
+
+    updateResourceCount();
+
+}
+
+
+/* =========================================================
+   INITIALIZE V2.8
+   ========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+        initializeResourceModal();
+
+        initializeResourceIntelligence();
+
+        console.log(
+            "LIFELINK V2.8 Resource Intelligence loaded."
+        );
+
+    }
+);
