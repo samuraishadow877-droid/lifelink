@@ -1441,7 +1441,300 @@
             </div>
 
         </section>
+<!-- =====================================================
+     LIFELINK V2.9 — SAFETY INTELLIGENCE
+     ===================================================== -->
 
+<section
+    class="section safety-intelligence-section"
+    id="safety"
+>
+
+    <div class="section-heading">
+
+        <span class="section-label">
+            SAFETY INTELLIGENCE
+        </span>
+
+        <h2>
+            Not sure what to do?
+        </h2>
+
+        <p>
+            Tell LIFELINK what kind of situation you're
+            facing and get simple safety-focused next steps.
+        </p>
+
+    </div>
+
+
+    <!-- SAFETY HELPER -->
+
+    <div
+        class="safety-helper"
+        id="safetyHelper"
+    >
+
+        <!-- Progress -->
+
+        <div class="safety-progress">
+
+            <div class="safety-progress-top">
+
+                <span id="safetyStepLabel">
+                    Step 1 of 2
+                </span>
+
+                <span>
+                    Safety Helper
+                </span>
+
+            </div>
+
+            <div class="safety-progress-bar">
+
+                <span
+                    id="safetyProgressBar"
+                ></span>
+
+            </div>
+
+        </div>
+
+
+        <!-- QUESTION -->
+
+        <div
+            class="safety-step active"
+            id="safetyQuestion"
+        >
+
+            <span class="safety-question-label">
+                FIRST
+            </span>
+
+            <h3>
+                What kind of situation are you dealing with?
+            </h3>
+
+            <p>
+                Choose the option that best describes
+                what's happening right now.
+            </p>
+
+
+            <div class="safety-options">
+
+                <button
+                    class="safety-option"
+                    type="button"
+                    data-safety-type="medical"
+                >
+
+                    <span class="safety-option-icon">
+                        🚑
+                    </span>
+
+                    <span>
+                        <strong>
+                            Medical emergency
+                        </strong>
+
+                        <small>
+                            Someone may need urgent medical help.
+                        </small>
+                    </span>
+
+                </button>
+
+
+                <button
+                    class="safety-option"
+                    type="button"
+                    data-safety-type="fire"
+                >
+
+                    <span class="safety-option-icon">
+                        🔥
+                    </span>
+
+                    <span>
+                        <strong>
+                            Fire or smoke
+                        </strong>
+
+                        <small>
+                            There is a fire, smoke, or burning hazard.
+                        </small>
+                    </span>
+
+                </button>
+
+
+                <button
+                    class="safety-option"
+                    type="button"
+                    data-safety-type="personal"
+                >
+
+                    <span class="safety-option-icon">
+                        🚨
+                    </span>
+
+                    <span>
+                        <strong>
+                            Personal safety
+                        </strong>
+
+                        <small>
+                            You feel threatened or unsafe.
+                        </small>
+
+                    </span>
+
+                </button>
+
+
+                <button
+                    class="safety-option"
+                    type="button"
+                    data-safety-type="disaster"
+                >
+
+                    <span class="safety-option-icon">
+                        🌊
+                    </span>
+
+                    <span>
+                        <strong>
+                            Disaster or severe weather
+                        </strong>
+
+                        <small>
+                            Flooding, severe weather, or another hazard.
+                        </small>
+                    </span>
+
+                </button>
+
+
+                <button
+                    class="safety-option"
+                    type="button"
+                    data-safety-type="other"
+                >
+
+                    <span class="safety-option-icon">
+                        🛡️
+                    </span>
+
+                    <span>
+                        <strong>
+                            Something else
+                        </strong>
+
+                        <small>
+                            I need general safety guidance.
+                        </small>
+                    </span>
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- RESULT -->
+
+        <div
+            class="safety-result"
+            id="safetyResult"
+        >
+
+            <div
+                class="safety-result-icon"
+                id="safetyResultIcon"
+            >
+                🛡️
+            </div>
+
+
+            <span
+                class="safety-result-label"
+                id="safetyResultLabel"
+            >
+                SAFETY GUIDANCE
+            </span>
+
+
+            <h3 id="safetyResultTitle">
+                Stay safe.
+            </h3>
+
+
+            <p id="safetyResultDescription">
+                Follow the safest available option and
+                contact appropriate emergency services
+                when necessary.
+            </p>
+
+
+            <!-- ACTIONS -->
+
+            <div
+                class="safety-result-actions"
+                id="safetyResultActions"
+            >
+
+            </div>
+
+
+            <!-- STEPS -->
+
+            <div class="safety-steps">
+
+                <span>
+                    Recommended next steps
+                </span>
+
+                <ol id="safetyStepsList">
+                </ol>
+
+            </div>
+
+
+            <!-- DISCLAIMER -->
+
+            <div class="safety-result-note">
+
+                <strong>
+                    ⚠️ Remember
+                </strong>
+
+                <span>
+                    This guide provides general safety
+                    information and does not diagnose
+                    conditions or replace professional
+                    emergency services.
+                </span>
+
+            </div>
+
+
+            <button
+                id="safetyReset"
+                class="safety-reset"
+                type="button"
+            >
+                ← Start Again
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
 
         <!-- =================================================
              ABOUT
