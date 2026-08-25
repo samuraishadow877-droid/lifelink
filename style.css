@@ -2012,3 +2012,445 @@ button {
     }
 
 }
+/* =========================================================
+   LIFELINK V2.8
+   RESOURCE INTELLIGENCE
+   ========================================================= */
+
+
+/* =========================================================
+   RESOURCE TOOLBAR
+   ========================================================= */
+
+.resource-toolbar {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 15px;
+
+    margin-bottom: 18px;
+
+    color: var(--muted);
+
+    font-size: 11px;
+}
+
+.resource-data-note {
+    padding: 5px 9px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 999px;
+
+    color: #758094;
+
+    font-size: 10px;
+}
+
+
+/* =========================================================
+   RESOURCE CARD V2.8
+   ========================================================= */
+
+.resource-card {
+    position: relative;
+
+    min-height: 320px;
+}
+
+.resource-card-top {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 17px;
+}
+
+.resource-status {
+    padding: 5px 8px;
+
+    border: 1px solid
+        rgba(57, 217, 138, 0.15);
+
+    border-radius: 999px;
+
+    background:
+        rgba(57, 217, 138, 0.05);
+
+    color: #73dbaa;
+
+    font-size: 9px;
+    font-weight: 750;
+}
+
+.resource-info {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 6px;
+
+    margin-top: 17px;
+
+    color: #737f91;
+
+    font-size: 11px;
+}
+
+.resource-actions {
+    display: flex;
+
+    gap: 8px;
+
+    flex-wrap: wrap;
+
+    margin-top: auto;
+    padding-top: 22px;
+}
+
+.resource-call,
+.resource-details {
+    min-height: 36px;
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 0 12px;
+
+    border-radius: 9px;
+
+    font-size: 11px;
+    font-weight: 750;
+}
+
+.resource-call {
+    background:
+        rgba(79, 140, 255, 0.12);
+
+    border: 1px solid
+        rgba(79, 140, 255, 0.2);
+
+    color: #91b6ff;
+}
+
+.resource-call:hover {
+    background:
+        rgba(79, 140, 255, 0.18);
+}
+
+.resource-details {
+    border: 1px solid var(--border);
+
+    background:
+        rgba(255, 255, 255, 0.035);
+
+    color: var(--muted);
+
+    cursor: pointer;
+}
+
+.resource-details:hover {
+    color: white;
+
+    background:
+        rgba(255, 255, 255, 0.07);
+}
+
+
+/* =========================================================
+   NO RESULTS
+   ========================================================= */
+
+.no-results-icon {
+    margin-bottom: 8px;
+
+    font-size: 25px;
+}
+
+.no-results h3 {
+    color: white;
+
+    font-size: 17px;
+}
+
+.no-results p {
+    margin-top: 5px;
+
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   DATA DISCLAIMER
+   ========================================================= */
+
+.resource-disclaimer {
+    margin-top: 18px;
+
+    padding: 15px 17px;
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 10px;
+
+    border: 1px solid
+        rgba(255, 159, 67, 0.15);
+
+    border-radius: 13px;
+
+    background:
+        rgba(255, 159, 67, 0.035);
+
+    color: var(--muted);
+
+    font-size: 11px;
+}
+
+.resource-disclaimer strong {
+    color: #ffb45e;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   MODAL
+   ========================================================= */
+
+.resource-modal {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 5000;
+
+    display: none;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+}
+
+.resource-modal.open {
+    display: flex;
+}
+
+.resource-modal-backdrop {
+    position: absolute;
+
+    inset: 0;
+
+    background:
+        rgba(0, 0, 0, 0.72);
+
+    backdrop-filter: blur(8px);
+}
+
+.resource-modal-box {
+    position: relative;
+
+    z-index: 2;
+
+    width: min(
+        100%,
+        500px
+    );
+
+    padding: 30px;
+
+    border: 1px solid var(--border-light);
+
+    border-radius: 22px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #101720,
+            #080c12
+        );
+
+    box-shadow:
+        0 30px 90px rgba(0, 0, 0, 0.5);
+
+    animation:
+        modalIn 0.2s ease;
+}
+
+@keyframes modalIn {
+
+    from {
+        opacity: 0;
+
+        transform:
+            translateY(10px)
+            scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            translateY(0)
+            scale(1);
+    }
+
+}
+
+.modal-close {
+    position: absolute;
+
+    top: 15px;
+    right: 15px;
+
+    width: 34px;
+    height: 34px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 9px;
+
+    background:
+        rgba(255, 255, 255, 0.04);
+
+    color: var(--muted);
+
+    cursor: pointer;
+}
+
+.modal-close:hover {
+    color: white;
+
+    background:
+        rgba(255, 255, 255, 0.08);
+}
+
+.resource-modal-box h2 {
+    margin-top: 8px;
+
+    padding-right: 35px;
+
+    font-size: 28px;
+
+    letter-spacing: -1px;
+}
+
+
+/* =========================================================
+   MODAL DETAILS
+   ========================================================= */
+
+.modal-details {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 1px;
+
+    margin-top: 25px;
+
+    overflow: hidden;
+
+    border: 1px solid var(--border);
+
+    border-radius: 13px;
+}
+
+.modal-details > div {
+    padding: 14px 15px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 3px;
+
+    background:
+        rgba(255, 255, 255, 0.025);
+
+    border-bottom: 1px solid var(--border);
+}
+
+.modal-details > div:last-child {
+    border-bottom: none;
+}
+
+.modal-details span {
+    color: #687486;
+
+    font-size: 10px;
+}
+
+.modal-details strong {
+    color: #e8edf5;
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   MODAL ACTIONS
+   ========================================================= */
+
+.modal-actions {
+    display: flex;
+
+    gap: 9px;
+
+    margin-top: 20px;
+}
+
+.modal-actions .btn {
+    flex: 1;
+}
+
+
+/* =========================================================
+   V2.8 MOBILE
+   ========================================================= */
+
+@media (max-width: 680px) {
+
+    .resource-toolbar {
+        align-items: flex-start;
+
+        flex-direction: column;
+
+        gap: 8px;
+    }
+
+    .resource-actions {
+        flex-direction: column;
+    }
+
+    .resource-call,
+    .resource-details {
+        width: 100%;
+    }
+
+    .resource-disclaimer {
+        flex-direction: column;
+
+        gap: 5px;
+    }
+
+    .resource-modal {
+        padding: 12px;
+    }
+
+    .resource-modal-box {
+        padding: 24px 20px;
+    }
+
+    .modal-actions {
+        flex-direction: column;
+    }
+
+}
