@@ -380,14 +380,66 @@ function initializeMap() {
        after being loaded inside a section.
     */
 
-    setTimeout(
-        function() {
+ /* =====================================================
+   FIX LEAFLET TILE ALIGNMENT
+===================================================== */
 
-            lifelinkMap.invalidateSize();
+function refreshMapSize() {
 
-        },
-        300
+    if (!lifelinkMap) {
+        return;
+    }
+
+    lifelinkMap.invalidateSize(true);
+
+}
+
+
+/* Give the browser time to finish laying out the page */
+
+setTimeout(refreshMapSize, 100);
+
+setTimeout(refreshMapSize, 500);
+
+setTimeout(refreshMapSize, 1000);
+
+
+/* Fix map when browser window changes size */
+
+window.addEventListener(
+    "resize",
+    function() {
+
+        setTimeout(
+            refreshMapSize,
+            100
+        );
+
+    }
+);
+
+
+/* Watch the actual map container */
+
+if (
+    typeof ResizeObserver !== "undefined" &&
+    mapElement
+) {
+
+    const mapResizeObserver =
+        new ResizeObserver(
+            function() {
+
+                refreshMapSize();
+
+            }
+        );
+
+    mapResizeObserver.observe(
+        mapElement
     );
+
+}
 
 }
 
@@ -1563,12 +1615,37 @@ document.addEventListener(
    25. START EVERYTHING
 ===================================================== */
 
-initializeMap();
+/* =====================================================
+   START LIFELINK
+===================================================== */
 
-renderResources();
+function startLifelink() {
 
-updateNavigation();
+    initializeMap();
 
+    renderResources();
+
+    updateNavigation();
+
+}
+
+
+/*
+   Wait until the entire page has loaded.
+*/
+
+if (document.readyState === "loading") {
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        startLifelink
+    );
+
+} else {
+
+    startLifelink();
+
+}
 
 /* =====================================================
    26. CONSOLE
