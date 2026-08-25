@@ -1,7 +1,40 @@
-/* =====================================================
-   LIFELINK V2.4
-   COMPLETE STYLE.CSS
-===================================================== */
+/* =========================================================
+   LIFELINK V2.5
+   ENHANCED STYLE.CSS
+   ========================================================= */
+
+:root {
+    --bg: #05070b;
+    --bg-soft: #080c12;
+    --panel: #0b1119;
+    --panel-2: #0f1722;
+
+    --border: #1d2938;
+    --border-light: #263548;
+
+    --text: #f5f7fb;
+    --muted: #8d9aae;
+    --muted-2: #647286;
+
+    --blue: #347cff;
+    --blue-light: #74a8ff;
+
+    --green: #2ebd8c;
+    --red: #e83d45;
+    --orange: #f28c28;
+    --purple: #9a6cff;
+    --yellow: #d5aa24;
+
+    --radius: 16px;
+
+    --shadow:
+        0 18px 55px rgba(0, 0, 0, 0.28);
+}
+
+
+/* =========================================================
+   RESET
+   ========================================================= */
 
 * {
     box-sizing: border-box;
@@ -9,38 +42,40 @@
 
 html {
     scroll-behavior: smooth;
+    scroll-padding-top: 80px;
 }
 
 body {
     margin: 0;
 
-    background: #05070b;
+    min-height: 100vh;
 
-    color: #f5f7fb;
+    background:
+        radial-gradient(
+            circle at 50% -10%,
+            rgba(52, 124, 255, 0.08),
+            transparent 35%
+        ),
+        var(--bg);
+
+    color: var(--text);
 
     font-family:
         Inter,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
         Arial,
-        Helvetica,
         sans-serif;
 
     line-height: 1.5;
-}
 
-
-/* =====================================================
-   GLOBAL
-===================================================== */
-
-a {
-    color: inherit;
-
-    text-decoration: none;
+    overflow-x: hidden;
 }
 
 button,
-input,
-select {
+input {
     font: inherit;
 }
 
@@ -48,129 +83,153 @@ button {
     cursor: pointer;
 }
 
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
 img {
     max-width: 100%;
 }
 
 
-/* =====================================================
-   HEADER
-===================================================== */
+/* =========================================================
+   SELECTION
+   ========================================================= */
 
-header {
+::selection {
+    background: rgba(52, 124, 255, 0.35);
+    color: #ffffff;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.site-header {
     position: sticky;
 
     top: 0;
 
     z-index: 2000;
 
-    background:
-        rgba(5, 7, 11, 0.92);
+    width: 100%;
 
     border-bottom:
-        1px solid #1c2633;
+        1px solid rgba(38, 53, 72, 0.75);
 
-    backdrop-filter:
-        blur(16px);
+    background:
+        rgba(5, 7, 11, 0.82);
+
+    backdrop-filter: blur(18px);
+
+    -webkit-backdrop-filter: blur(18px);
 }
 
-.header-inner,
-.navigation {
-    max-width: 1180px;
+.header-inner {
+    width: min(1180px, calc(100% - 36px));
+
+    min-height: 68px;
 
     margin: auto;
 
-    padding:
-        14px 22px;
-}
-
-.navigation {
     display: flex;
 
     align-items: center;
 
     justify-content: space-between;
 
-    gap: 20px;
+    gap: 25px;
 }
 
-.logo,
-.brand {
-    font-size: 21px;
 
-    font-weight: 900;
+/* =========================================================
+   LOGO
+   ========================================================= */
 
-    letter-spacing: 1px;
-}
+.logo {
+    flex-shrink: 0;
 
-.logo span,
-.brand span {
-    color: #4b8cff;
-}
+    font-size: 20px;
 
-.navigation nav {
-    display: flex;
+    font-weight: 950;
 
-    align-items: center;
-
-    gap: 6px;
-
-    flex-wrap: wrap;
-}
-
-.navigation nav a,
-.navigation a {
-    padding:
-        8px 11px;
-
-    border-radius: 8px;
-
-    color: #9da9ba;
-
-    font-size: 12px;
-
-    font-weight: 700;
-
-    transition:
-        background 0.2s ease,
-        color 0.2s ease;
-}
-
-.navigation nav a:hover,
-.navigation a:hover,
-.navigation a.active {
-    background: #111b28;
+    letter-spacing: 1.5px;
 
     color: #ffffff;
 }
 
+.logo span {
+    color: var(--blue);
+}
 
-/* =====================================================
+
+/* =========================================================
+   NAVIGATION
+   ========================================================= */
+
+.navigation {
+    display: flex;
+
+    align-items: center;
+
+    gap: 4px;
+}
+
+.navigation a {
+    position: relative;
+
+    padding: 9px 12px;
+
+    border-radius: 8px;
+
+    color: var(--muted);
+
+    font-size: 12px;
+
+    font-weight: 750;
+
+    transition:
+        color 0.2s ease,
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.navigation a:hover {
+    color: #ffffff;
+
+    background: rgba(52, 124, 255, 0.08);
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
    MAIN
-===================================================== */
+   ========================================================= */
 
 main {
     width: 100%;
 }
 
 section {
-    width: 100%;
-
-    max-width: 1180px;
+    width: min(1180px, calc(100% - 36px));
 
     margin: auto;
 
-    padding:
-        75px 22px;
+    padding: 90px 0;
 }
 
 
-/* =====================================================
+/* =========================================================
    HERO
-===================================================== */
+   ========================================================= */
 
 .hero {
-    min-height: 650px;
+    width: 100%;
+
+    min-height: 690px;
 
     display: flex;
 
@@ -180,110 +239,196 @@ section {
 
     text-align: center;
 
+    padding:
+        110px 18px;
+
     background:
         radial-gradient(
             circle at 50% 35%,
-            rgba(52, 124, 255, 0.13),
-            transparent 40%
+            rgba(52, 124, 255, 0.12),
+            transparent 38%
         );
 }
 
 .hero-content {
-    max-width: 850px;
+    width: min(900px, 100%);
 
     margin: auto;
 }
+
+
+/* Hero badge */
+
+.hero-badge {
+    display: inline-flex;
+
+    align-items: center;
+
+    padding: 7px 12px;
+
+    margin-bottom: 22px;
+
+    border:
+        1px solid rgba(52, 124, 255, 0.28);
+
+    border-radius: 999px;
+
+    background:
+        rgba(52, 124, 255, 0.07);
+
+    color: var(--blue-light);
+
+    font-size: 9px;
+
+    font-weight: 900;
+
+    letter-spacing: 1.5px;
+}
+
+.hero-badge::before {
+    content: "";
+
+    width: 6px;
+
+    height: 6px;
+
+    margin-right: 8px;
+
+    border-radius: 50%;
+
+    background: var(--green);
+
+    box-shadow:
+        0 0 12px rgba(46, 189, 140, 0.7);
+}
+
+
+/* Hero heading */
 
 .hero h1 {
     margin: 0;
 
     font-size:
-        clamp(42px, 8vw, 88px);
+        clamp(48px, 8vw, 92px);
 
     line-height: 0.95;
 
-    font-weight: 950;
+    letter-spacing: -5px;
 
-    letter-spacing: -4px;
+    font-weight: 950;
 }
 
 .hero h1 span {
-    color: #4b8cff;
+    color: var(--blue);
+
+    text-shadow:
+        0 0 45px rgba(52, 124, 255, 0.25);
 }
 
 .hero p {
-    max-width: 650px;
+    width: min(650px, 100%);
 
     margin:
-        25px auto;
+        28px auto 0;
 
-    color: #9da9ba;
+    color: var(--muted);
 
-    font-size: 17px;
+    font-size:
+        clamp(14px, 2vw, 17px);
+
+    line-height: 1.75;
 }
+
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
 
 .hero-actions {
     display: flex;
 
     justify-content: center;
 
-    gap: 12px;
+    align-items: center;
 
     flex-wrap: wrap;
 
-    margin-top: 30px;
+    gap: 10px;
+
+    margin-top: 32px;
 }
 
 .btn {
+    min-height: 44px;
+
     display: inline-flex;
 
     align-items: center;
 
     justify-content: center;
 
+    gap: 7px;
+
     padding:
-        12px 18px;
+        11px 18px;
+
+    border:
+        1px solid var(--border-light);
 
     border-radius: 10px;
 
-    border: 1px solid #263344;
-
-    background: #0d141d;
+    background: var(--panel);
 
     color: #ffffff;
 
-    font-weight: 800;
+    font-size: 12px;
 
-    font-size: 13px;
+    font-weight: 850;
 
     transition:
         transform 0.2s ease,
-        background 0.2s ease;
+        background 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
 .btn:hover {
     transform: translateY(-2px);
 
-    background: #142238;
+    background: #111b28;
+
+    border-color: #35465c;
+}
+
+.btn:active {
+    transform: translateY(0);
 }
 
 .btn-primary {
-    background: #347cff;
+    border-color: var(--blue);
 
-    border-color: #347cff;
+    background: var(--blue);
+
+    box-shadow:
+        0 8px 28px rgba(52, 124, 255, 0.22);
 }
 
 .btn-primary:hover {
     background: #4b8cff;
+
+    border-color: #4b8cff;
+
+    box-shadow:
+        0 10px 32px rgba(52, 124, 255, 0.32);
 }
 
 
-/* =====================================================
-   SECTION TITLES
-===================================================== */
+/* =========================================================
+   SECTION TITLE
+   ========================================================= */
 
 .section-title {
-    margin-bottom: 35px;
+    margin-bottom: 32px;
 
     text-align: center;
 }
@@ -292,162 +437,139 @@ section {
     margin: 0;
 
     font-size:
-        clamp(28px, 5vw, 44px);
+        clamp(29px, 5vw, 46px);
 
-    letter-spacing: -1px;
+    line-height: 1.05;
+
+    letter-spacing: -1.8px;
+
+    font-weight: 900;
 }
 
 .section-title p {
-    max-width: 650px;
+    width: min(650px, 100%);
 
     margin:
-        10px auto 0;
+        12px auto 0;
 
-    color: #8995a8;
-}
-
-
-/* =====================================================
-   CARDS
-===================================================== */
-
-.card-grid {
-    display: grid;
-
-    grid-template-columns:
-        repeat(3, minmax(0, 1fr));
-
-    gap: 16px;
-}
-
-.card {
-    padding: 22px;
-
-    border:
-        1px solid #1c2633;
-
-    border-radius: 16px;
-
-    background:
-        linear-gradient(
-            145deg,
-            #0b1119,
-            #080c12
-        );
-
-    box-shadow:
-        0 12px 35px
-        rgba(0, 0, 0, 0.18);
-}
-
-.card-icon {
-    font-size: 28px;
-
-    margin-bottom: 12px;
-}
-
-.card h3 {
-    margin:
-        0 0 8px;
-
-    font-size: 17px;
-}
-
-.card p {
-    margin: 0;
-
-    color: #8995a8;
+    color: var(--muted);
 
     font-size: 13px;
 }
 
 
-/* =====================================================
+/* =========================================================
    MAP SECTION
-===================================================== */
+   ========================================================= */
 
 .map-section {
-    max-width: 1250px;
+    width: min(1250px, calc(100% - 36px));
+
+    padding-top: 80px;
 }
 
 
-/* Map toolbar */
+/* =========================================================
+   MAP TOOLBAR
+   ========================================================= */
 
 .map-toolbar {
     display: flex;
 
-    align-items: center;
+    align-items: stretch;
 
-    justify-content: space-between;
+    gap: 10px;
 
-    gap: 12px;
-
-    margin-bottom: 14px;
-
-    flex-wrap: wrap;
+    margin-bottom: 12px;
 }
 
 .map-search {
     flex: 1;
 
-    min-width: 220px;
+    min-width: 0;
+
+    height: 46px;
 
     padding:
-        12px 14px;
+        0 15px;
 
     border:
-        1px solid #263344;
+        1px solid var(--border-light);
 
-    border-radius: 10px;
+    border-radius: 11px;
 
     outline: none;
 
-    background: #0b1119;
+    background: var(--panel);
 
     color: #ffffff;
+
+    font-size: 12px;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
 .map-search::placeholder {
-    color: #667387;
+    color: var(--muted-2);
 }
 
 .map-search:focus {
-    border-color: #347cff;
+    border-color: var(--blue);
+
+    box-shadow:
+        0 0 0 3px rgba(52, 124, 255, 0.1);
 }
 
 .map-location-button {
+    height: 46px;
+
+    flex-shrink: 0;
+
     padding:
-        11px 15px;
+        0 16px;
 
     border:
-        1px solid #263344;
+        1px solid var(--border-light);
 
-    border-radius: 10px;
+    border-radius: 11px;
 
-    background: #0d141d;
+    background: var(--panel);
 
     color: #ffffff;
 
-    font-weight: 800;
+    font-size: 11px;
+
+    font-weight: 850;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
 }
 
 .map-location-button:hover {
     background: #142238;
+
+    border-color: #3a4b62;
+
+    transform: translateY(-1px);
 }
 
 
-/* =====================================================
+/* =========================================================
    MAP FILTERS
-===================================================== */
+   ========================================================= */
 
 .map-filters {
     display: flex;
 
-    gap: 8px;
+    gap: 7px;
 
     flex-wrap: wrap;
 
-    margin-bottom: 14px;
+    margin-bottom: 12px;
 }
 
 .map-filter {
@@ -455,69 +577,167 @@ section {
         8px 12px;
 
     border:
-        1px solid #263344;
+        1px solid var(--border);
 
     border-radius: 999px;
 
-    background: #0b1119;
+    background: var(--panel);
 
-    color: #8995a8;
+    color: var(--muted);
 
-    font-size: 11px;
+    font-size: 10px;
 
-    font-weight: 800;
+    font-weight: 850;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
 }
 
-.map-filter:hover,
-.map-filter.active {
-    background: #347cff;
+.map-filter:hover {
+    color: #ffffff;
 
-    border-color: #347cff;
+    border-color: #35465c;
+
+    transform: translateY(-1px);
+}
+
+.map-filter.active {
+    background: var(--blue);
+
+    border-color: var(--blue);
 
     color: #ffffff;
+
+    box-shadow:
+        0 5px 18px rgba(52, 124, 255, 0.2);
 }
 
 
-/* =====================================================
-   REAL LEAFLET MAP
-===================================================== */
+/* =========================================================
+   MAP CONTAINER
+   ========================================================= */
 
 /*
-   IMPORTANT:
-   We intentionally do NOT redefine Leaflet's internal
-   tile/pane positioning here.
+    VERY IMPORTANT:
 
-   Leaflet's official CSS handles:
-   .leaflet-map-pane
-   .leaflet-tile-pane
-   .leaflet-tile
-   .leaflet-marker-pane
-   etc.
+    DO NOT STYLE LEAFLET INTERNAL ELEMENTS HERE.
+
+    Leaflet's own CSS controls:
+
+    .leaflet-map-pane
+    .leaflet-tile-pane
+    .leaflet-tile
+    .leaflet-marker-pane
+    .leaflet-popup-pane
+
+    We only size the outer container.
 */
 
 #mapCanvas {
+    position: relative;
+
     width: 100%;
 
     height: 570px;
 
     min-height: 570px;
 
-    position: relative;
-
     overflow: hidden;
 
     border:
-        1px solid #263344;
+        1px solid var(--border-light);
 
     border-radius: 18px;
 
     background: #101820;
+
+    box-shadow: var(--shadow);
 }
 
 
-/* =====================================================
-   LIFELINK MAP MARKERS
-===================================================== */
+/* =========================================================
+   LEAFLET POPUPS
+   ========================================================= */
+
+.leaflet-popup-content-wrapper {
+    background: #0b1119 !important;
+
+    color: #ffffff !important;
+
+    border:
+        1px solid #293548;
+
+    border-radius: 13px !important;
+
+    box-shadow:
+        0 18px 45px rgba(0, 0, 0, 0.45);
+}
+
+.leaflet-popup-tip {
+    background: #0b1119 !important;
+}
+
+.leaflet-popup-content {
+    margin: 15px !important;
+
+    min-width: 190px;
+}
+
+.leaflet-popup-close-button {
+    color: #8d9aae !important;
+
+    transition: color 0.2s ease;
+}
+
+.leaflet-popup-close-button:hover {
+    color: #ffffff !important;
+}
+
+
+/* =========================================================
+   LEAFLET CONTROLS
+   ========================================================= */
+
+.leaflet-control-zoom {
+    border: 0 !important;
+
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.35) !important;
+}
+
+.leaflet-control-zoom a {
+    background: #0b1119 !important;
+
+    color: #ffffff !important;
+
+    border-color: #263548 !important;
+}
+
+.leaflet-control-zoom a:hover {
+    background: #142238 !important;
+}
+
+.leaflet-control-attribution {
+    background:
+        rgba(5, 7, 11, 0.8) !important;
+
+    color: #7c899c !important;
+
+    border-radius:
+        5px 0 0 0;
+}
+
+.leaflet-control-attribution a {
+    color: var(--blue-light) !important;
+}
+
+
+/* =========================================================
+   CUSTOM LIFELINK MARKERS
+   ========================================================= */
 
 .lifelink-marker {
     width: 42px;
@@ -540,8 +760,7 @@ section {
         rotate(-45deg);
 
     box-shadow:
-        0 5px 15px
-        rgba(0, 0, 0, 0.45);
+        0 7px 18px rgba(0, 0, 0, 0.5);
 }
 
 .lifelink-marker span {
@@ -549,80 +768,45 @@ section {
         rotate(45deg);
 
     font-size: 18px;
+
+    line-height: 1;
 }
 
 .lifelink-marker.hospital {
-    background: #e83d45;
-}
-
-.lifelink-marker.pharmacy {
-    background: #2ebd8c;
+    background: var(--red);
 }
 
 .lifelink-marker.police {
-    background: #347cff;
+    background: var(--blue);
 }
 
 .lifelink-marker.fire {
-    background: #f28c28;
+    background: var(--orange);
 }
 
-.lifelink-marker.government {
-    background: #9a6cff;
+.lifelink-marker.pharmacy {
+    background: var(--green);
 }
 
 .lifelink-marker.shelter {
-    background: #d5aa24;
+    background: var(--yellow);
 }
 
 
-/* =====================================================
-   LEAFLET POPUP
-===================================================== */
-
-.leaflet-popup-content-wrapper {
-    background: #0b1119 !important;
-
-    color: #ffffff !important;
-
-    border:
-        1px solid #293548;
-
-    border-radius:
-        13px !important;
-
-    box-shadow:
-        0 15px 40px
-        rgba(0, 0, 0, 0.45);
-}
-
-.leaflet-popup-tip {
-    background: #0b1119 !important;
-}
-
-.leaflet-popup-content {
-    margin: 15px !important;
-
-    min-width: 190px;
-}
-
-.leaflet-popup-close-button {
-    color: #8995a8 !important;
-}
-
-
-/* =====================================================
+/* =========================================================
    POPUP CONTENT
-===================================================== */
+   ========================================================= */
 
 .lifelink-popup-category {
-    color: #74a8ff;
+    color: var(--blue-light);
 
     font-size: 8px;
 
     font-weight: 900;
 
-    letter-spacing: 1px;
+    letter-spacing: 1.2px;
+
+    text-transform: uppercase;
 }
 
 .lifelink-popup-title {
@@ -632,39 +816,40 @@ section {
 
     font-size: 15px;
 
-    font-weight: 800;
+    font-weight: 900;
 }
 
 .lifelink-popup-description {
-    margin-top: 6px;
+    margin-top: 7px;
 
-    color: #9da9ba;
+    color: var(--muted);
 
     font-size: 10px;
 
-    line-height: 1.5;
+    line-height: 1.55;
 }
 
 .lifelink-popup-button {
     width: 100%;
 
-    margin-top: 11px;
+    margin-top: 12px;
 
-    padding: 8px;
+    padding: 9px;
 
     border: 0;
 
-    border-radius: 7px;
+    border-radius: 8px;
 
-    background: #347cff;
+    background: var(--blue);
 
     color: #ffffff;
 
     font-size: 10px;
 
-    font-weight: 800;
+    font-weight: 850;
 
-    cursor: pointer;
+    transition:
+        background 0.2s ease;
 }
 
 .lifelink-popup-button:hover {
@@ -672,9 +857,9 @@ section {
 }
 
 
-/* =====================================================
+/* =========================================================
    MAP STATUS
-===================================================== */
+   ========================================================= */
 
 .map-status {
     display: flex;
@@ -685,18 +870,37 @@ section {
 
     margin-top: 12px;
 
-    padding: 12px 15px;
+    padding:
+        12px 15px;
 
     border:
-        1px solid #1c2633;
+        1px solid var(--border);
 
-    border-radius: 10px;
+    border-radius: 11px;
 
-    background: #0b1119;
+    background: var(--panel);
+
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.12);
 }
 
 .map-status > span {
-    font-size: 20px;
+    width: 34px;
+
+    height: 34px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 9px;
+
+    background:
+        rgba(52, 124, 255, 0.1);
+
+    font-size: 17px;
 }
 
 .map-status strong {
@@ -704,7 +908,9 @@ section {
 
     color: #ffffff;
 
-    font-size: 12px;
+    font-size: 11px;
+
+    font-weight: 850;
 }
 
 .map-status small {
@@ -712,104 +918,127 @@ section {
 
     margin-top: 2px;
 
-    color: #8995a8;
+    color: var(--muted);
 
     font-size: 10px;
 }
 
 
-/* =====================================================
+/* =========================================================
    LOCATION CARD
-===================================================== */
+   ========================================================= */
 
 .location-card {
     position: relative;
 
-    margin-top: 14px;
+    margin-top: 12px;
 
     padding: 18px;
 
     border:
-        1px solid #263344;
+        1px solid var(--border-light);
 
     border-radius: 14px;
 
-    background: #0b1119;
+    background:
+        linear-gradient(
+            145deg,
+            #0d151f,
+            #0a1017
+        );
+
+    box-shadow: var(--shadow);
 }
 
 .location-card.hidden {
     display: none;
 }
 
-.location-card-icon {
-    font-size: 28px;
-}
-
-.location-card-category {
-    margin-top: 7px;
-
-    color: #74a8ff;
-
-    font-size: 9px;
-
-    font-weight: 900;
-
-    letter-spacing: 1px;
-}
-
 .location-card h3 {
     margin:
-        4px 0;
+        5px 0;
 
-    font-size: 18px;
+    font-size: 17px;
 }
 
 .location-card p {
-    margin: 0 0 13px;
+    margin: 0;
 
-    color: #8995a8;
+    color: var(--muted);
 
     font-size: 12px;
 }
 
-.location-card button {
-    padding:
-        9px 13px;
 
-    border: 0;
+/* =========================================================
+   CARDS
+   ========================================================= */
 
-    border-radius: 8px;
+.card-grid {
+    display: grid;
 
-    background: #347cff;
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
 
-    color: #ffffff;
-
-    font-weight: 800;
+    gap: 15px;
 }
 
-.location-close {
-    position: absolute;
-
-    top: 12px;
-
-    right: 12px;
-
-    padding: 5px 9px;
+.card {
+    padding: 22px;
 
     border:
-        1px solid #263344;
+        1px solid var(--border);
 
-    border-radius: 7px;
+    border-radius: var(--radius);
 
-    background: #101820;
+    background:
+        linear-gradient(
+            145deg,
+            #0b1119,
+            #080c12
+        );
 
-    color: #8995a8;
+    box-shadow:
+        0 12px 35px rgba(0, 0, 0, 0.18);
+
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+
+    border-color: #2d3d52;
+}
+
+.card-icon {
+    font-size: 27px;
+
+    margin-bottom: 12px;
+}
+
+.card h3 {
+    margin:
+        0 0 7px;
+
+    font-size: 16px;
+}
+
+.card p {
+    margin: 0;
+
+    color: var(--muted);
+
+    font-size: 12px;
+
+    line-height: 1.65;
 }
 
 
-/* =====================================================
+/* =========================================================
    GUIDE
-===================================================== */
+   ========================================================= */
 
 .guide-grid {
     display: grid;
@@ -817,39 +1046,55 @@ section {
     grid-template-columns:
         repeat(3, minmax(0, 1fr));
 
-    gap: 14px;
+    gap: 15px;
 }
 
 .guide-card {
-    padding: 20px;
+    padding: 21px;
 
     border:
-        1px solid #1c2633;
+        1px solid var(--border);
 
-    border-radius: 15px;
+    border-radius: var(--radius);
 
-    background: #0b1119;
-
-    cursor: pointer;
+    background: var(--panel);
 
     transition:
         transform 0.2s ease,
-        border-color 0.2s ease;
+        border-color 0.2s ease,
+        background 0.2s ease;
 }
 
 .guide-card:hover {
     transform: translateY(-3px);
 
-    border-color: #347cff;
+    border-color: #304258;
+
+    background: var(--panel-2);
 }
 
 .guide-card .icon {
-    font-size: 27px;
+    width: 44px;
+
+    height: 44px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 12px;
+
+    background:
+        rgba(52, 124, 255, 0.09);
+
+    font-size: 23px;
 }
 
 .guide-card h3 {
     margin:
-        10px 0 5px;
+        14px 0 6px;
 
     font-size: 16px;
 }
@@ -857,84 +1102,17 @@ section {
 .guide-card p {
     margin: 0;
 
-    color: #8995a8;
+    color: var(--muted);
 
     font-size: 12px;
-}
 
-.guide-result {
-    margin-top: 18px;
-
-    padding: 18px;
-
-    border:
-        1px solid #263344;
-
-    border-radius: 14px;
-
-    background: #0b1119;
-
-    color: #c6cfdb;
-
-    font-size: 13px;
-}
-
-.guide-result.hidden {
-    display: none;
-}
-
-.official-link {
-    color: #74a8ff;
-
-    font-weight: 800;
+    line-height: 1.65;
 }
 
 
-/* =====================================================
+/* =========================================================
    RESOURCES
-===================================================== */
-
-.resource-controls {
-    display: flex;
-
-    gap: 10px;
-
-    margin-bottom: 20px;
-
-    flex-wrap: wrap;
-}
-
-.resource-search,
-.resource-filter {
-    padding:
-        11px 13px;
-
-    border:
-        1px solid #263344;
-
-    border-radius: 9px;
-
-    background: #0b1119;
-
-    color: #ffffff;
-
-    outline: none;
-}
-
-.resource-search {
-    flex: 1;
-
-    min-width: 220px;
-}
-
-.resource-search::placeholder {
-    color: #667387;
-}
-
-.resource-search:focus,
-.resource-filter:focus {
-    border-color: #347cff;
-}
+   ========================================================= */
 
 .resource-list {
     display: grid;
@@ -942,104 +1120,109 @@ section {
     grid-template-columns:
         repeat(2, minmax(0, 1fr));
 
-    gap: 14px;
+    gap: 15px;
 }
 
 .resource-card {
-    padding: 20px;
+    padding: 21px;
 
     border:
-        1px solid #1c2633;
+        1px solid var(--border);
 
-    border-radius: 14px;
+    border-radius: var(--radius);
 
-    background: #0b1119;
+    background: var(--panel);
+
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.resource-card:hover {
+    transform: translateY(-3px);
+
+    border-color: #304258;
 }
 
 .resource-tag {
-    display: inline-block;
+    display: inline-flex;
 
     padding:
         4px 8px;
 
     border-radius: 999px;
 
-    background: #111d2d;
+    background:
+        rgba(52, 124, 255, 0.09);
 
-    color: #74a8ff;
+    color: var(--blue-light);
 
     font-size: 8px;
 
     font-weight: 900;
 
-    text-transform: uppercase;
+    letter-spacing: 0.8px;
 }
 
 .resource-card h3 {
     margin:
-        10px 0 7px;
+        11px 0 7px;
 
     font-size: 16px;
 }
 
 .resource-card p {
-    margin:
-        0 0 12px;
+    margin: 0;
 
-    color: #8995a8;
+    color: var(--muted);
 
     font-size: 12px;
+
+    line-height: 1.65;
 }
 
-.resource-card a {
-    color: #74a8ff;
 
-    font-size: 11px;
+/* =========================================================
+   FOOTER
+   ========================================================= */
 
-    font-weight: 800;
-}
+footer {
+    padding:
+        38px 18px;
 
-.no-resources {
-    padding: 30px;
+    border-top:
+        1px solid var(--border);
+
+    background: #030509;
+
+    color: var(--muted-2);
 
     text-align: center;
 
-    color: #8995a8;
+    font-size: 10px;
+
+    line-height: 1.8;
 }
+
+footer strong {
+    color: #ffffff;
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   HIDDEN
+   ========================================================= */
 
 .hidden {
     display: none !important;
 }
 
 
-/* =====================================================
-   FOOTER
-===================================================== */
-
-footer {
-    padding:
-        35px 22px;
-
-    border-top:
-        1px solid #1c2633;
-
-    background: #030509;
-
-    color: #667387;
-
-    text-align: center;
-
-    font-size: 11px;
-}
-
-footer strong {
-    color: #ffffff;
-}
-
-
-/* =====================================================
-   RESPONSIVE
-===================================================== */
+/* =========================================================
+   RESPONSIVE — TABLET
+   ========================================================= */
 
 @media (max-width: 900px) {
 
@@ -1049,75 +1232,197 @@ footer strong {
             repeat(2, minmax(0, 1fr));
     }
 
-    .navigation {
-        align-items: flex-start;
+    .header-inner {
+        width: min(100% - 24px, 1180px);
+    }
+
+    section {
+        width: min(100% - 24px, 1180px);
     }
 
 }
 
 
+/* =========================================================
+   RESPONSIVE — MOBILE
+   ========================================================= */
+
 @media (max-width: 650px) {
 
-    section {
-        padding:
-            55px 15px;
+    html {
+        scroll-padding-top: 125px;
     }
 
-    .navigation {
+    .site-header {
+        position: relative;
+    }
+
+    .header-inner {
+        min-height: auto;
+
         padding:
-            12px 15px;
+            13px 0;
 
         flex-direction: column;
 
         gap: 10px;
     }
 
-    .navigation nav {
+    .navigation {
         width: 100%;
+
+        justify-content: center;
 
         overflow-x: auto;
 
-        flex-wrap: nowrap;
+        scrollbar-width: none;
+    }
+
+    .navigation::-webkit-scrollbar {
+        display: none;
+    }
+
+    .navigation a {
+        flex-shrink: 0;
+
+        padding:
+            7px 10px;
+
+        font-size: 11px;
+    }
+
+    section {
+        width: calc(100% - 24px);
+
+        padding:
+            60px 0;
     }
 
     .hero {
-        min-height: 560px;
+        min-height: 590px;
+
+        padding:
+            80px 12px;
     }
 
     .hero h1 {
-        letter-spacing: -2px;
+        font-size:
+            clamp(43px, 14vw, 70px);
+
+        letter-spacing: -3px;
+    }
+
+    .hero p {
+        font-size: 14px;
+    }
+
+    .hero-actions {
+        flex-direction: column;
+
+        width: 100%;
+    }
+
+    .hero-actions .btn {
+        width: min(300px, 100%);
+    }
+
+    .map-section {
+        width: calc(100% - 20px);
+    }
+
+    .map-toolbar {
+        flex-direction: column;
+    }
+
+    .map-search,
+    .map-location-button {
+        width: 100%;
+    }
+
+    .map-filters {
+        overflow-x: auto;
+
+        flex-wrap: nowrap;
+
+        padding-bottom: 4px;
+
+        scrollbar-width: none;
+    }
+
+    .map-filters::-webkit-scrollbar {
+        display: none;
+    }
+
+    .map-filter {
+        flex-shrink: 0;
+    }
+
+    /*
+       Mobile map height.
+       Still ONLY styling the outer container.
+    */
+
+    #mapCanvas {
+        height: 470px;
+
+        min-height: 470px;
+
+        border-radius: 14px;
     }
 
     .card-grid,
     .guide-grid,
     .resource-list {
-        grid-template-columns:
-            1fr;
+        grid-template-columns: 1fr;
     }
 
-    .map-toolbar {
-        align-items: stretch;
-
-        flex-direction: column;
-    }
-
-    .map-search {
-        width: 100%;
-    }
-
-    .map-location-button {
-        width: 100%;
-    }
-
-    #mapCanvas {
-        height: 480px;
-
-        min-height: 480px;
+    .section-title h2 {
+        font-size: 31px;
     }
 
 }
 
 
-/* =====================================================
-   END LIFELINK V2.4
-===================================================== */
+/* =========================================================
+   SMALL PHONES
+   ========================================================= */
+
+@media (max-width: 380px) {
+
+    .hero h1 {
+        font-size: 42px;
+    }
+
+    #mapCanvas {
+        height: 430px;
+
+        min-height: 430px;
+    }
+
+    .map-filter {
+        padding:
+            7px 10px;
+
+        font-size: 9px;
+    }
+
+}
+
+
+/* =========================================================
+   ACCESSIBILITY
+   ========================================================= */
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible {
+    outline:
+        2px solid var(--blue-light);
+
+    outline-offset: 3px;
+}
+
+
+/* =========================================================
+   END LIFELINK V2.5
+   ========================================================= */
