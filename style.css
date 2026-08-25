@@ -1,5 +1,6 @@
 /* =====================================================
-   LIFELINK V2.4 — STYLE
+   LIFELINK V2.4
+   COMPLETE STYLE.CSS
 ===================================================== */
 
 * {
@@ -12,14 +13,28 @@ html {
 
 body {
     margin: 0;
+
     background: #05070b;
+
     color: #f5f7fb;
-    font-family: Arial, Helvetica, sans-serif;
-    overflow-x: hidden;
+
+    font-family:
+        Inter,
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    line-height: 1.5;
 }
+
+
+/* =====================================================
+   GLOBAL
+===================================================== */
 
 a {
     color: inherit;
+
     text-decoration: none;
 }
 
@@ -33,126 +48,120 @@ button {
     cursor: pointer;
 }
 
-
-/* =====================================================
-   BACKGROUND
-===================================================== */
-
-.background-glow {
-    position: fixed;
-    width: 450px;
-    height: 450px;
-    border-radius: 50%;
-    filter: blur(120px);
-    opacity: 0.12;
-    pointer-events: none;
-    z-index: -1;
-}
-
-.glow-one {
-    top: 10%;
-    left: -180px;
-    background: #347cff;
-}
-
-.glow-two {
-    top: 55%;
-    right: -180px;
-    background: #ff3e4d;
+img {
+    max-width: 100%;
 }
 
 
 /* =====================================================
-   NAVBAR
+   HEADER
 ===================================================== */
 
-.navbar {
-    position: fixed;
+header {
+    position: sticky;
+
     top: 0;
-    left: 0;
-    right: 0;
 
-    z-index: 1000;
+    z-index: 2000;
 
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    background:
+        rgba(5, 7, 11, 0.92);
 
-    padding: 14px 6%;
+    border-bottom:
+        1px solid #1c2633;
 
-    background: rgba(5, 7, 11, 0.90);
-    backdrop-filter: blur(18px);
-
-    border-bottom: 1px solid #202938;
+    backdrop-filter:
+        blur(16px);
 }
 
-.brand {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
+.header-inner,
+.navigation {
+    max-width: 1180px;
 
-.brand-icon {
-    width: 42px;
-    height: 42px;
+    margin: auto;
 
-    display: grid;
-    place-items: center;
-
-    border-radius: 12px;
-
-    background: linear-gradient(
-        135deg,
-        #347cff,
-        #ff4148
-    );
-
-    font-size: 20px;
-}
-
-.brand-text strong,
-.brand-text small {
-    display: block;
-}
-
-.brand-text strong {
-    font-size: 16px;
-}
-
-.brand-text small {
-    margin-top: 3px;
-    color: #8995a8;
-    font-size: 8px;
-    letter-spacing: 0.7px;
+    padding:
+        14px 22px;
 }
 
 .navigation {
     display: flex;
-    gap: 24px;
 
-    color: #aeb8c8;
-    font-size: 13px;
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
 }
 
+.logo,
+.brand {
+    font-size: 21px;
+
+    font-weight: 900;
+
+    letter-spacing: 1px;
+}
+
+.logo span,
+.brand span {
+    color: #4b8cff;
+}
+
+.navigation nav {
+    display: flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    flex-wrap: wrap;
+}
+
+.navigation nav a,
 .navigation a {
-    transition: 0.2s ease;
+    padding:
+        8px 11px;
+
+    border-radius: 8px;
+
+    color: #9da9ba;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease;
 }
 
+.navigation nav a:hover,
 .navigation a:hover,
 .navigation a.active {
+    background: #111b28;
+
     color: #ffffff;
 }
 
-.call-button {
-    padding: 10px 15px;
 
-    background: #ffffff;
-    color: #05070b;
+/* =====================================================
+   MAIN
+===================================================== */
 
-    border-radius: 9px;
+main {
+    width: 100%;
+}
 
-    font-size: 12px;
-    font-weight: 800;
+section {
+    width: 100%;
+
+    max-width: 1180px;
+
+    margin: auto;
+
+    padding:
+        75px 22px;
 }
 
 
@@ -161,392 +170,269 @@ button {
 ===================================================== */
 
 .hero {
-    min-height: 100vh;
+    min-height: 650px;
 
-    display: grid;
-    place-items: center;
+    display: flex;
 
-    padding: 140px 20px 80px;
+    align-items: center;
+
+    justify-content: center;
 
     text-align: center;
 
     background:
         radial-gradient(
-            circle at 50% 40%,
-            #102b58 0%,
-            #081424 32%,
-            #05070b 72%
+            circle at 50% 35%,
+            rgba(52, 124, 255, 0.13),
+            transparent 40%
         );
 }
 
 .hero-content {
-    max-width: 900px;
-}
+    max-width: 850px;
 
-.version-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 9px;
-
-    padding: 9px 14px;
-
-    border: 1px solid #29446f;
-    border-radius: 50px;
-
-    background: rgba(9, 20, 38, 0.85);
-
-    color: #74a8ff;
-
-    font-size: 10px;
-    font-weight: 900;
-    letter-spacing: 1.2px;
-}
-
-.version-badge span {
-    color: #66758c;
+    margin: auto;
 }
 
 .hero h1 {
-    margin: 28px 0 24px;
+    margin: 0;
 
-    font-size: clamp(52px, 8vw, 92px);
+    font-size:
+        clamp(42px, 8vw, 88px);
 
-    line-height: 0.94;
-    letter-spacing: -5px;
+    line-height: 0.95;
+
+    font-weight: 950;
+
+    letter-spacing: -4px;
 }
 
 .hero h1 span {
-    color: #70a5ff;
-
-    text-shadow:
-        0 0 35px rgba(112, 165, 255, 0.2);
+    color: #4b8cff;
 }
 
 .hero p {
-    max-width: 720px;
-    margin: auto;
+    max-width: 650px;
+
+    margin:
+        25px auto;
 
     color: #9da9ba;
 
     font-size: 17px;
-    line-height: 1.8;
 }
 
-.hero-buttons {
+.hero-actions {
     display: flex;
-    justify-content: center;
 
-    flex-wrap: wrap;
+    justify-content: center;
 
     gap: 12px;
 
-    margin-top: 34px;
+    flex-wrap: wrap;
+
+    margin-top: 30px;
 }
 
-.button {
+.btn {
     display: inline-flex;
+
     align-items: center;
+
     justify-content: center;
 
-    padding: 13px 19px;
+    padding:
+        12px 18px;
 
-    border: 0;
     border-radius: 10px;
+
+    border: 1px solid #263344;
+
+    background: #0d141d;
+
+    color: #ffffff;
 
     font-weight: 800;
 
+    font-size: 13px;
+
     transition:
         transform 0.2s ease,
-        box-shadow 0.2s ease;
+        background 0.2s ease;
 }
 
-.button:hover {
-    transform: translateY(-3px);
+.btn:hover {
+    transform: translateY(-2px);
+
+    background: #142238;
 }
 
-.primary-button {
+.btn-primary {
     background: #347cff;
-    color: #ffffff;
 
-    box-shadow:
-        0 8px 25px rgba(52, 124, 255, 0.2);
+    border-color: #347cff;
 }
 
-.secondary-button {
-    background: #0c121b;
-
-    border: 1px solid #293548;
-
-    color: #ffffff;
-}
-
-.danger-button {
-    background: #e83d45;
-    color: #ffffff;
-}
-
-.hero-trust {
-    display: flex;
-    justify-content: center;
-
-    flex-wrap: wrap;
-
-    gap: 18px;
-
-    margin-top: 20px;
-
-    color: #7e8da2;
-
-    font-size: 11px;
+.btn-primary:hover {
+    background: #4b8cff;
 }
 
 
 /* =====================================================
-   SECTIONS
+   SECTION TITLES
 ===================================================== */
 
-.section {
-    position: relative;
-    padding: 95px 6%;
+.section-title {
+    margin-bottom: 35px;
+
+    text-align: center;
 }
 
-.dark-section {
-    background: #070b11;
+.section-title h2 {
+    margin: 0;
+
+    font-size:
+        clamp(28px, 5vw, 44px);
+
+    letter-spacing: -1px;
 }
 
-.container {
-    width: 100%;
-    max-width: 1150px;
-    margin: auto;
-}
+.section-title p {
+    max-width: 650px;
 
-.section-label {
-    color: #74a8ff;
+    margin:
+        10px auto 0;
 
-    font-size: 10px;
-    font-weight: 900;
-
-    letter-spacing: 1.5px;
-}
-
-h2 {
-    margin: 10px 0 18px;
-
-    font-size: 43px;
-    line-height: 1.05;
-
-    letter-spacing: -2px;
-}
-
-.section-description {
-    max-width: 760px;
-
-    color: #9da9ba;
-
-    line-height: 1.75;
+    color: #8995a8;
 }
 
 
 /* =====================================================
-   EMERGENCY
+   CARDS
 ===================================================== */
 
-.emergency-card {
-    position: relative;
+.card-grid {
+    display: grid;
 
-    display: flex;
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
 
-    gap: 24px;
+    gap: 16px;
+}
 
-    margin-top: 32px;
+.card {
+    padding: 22px;
 
-    padding: 30px;
+    border:
+        1px solid #1c2633;
 
-    overflow: hidden;
-
-    border: 1px solid #5b2930;
-    border-radius: 22px;
+    border-radius: 16px;
 
     background:
         linear-gradient(
             145deg,
-            #241014,
-            #0b1018
+            #0b1119,
+            #080c12
         );
-}
-
-.emergency-icon {
-    font-size: 44px;
-}
-
-.emergency-content {
-    position: relative;
-    z-index: 2;
-}
-
-.live-indicator {
-    display: flex;
-    align-items: center;
-
-    gap: 7px;
-
-    color: #ff7a82;
-
-    font-size: 9px;
-    font-weight: 900;
-
-    letter-spacing: 1px;
-}
-
-.live-indicator span {
-    width: 7px;
-    height: 7px;
-
-    border-radius: 50%;
-
-    background: #ff4c58;
 
     box-shadow:
-        0 0 12px #ff4c58;
+        0 12px 35px
+        rgba(0, 0, 0, 0.18);
 }
 
-.emergency-content h3 {
-    margin: 10px 0;
+.card-icon {
+    font-size: 28px;
 
-    font-size: 24px;
+    margin-bottom: 12px;
 }
 
-.emergency-content p {
-    max-width: 750px;
+.card h3 {
+    margin:
+        0 0 8px;
 
-    color: #aeb8c8;
-
-    line-height: 1.7;
+    font-size: 17px;
 }
 
-.emergency-actions {
-    display: flex;
-    align-items: center;
+.card p {
+    margin: 0;
 
-    flex-wrap: wrap;
+    color: #8995a8;
 
-    gap: 14px;
-
-    margin-top: 18px;
-}
-
-.official-link {
-    color: #76aaff;
-
-    font-size: 11px;
-    font-weight: 800;
+    font-size: 13px;
 }
 
 
 /* =====================================================
-   MAP APPLICATION
+   MAP SECTION
 ===================================================== */
 
-.map-application {
-    position: relative;
-
-    margin-top: 35px;
-
-    padding: 15px;
-
-    background: #080d14;
-
-    border: 1px solid #293548;
-
-    border-radius: 22px;
-
-    box-shadow:
-        0 25px 80px rgba(0, 0, 0, 0.3);
+.map-section {
+    max-width: 1250px;
 }
 
 
-/* =====================================================
-   MAP TOOLBAR
-===================================================== */
+/* Map toolbar */
 
 .map-toolbar {
     display: flex;
 
-    gap: 10px;
+    align-items: center;
 
-    margin-bottom: 12px;
+    justify-content: space-between;
+
+    gap: 12px;
+
+    margin-bottom: 14px;
+
+    flex-wrap: wrap;
 }
 
 .map-search {
     flex: 1;
 
-    display: flex;
-    align-items: center;
+    min-width: 220px;
 
-    gap: 10px;
+    padding:
+        12px 14px;
 
-    padding: 0 14px;
-
-    background: #0d141e;
-
-    border: 1px solid #293548;
+    border:
+        1px solid #263344;
 
     border-radius: 10px;
-}
 
-.map-search span {
-    color: #718096;
-}
-
-.map-search input {
-    width: 100%;
-
-    padding: 13px 0;
-
-    border: 0;
     outline: none;
 
-    background: transparent;
+    background: #0b1119;
 
     color: #ffffff;
 }
 
-.map-search input::placeholder {
-    color: #687589;
+.map-search::placeholder {
+    color: #667387;
 }
 
-.map-search:focus-within {
+.map-search:focus {
     border-color: #347cff;
 }
 
-.map-control-button {
-    display: flex;
-    align-items: center;
+.map-location-button {
+    padding:
+        11px 15px;
 
-    gap: 7px;
+    border:
+        1px solid #263344;
 
-    padding: 0 16px;
-
-    border: 1px solid #293548;
     border-radius: 10px;
 
-    background: #0d141e;
+    background: #0d141d;
 
     color: #ffffff;
 
-    font-weight: 700;
-
-    transition: 0.2s ease;
+    font-weight: 800;
 }
 
-.map-control-button:hover {
-    border-color: #347cff;
-    background: #101b2a;
-}
-
-.map-control-button:disabled {
-    cursor: wait;
-    opacity: 0.6;
+.map-location-button:hover {
+    background: #142238;
 }
 
 
@@ -557,38 +443,36 @@ h2 {
 .map-filters {
     display: flex;
 
-    gap: 7px;
+    gap: 8px;
 
-    overflow-x: auto;
+    flex-wrap: wrap;
 
-    padding-bottom: 10px;
-
-    scrollbar-width: thin;
+    margin-bottom: 14px;
 }
 
 .map-filter {
-    flex-shrink: 0;
+    padding:
+        8px 12px;
 
-    padding: 8px 12px;
+    border:
+        1px solid #263344;
 
-    border: 1px solid #273447;
-    border-radius: 50px;
+    border-radius: 999px;
 
     background: #0b1119;
 
     color: #8995a8;
 
-    font-size: 10px;
-    font-weight: 800;
+    font-size: 11px;
 
-    transition: 0.2s ease;
+    font-weight: 800;
 }
 
 .map-filter:hover,
 .map-filter.active {
-    border-color: #347cff;
+    background: #347cff;
 
-    background: #10213d;
+    border-color: #347cff;
 
     color: #ffffff;
 }
@@ -596,418 +480,73 @@ h2 {
 
 /* =====================================================
    REAL LEAFLET MAP
-   LIFELINK V2.4 — CORRECTED
 ===================================================== */
-
-.map-canvas.real-map {
-    position: relative;
-
-    width: 100%;
-    height: 570px;
-
-    overflow: hidden;
-
-    border: 1px solid #263344;
-    border-radius: 18px;
-
-    background: #101820;
-
-    isolation: isolate;
-}
-
-
-/* =====================================================
-   LEAFLET CORE
-===================================================== */
-
-.leaflet-container {
-    position: relative;
-
-    width: 100%;
-    height: 100%;
-
-    overflow: hidden;
-
-    outline: 0;
-
-    background: #101820;
-
-    font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
-
-    font-size: 12px;
-
-    -webkit-tap-highlight-color: transparent;
-}
-
-
-/* =====================================================
-   LEAFLET PANES
-===================================================== */
-
-.leaflet-pane,
-.leaflet-map-pane,
-.leaflet-tile-pane,
-.leaflet-overlay-pane,
-.leaflet-shadow-pane,
-.leaflet-marker-pane,
-.leaflet-tooltip-pane,
-.leaflet-popup-pane {
-    position: absolute;
-
-    left: 0;
-    top: 0;
-}
-
 
 /*
    IMPORTANT:
-   Leaflet itself uses transforms to position
-   these panes. Do NOT add manual transforms here.
+   We intentionally do NOT redefine Leaflet's internal
+   tile/pane positioning here.
+
+   Leaflet's official CSS handles:
+   .leaflet-map-pane
+   .leaflet-tile-pane
+   .leaflet-tile
+   .leaflet-marker-pane
+   etc.
 */
 
-.leaflet-map-pane {
-    z-index: 200;
-}
+#mapCanvas {
+    width: 100%;
 
-.leaflet-tile-pane {
-    z-index: 200;
-}
+    height: 570px;
 
-.leaflet-overlay-pane {
-    z-index: 400;
-}
+    min-height: 570px;
 
-.leaflet-shadow-pane {
-    z-index: 500;
-}
-
-.leaflet-marker-pane {
-    z-index: 600;
-}
-
-.leaflet-tooltip-pane {
-    z-index: 650;
-}
-
-.leaflet-popup-pane {
-    z-index: 700;
-}
-
-
-/* =====================================================
-   MAP TILES
-===================================================== */
-
-.leaflet-tile-container {
-    position: absolute;
-
-    left: 0;
-    top: 0;
-
-    pointer-events: none;
-}
-
-.leaflet-tile {
-    position: absolute;
-
-    left: 0;
-    top: 0;
-
-    display: block;
-
-    width: 256px !important;
-    height: 256px !important;
-
-    max-width: none !important;
-    max-height: none !important;
-
-    margin: 0;
-    padding: 0;
-
-    border: 0;
-
-    user-select: none;
-
-    -webkit-user-drag: none;
-}
-
-
-/*
-   Prevent global image rules from
-   resizing Leaflet's 256px tiles.
-*/
-
-.leaflet-container img {
-    max-width: none !important;
-    max-height: none !important;
-}
-
-.leaflet-container img.leaflet-tile {
-    width: 256px !important;
-    height: 256px !important;
-}
-
-
-/* =====================================================
-   MARKERS
-===================================================== */
-
-.leaflet-marker-icon,
-.leaflet-marker-shadow {
-    position: absolute;
-
-    display: block;
-
-    max-width: none !important;
-    max-height: none !important;
-
-    margin: 0;
-    padding: 0;
-
-    user-select: none;
-
-    -webkit-user-drag: none;
-}
-
-
-/* =====================================================
-   LEAFLET CONTROLS
-===================================================== */
-
-.leaflet-control {
     position: relative;
 
-    z-index: 800;
-
-    pointer-events: auto;
-}
-
-.leaflet-top,
-.leaflet-bottom {
-    position: absolute;
-
-    z-index: 1000;
-
-    pointer-events: none;
-}
-
-.leaflet-top {
-    top: 0;
-}
-
-.leaflet-bottom {
-    bottom: 0;
-}
-
-.leaflet-left {
-    left: 0;
-}
-
-.leaflet-right {
-    right: 0;
-}
-
-.leaflet-top .leaflet-control {
-    margin-top: 10px;
-}
-
-.leaflet-bottom .leaflet-control {
-    margin-bottom: 10px;
-}
-
-.leaflet-left .leaflet-control {
-    margin-left: 10px;
-}
-
-.leaflet-right .leaflet-control {
-    margin-right: 10px;
-}
-
-
-/* =====================================================
-   ZOOM CONTROL
-===================================================== */
-
-.leaflet-control-zoom {
     overflow: hidden;
 
-    border: 0 !important;
+    border:
+        1px solid #263344;
 
-    border-radius: 10px !important;
+    border-radius: 18px;
 
-    box-shadow:
-        0 5px 20px rgba(0, 0, 0, 0.4) !important;
-}
-
-.leaflet-control-zoom a {
-    width: 34px !important;
-    height: 34px !important;
-
-    line-height: 34px !important;
-
-    padding: 0 !important;
-
-    border: 1px solid #293548 !important;
-
-    background: #0b1119 !important;
-
-    color: #ffffff !important;
-
-    text-align: center;
-
-    text-decoration: none;
-
-    font-size: 20px !important;
-}
-
-.leaflet-control-zoom a:hover {
-    background: #142238 !important;
-}
-
-.leaflet-control-zoom-in {
-    border-bottom: 0 !important;
+    background: #101820;
 }
 
 
 /* =====================================================
-   POPUP
-===================================================== */
-
-.leaflet-popup {
-    position: absolute;
-
-    text-align: center;
-
-    margin-bottom: 20px;
-}
-
-.leaflet-popup-content-wrapper {
-    padding: 1px;
-
-    background: #0b1119 !important;
-
-    color: #ffffff !important;
-
-    border: 1px solid #293548;
-
-    border-radius: 13px !important;
-
-    box-shadow:
-        0 15px 40px rgba(0, 0, 0, 0.45);
-}
-
-.leaflet-popup-content {
-    margin: 15px !important;
-
-    min-width: 190px;
-
-    line-height: 1.4;
-}
-
-.leaflet-popup-tip-container {
-    width: 40px;
-    height: 20px;
-
-    position: absolute;
-
-    left: 50%;
-
-    margin-left: -20px;
-
-    overflow: hidden;
-
-    pointer-events: none;
-}
-
-.leaflet-popup-tip {
-    width: 17px;
-    height: 17px;
-
-    margin: -10px auto 0;
-
-    padding: 1px;
-
-    background: #0b1119 !important;
-
-    transform: rotate(45deg);
-
-    border: 1px solid #293548;
-}
-
-.leaflet-popup-close-button {
-    position: absolute;
-
-    top: 5px;
-    right: 7px;
-
-    width: 22px;
-    height: 22px;
-
-    color: #8995a8 !important;
-
-    font-size: 18px;
-
-    font-weight: bold;
-
-    text-decoration: none;
-}
-
-.leaflet-popup-close-button:hover {
-    color: #ffffff !important;
-}
-
-
-/* =====================================================
-   ATTRIBUTION
-===================================================== */
-
-.leaflet-control-attribution {
-    padding: 3px 7px;
-
-    background: rgba(5, 7, 11, 0.82) !important;
-
-    color: #8995a8 !important;
-
-    border-radius: 5px 0 0 0;
-
-    font-size: 9px !important;
-}
-
-.leaflet-control-attribution a {
-    color: #76aaff !important;
-
-    text-decoration: none;
-}
-
-
-/* =====================================================
-   LIFELINK CUSTOM MARKERS
+   LIFELINK MAP MARKERS
 ===================================================== */
 
 .lifelink-marker {
     width: 42px;
+
     height: 42px;
 
     display: flex;
 
     align-items: center;
+
     justify-content: center;
 
-    border: 3px solid #ffffff;
+    border:
+        3px solid #ffffff;
 
-    border-radius: 50% 50% 50% 0;
+    border-radius:
+        50% 50% 50% 0;
 
-    transform: rotate(-45deg);
+    transform:
+        rotate(-45deg);
 
     box-shadow:
-        0 5px 15px rgba(0, 0, 0, 0.45);
+        0 5px 15px
+        rgba(0, 0, 0, 0.45);
 }
 
 .lifelink-marker span {
-    transform: rotate(45deg);
+    transform:
+        rotate(45deg);
 
     font-size: 18px;
 }
@@ -1038,7 +577,42 @@ h2 {
 
 
 /* =====================================================
-   LIFELINK POPUP CONTENT
+   LEAFLET POPUP
+===================================================== */
+
+.leaflet-popup-content-wrapper {
+    background: #0b1119 !important;
+
+    color: #ffffff !important;
+
+    border:
+        1px solid #293548;
+
+    border-radius:
+        13px !important;
+
+    box-shadow:
+        0 15px 40px
+        rgba(0, 0, 0, 0.45);
+}
+
+.leaflet-popup-tip {
+    background: #0b1119 !important;
+}
+
+.leaflet-popup-content {
+    margin: 15px !important;
+
+    min-width: 190px;
+}
+
+.leaflet-popup-close-button {
+    color: #8995a8 !important;
+}
+
+
+/* =====================================================
+   POPUP CONTENT
 ===================================================== */
 
 .lifelink-popup-category {
@@ -1099,159 +673,24 @@ h2 {
 
 
 /* =====================================================
-   MOBILE MAP
-===================================================== */
-
-@media (max-width: 650px) {
-
-    .map-canvas.real-map {
-        height: 480px;
-    }
-
-}
-/* =====================================================
-   CUSTOM MAP MARKERS
-===================================================== */
-
-.lifelink-marker {
-    width: 42px;
-    height: 42px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border: 3px solid #ffffff;
-
-    border-radius: 50% 50% 50% 0;
-
-    transform: rotate(-45deg);
-
-    box-shadow:
-        0 5px 15px rgba(0, 0, 0, 0.45);
-}
-
-.lifelink-marker span {
-    transform: rotate(45deg);
-
-    font-size: 18px;
-}
-
-.lifelink-marker.hospital {
-    background: #e83d45;
-}
-
-.lifelink-marker.pharmacy {
-    background: #2ebd8c;
-}
-
-.lifelink-marker.police {
-    background: #347cff;
-}
-
-.lifelink-marker.fire {
-    background: #f28c28;
-}
-
-.lifelink-marker.government {
-    background: #9a6cff;
-}
-
-.lifelink-marker.shelter {
-    background: #d5aa24;
-}
-
-
-/* =====================================================
-   LEAFLET POPUP
-===================================================== */
-
-.leaflet-popup-content-wrapper {
-    background: #0b1119 !important;
-
-    color: #ffffff !important;
-
-    border: 1px solid #293548;
-
-    border-radius: 13px !important;
-
-    box-shadow:
-        0 15px 40px rgba(0, 0, 0, 0.45);
-}
-
-.leaflet-popup-tip {
-    background: #0b1119 !important;
-}
-
-.leaflet-popup-content {
-    margin: 15px !important;
-
-    min-width: 190px;
-}
-
-.lifelink-popup-category {
-    color: #74a8ff;
-
-    font-size: 8px;
-    font-weight: 900;
-
-    letter-spacing: 1px;
-}
-
-.lifelink-popup-title {
-    margin-top: 5px;
-
-    color: #ffffff;
-
-    font-size: 15px;
-    font-weight: 800;
-}
-
-.lifelink-popup-description {
-    margin-top: 6px;
-
-    color: #9da9ba;
-
-    font-size: 10px;
-
-    line-height: 1.5;
-}
-
-.lifelink-popup-button {
-    width: 100%;
-
-    margin-top: 11px;
-
-    padding: 8px;
-
-    border: 0;
-    border-radius: 7px;
-
-    background: #347cff;
-
-    color: #ffffff;
-
-    font-size: 10px;
-    font-weight: 800;
-}
-
-
-/* =====================================================
    MAP STATUS
 ===================================================== */
 
 .map-status {
     display: flex;
+
     align-items: center;
 
     gap: 12px;
 
     margin-top: 12px;
 
-    padding: 16px;
+    padding: 12px 15px;
 
-    border: 1px solid #293548;
-    border-radius: 14px;
+    border:
+        1px solid #1c2633;
+
+    border-radius: 10px;
 
     background: #0b1119;
 }
@@ -1260,17 +699,18 @@ h2 {
     font-size: 20px;
 }
 
-.map-status strong,
-.map-status small {
-    display: block;
-}
-
 .map-status strong {
+    display: block;
+
+    color: #ffffff;
+
     font-size: 12px;
 }
 
 .map-status small {
-    margin-top: 4px;
+    display: block;
+
+    margin-top: 2px;
 
     color: #8995a8;
 
@@ -1282,266 +722,86 @@ h2 {
    LOCATION CARD
 ===================================================== */
 
-.map-location-card {
-    display: flex;
-    align-items: flex-start;
+.location-card {
+    position: relative;
 
-    gap: 15px;
+    margin-top: 14px;
 
-    margin-top: 12px;
+    padding: 18px;
 
-    padding: 20px;
+    border:
+        1px solid #263344;
 
-    border: 1px solid #347cff;
+    border-radius: 14px;
 
-    border-radius: 17px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #0d1c31,
-            #0a1018
-        );
-
-    animation: cardIn 0.25s ease;
+    background: #0b1119;
 }
 
-@keyframes cardIn {
-
-    from {
-        opacity: 0;
-        transform: translateY(8px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-
+.location-card.hidden {
+    display: none;
 }
 
 .location-card-icon {
-    width: 48px;
-    height: 48px;
-
-    flex-shrink: 0;
-
-    display: grid;
-    place-items: center;
-
-    border-radius: 13px;
-
-    background: #15243a;
-
-    font-size: 23px;
-}
-
-.location-card-content {
-    flex: 1;
+    font-size: 28px;
 }
 
 .location-card-category {
+    margin-top: 7px;
+
     color: #74a8ff;
 
     font-size: 9px;
+
     font-weight: 900;
 
-    letter-spacing: 1.2px;
+    letter-spacing: 1px;
 }
 
-.location-card-content h3 {
-    margin: 7px 0;
+.location-card h3 {
+    margin:
+        4px 0;
 
-    font-size: 20px;
+    font-size: 18px;
 }
 
-.location-card-content p {
-    margin: 0;
+.location-card p {
+    margin: 0 0 13px;
 
-    color: #9da9ba;
-
-    font-size: 11px;
-
-    line-height: 1.6;
-}
-
-.location-card-actions {
-    display: flex;
-
-    gap: 9px;
-
-    flex-wrap: wrap;
-
-    margin-top: 15px;
-}
-
-.location-card-actions .button {
-    padding: 10px 13px;
-
-    font-size: 11px;
-}
-
-
-/* =====================================================
-   MAP DISCLAIMER
-===================================================== */
-
-.map-disclaimer {
-    display: flex;
-
-    gap: 9px;
-
-    margin-top: 12px;
-
-    color: #687589;
-
-    font-size: 10px;
-
-    line-height: 1.6;
-}
-
-.map-disclaimer p {
-    margin: 0;
-}
-
-
-/* =====================================================
-   RESOURCES
-===================================================== */
-
-.resource-controls {
-    display: flex;
-
-    gap: 10px;
-
-    margin: 30px 0 20px;
-}
-
-.search-box {
-    flex: 1;
-
-    display: flex;
-    align-items: center;
-
-    gap: 8px;
-
-    padding: 0 13px;
-
-    background: #0b1119;
-
-    border: 1px solid #293548;
-
-    border-radius: 10px;
-}
-
-.search-box input {
-    width: 100%;
-
-    padding: 13px 0;
-
-    border: 0;
-    outline: none;
-
-    background: transparent;
-
-    color: #ffffff;
-}
-
-.resource-controls select {
-    min-width: 170px;
-
-    padding: 13px;
-
-    background: #0b1119;
-
-    color: #ffffff;
-
-    border: 1px solid #293548;
-
-    border-radius: 10px;
-}
-
-.resource-grid {
-    display: grid;
-
-    grid-template-columns:
-        repeat(3, 1fr);
-
-    gap: 15px;
-}
-
-.resource-card {
-    padding: 20px;
-
-    background: #0b1018;
-
-    border: 1px solid #202b3a;
-
-    border-radius: 17px;
-
-    transition: 0.2s ease;
-}
-
-.resource-card:hover {
-    border-color: #347cff;
-
-    transform: translateY(-3px);
-}
-
-.resource-card h3 {
-    margin: 13px 0 7px;
-
-    font-size: 17px;
-}
-
-.resource-card p {
-    color: #9da9ba;
+    color: #8995a8;
 
     font-size: 12px;
-
-    line-height: 1.6;
 }
 
-.resource-card a {
-    color: #76aaff;
+.location-card button {
+    padding:
+        9px 13px;
 
-    font-size: 11px;
+    border: 0;
+
+    border-radius: 8px;
+
+    background: #347cff;
+
+    color: #ffffff;
+
     font-weight: 800;
 }
 
-.resource-tag {
-    display: inline-block;
+.location-close {
+    position: absolute;
 
-    padding: 5px 8px;
+    top: 12px;
 
-    border-radius: 50px;
+    right: 12px;
 
-    background: #09271f;
+    padding: 5px 9px;
 
-    color: #73dfba;
+    border:
+        1px solid #263344;
 
-    font-size: 9px;
-    font-weight: bold;
-}
+    border-radius: 7px;
 
-
-/* =====================================================
-   EMPTY
-===================================================== */
-
-.hidden {
-    display: none !important;
-}
-
-.empty-message {
-    display: flex;
-
-    flex-direction: column;
-    align-items: center;
-
-    gap: 7px;
-
-    padding: 40px;
+    background: #101820;
 
     color: #8995a8;
 }
@@ -1555,165 +815,200 @@ h2 {
     display: grid;
 
     grid-template-columns:
-        repeat(5, 1fr);
+        repeat(3, minmax(0, 1fr));
 
-    gap: 12px;
-
-    margin-top: 30px;
+    gap: 14px;
 }
 
 .guide-card {
-    min-height: 150px;
+    padding: 20px;
 
-    padding: 19px;
+    border:
+        1px solid #1c2633;
 
-    text-align: left;
+    border-radius: 15px;
 
     background: #0b1119;
 
-    border: 1px solid #202b3a;
+    cursor: pointer;
 
-    border-radius: 17px;
-
-    color: #ffffff;
-
-    transition: 0.2s ease;
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease;
 }
 
 .guide-card:hover {
+    transform: translateY(-3px);
+
     border-color: #347cff;
-
-    transform: translateY(-4px);
 }
 
-.guide-card span,
-.guide-card strong,
-.guide-card small {
-    display: block;
+.guide-card .icon {
+    font-size: 27px;
 }
 
-.guide-card span {
-    font-size: 28px;
+.guide-card h3 {
+    margin:
+        10px 0 5px;
+
+    font-size: 16px;
 }
 
-.guide-card strong {
-    margin-top: 12px;
-}
-
-.guide-card small {
-    margin-top: 7px;
-
-    color: #8995a8;
-
-    font-size: 10px;
-
-    line-height: 1.5;
-}
-
-.guide-result {
-    display: flex;
-
-    gap: 12px;
-
-    margin-top: 16px;
-
-    padding: 20px;
-
-    border: 1px solid #293548;
-    border-radius: 16px;
-
-    background: #0b1018;
-
-    color: #aeb8c8;
-
-    line-height: 1.7;
-}
-
-
-/* =====================================================
-   TRUST
-===================================================== */
-
-.trust-card {
-    display: flex;
-    align-items: center;
-
-    gap: 22px;
-
-    padding: 30px;
-
-    border: 1px solid #293548;
-    border-radius: 20px;
-
-    background: #0b1119;
-}
-
-.trust-icon {
-    width: 65px;
-    height: 65px;
-
-    flex-shrink: 0;
-
-    display: grid;
-    place-items: center;
-
-    border-radius: 18px;
-
-    background: #10203a;
-
-    font-size: 30px;
-}
-
-.trust-card h2 {
-    margin-bottom: 10px;
-}
-
-.trust-card p {
+.guide-card p {
     margin: 0;
 
     color: #8995a8;
 
-    line-height: 1.7;
+    font-size: 12px;
+}
+
+.guide-result {
+    margin-top: 18px;
+
+    padding: 18px;
+
+    border:
+        1px solid #263344;
+
+    border-radius: 14px;
+
+    background: #0b1119;
+
+    color: #c6cfdb;
+
+    font-size: 13px;
+}
+
+.guide-result.hidden {
+    display: none;
+}
+
+.official-link {
+    color: #74a8ff;
+
+    font-weight: 800;
 }
 
 
 /* =====================================================
-   FLOATING EMERGENCY
+   RESOURCES
 ===================================================== */
 
-.floating-emergency {
-    position: fixed;
-
-    right: 25px;
-    bottom: 25px;
-
-    z-index: 900;
-
-    width: 62px;
-    height: 62px;
-
+.resource-controls {
     display: flex;
-    flex-direction: column;
 
-    align-items: center;
-    justify-content: center;
+    gap: 10px;
 
-    gap: 1px;
+    margin-bottom: 20px;
 
-    border-radius: 50%;
+    flex-wrap: wrap;
+}
 
-    background: #e83d45;
+.resource-search,
+.resource-filter {
+    padding:
+        11px 13px;
+
+    border:
+        1px solid #263344;
+
+    border-radius: 9px;
+
+    background: #0b1119;
 
     color: #ffffff;
 
-    box-shadow:
-        0 8px 30px rgba(232, 61, 69, 0.35);
-
-    transition: 0.2s ease;
+    outline: none;
 }
 
-.floating-emergency:hover {
-    transform: scale(1.08);
+.resource-search {
+    flex: 1;
+
+    min-width: 220px;
+}
+
+.resource-search::placeholder {
+    color: #667387;
+}
+
+.resource-search:focus,
+.resource-filter:focus {
+    border-color: #347cff;
+}
+
+.resource-list {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 14px;
+}
+
+.resource-card {
+    padding: 20px;
+
+    border:
+        1px solid #1c2633;
+
+    border-radius: 14px;
+
+    background: #0b1119;
+}
+
+.resource-tag {
+    display: inline-block;
+
+    padding:
+        4px 8px;
+
+    border-radius: 999px;
+
+    background: #111d2d;
+
+    color: #74a8ff;
+
+    font-size: 8px;
+
+    font-weight: 900;
+
+    text-transform: uppercase;
+}
+
+.resource-card h3 {
+    margin:
+        10px 0 7px;
+
+    font-size: 16px;
+}
+
+.resource-card p {
+    margin:
+        0 0 12px;
+
+    color: #8995a8;
+
+    font-size: 12px;
+}
+
+.resource-card a {
+    color: #74a8ff;
+
+    font-size: 11px;
+
+    font-weight: 800;
+}
+
+.no-resources {
+    padding: 30px;
+
+    text-align: center;
+
+    color: #8995a8;
+}
+
+.hidden {
+    display: none !important;
 }
 
 
@@ -1722,223 +1017,107 @@ h2 {
 ===================================================== */
 
 footer {
-    display: flex;
-    justify-content: space-between;
+    padding:
+        35px 22px;
 
-    gap: 20px;
+    border-top:
+        1px solid #1c2633;
 
-    padding: 40px 6%;
+    background: #030509;
 
-    border-top: 1px solid #202938;
+    color: #667387;
 
-    color: #8995a8;
+    text-align: center;
 
     font-size: 11px;
 }
 
-footer strong,
-footer small {
-    display: block;
-}
-
 footer strong {
     color: #ffffff;
-    font-size: 14px;
-}
-
-footer small {
-    margin-top: 4px;
 }
 
 
 /* =====================================================
-   TABLET
+   RESPONSIVE
 ===================================================== */
 
-@media (max-width: 1000px) {
+@media (max-width: 900px) {
 
-    .navigation {
-        display: none;
-    }
-
+    .card-grid,
     .guide-grid {
         grid-template-columns:
-            repeat(2, 1fr);
+            repeat(2, minmax(0, 1fr));
     }
 
-    .resource-grid {
-        grid-template-columns:
-            repeat(2, 1fr);
+    .navigation {
+        align-items: flex-start;
     }
 
 }
 
-
-/* =====================================================
-   MOBILE
-===================================================== */
 
 @media (max-width: 650px) {
 
-    .navbar {
-        padding: 12px 18px;
+    section {
+        padding:
+            55px 15px;
     }
 
-    .call-button {
-        display: none;
+    .navigation {
+        padding:
+            12px 15px;
+
+        flex-direction: column;
+
+        gap: 10px;
+    }
+
+    .navigation nav {
+        width: 100%;
+
+        overflow-x: auto;
+
+        flex-wrap: nowrap;
     }
 
     .hero {
-        padding: 125px 18px 65px;
+        min-height: 560px;
     }
 
     .hero h1 {
-        font-size: 52px;
-        letter-spacing: -3px;
+        letter-spacing: -2px;
     }
 
-    .section {
-        padding: 75px 18px;
-    }
-
-    h2 {
-        font-size: 34px;
-    }
-
-    .emergency-card {
-        flex-direction: column;
+    .card-grid,
+    .guide-grid,
+    .resource-list {
+        grid-template-columns:
+            1fr;
     }
 
     .map-toolbar {
+        align-items: stretch;
+
         flex-direction: column;
     }
 
-    .map-control-button {
-        min-height: 45px;
-
-        justify-content: center;
-    }
-
-    .map-canvas.real-map {
-        height: 480px;
-    }
-
-    .map-location-card {
-        flex-direction: column;
-    }
-
-    .location-card-icon {
-        width: 44px;
-        height: 44px;
-    }
-
-    .resource-controls {
-        flex-direction: column;
-    }
-
-    .resource-controls select {
+    .map-search {
         width: 100%;
     }
 
-    .guide-grid,
-    .resource-grid {
-        grid-template-columns: 1fr;
+    .map-location-button {
+        width: 100%;
     }
-
-    .trust-card {
-        align-items: flex-start;
-
-        flex-direction: column;
-    }
-
-    footer {
-        flex-direction: column;
-    }
-
-    .floating-emergency {
-        right: 18px;
-        bottom: 18px;
-
-        width: 57px;
-        height: 57px;
-    }
-
-}
-/* =====================================================
-   LIFELINK MAP VISIBILITY FIX
-===================================================== */
-
-#mapCanvas {
-    display: block !important;
-
-    position: relative !important;
-
-    width: 100% !important;
-    height: 570px !important;
-
-    min-height: 570px !important;
-
-    overflow: hidden !important;
-
-    visibility: visible !important;
-
-    opacity: 1 !important;
-
-    background: #101820 !important;
-
-    border: 1px solid #263344 !important;
-
-    border-radius: 18px !important;
-}
-
-
-/* Leaflet must fill the map container */
-
-#mapCanvas.leaflet-container {
-    width: 100% !important;
-    height: 100% !important;
-
-    min-height: 0 !important;
-
-    display: block !important;
-
-    visibility: visible !important;
-
-    opacity: 1 !important;
-}
-
-
-/* Leaflet's map layers */
-
-#mapCanvas .leaflet-map-pane,
-#mapCanvas .leaflet-tile-pane,
-#mapCanvas .leaflet-overlay-pane,
-#mapCanvas .leaflet-shadow-pane,
-#mapCanvas .leaflet-marker-pane,
-#mapCanvas .leaflet-tooltip-pane,
-#mapCanvas .leaflet-popup-pane {
-    display: block !important;
-}
-
-
-/* Make tiles visible */
-
-#mapCanvas .leaflet-tile {
-    display: block !important;
-
-    visibility: visible !important;
-
-    opacity: 1 !important;
-}
-
-
-/* Mobile */
-
-@media (max-width: 650px) {
 
     #mapCanvas {
-        height: 480px !important;
-        min-height: 480px !important;
+        height: 480px;
+
+        min-height: 480px;
     }
 
 }
+
+
+/* =====================================================
+   END LIFELINK V2.4
+===================================================== */
