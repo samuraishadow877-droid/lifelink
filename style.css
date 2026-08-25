@@ -1561,3 +1561,454 @@ button {
     }
 
 }
+/* =========================================================
+   LIFELINK V2.7
+   EMERGENCY COMMAND CENTER
+   ========================================================= */
+
+
+/* =========================================================
+   EMERGENCY ALERT
+   ========================================================= */
+
+.emergency-alert {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+
+    padding: 18px 20px;
+
+    margin-bottom: 18px;
+
+    border: 1px solid rgba(255, 92, 108, 0.22);
+    border-radius: 16px;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(255, 92, 108, 0.08),
+            rgba(255, 92, 108, 0.025)
+        );
+}
+
+.alert-icon {
+    width: 46px;
+    height: 46px;
+
+    flex: 0 0 46px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 13px;
+
+    background: rgba(255, 92, 108, 0.1);
+
+    font-size: 22px;
+}
+
+.alert-content {
+    flex: 1;
+}
+
+.alert-content strong {
+    display: block;
+
+    font-size: 14px;
+}
+
+.alert-content p {
+    margin-top: 3px;
+
+    color: var(--muted);
+
+    font-size: 12px;
+}
+
+.alert-button {
+    padding: 10px 17px;
+
+    border-radius: 10px;
+
+    background: var(--red);
+
+    color: white;
+
+    font-size: 12px;
+    font-weight: 800;
+
+    white-space: nowrap;
+
+    transition:
+        transform 0.2s ease,
+        opacity 0.2s ease;
+}
+
+.alert-button:hover {
+    transform: translateY(-2px);
+
+    opacity: 0.9;
+}
+
+
+/* =========================================================
+   QUICK ACTIONS
+   ========================================================= */
+
+.quick-actions {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    gap: 12px;
+
+    margin-bottom: 18px;
+}
+
+.quick-action {
+    min-height: 92px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 13px;
+
+    padding: 17px;
+
+    text-align: left;
+
+    border: 1px solid var(--border);
+
+    border-radius: 15px;
+
+    background: var(--panel);
+
+    color: white;
+
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        background 0.2s ease;
+}
+
+.quick-action:hover {
+    transform: translateY(-3px);
+
+    border-color:
+        rgba(79, 140, 255, 0.3);
+
+    background: var(--panel-light);
+}
+
+.quick-action-icon {
+    width: 42px;
+    height: 42px;
+
+    flex: 0 0 42px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 12px;
+
+    background: rgba(255, 255, 255, 0.05);
+
+    font-size: 20px;
+}
+
+.quick-action strong {
+    display: block;
+
+    font-size: 13px;
+}
+
+.quick-action small {
+    display: block;
+
+    margin-top: 2px;
+
+    color: var(--muted);
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   EMERGENCY TOOLS
+   ========================================================= */
+
+.emergency-tools {
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 14px;
+}
+
+.emergency-tool-card {
+    padding: 25px;
+
+    border: 1px solid var(--border);
+
+    border-radius: var(--radius);
+
+    background: var(--panel);
+}
+
+.tool-header {
+    display: flex;
+    align-items: center;
+
+    gap: 13px;
+
+    margin-bottom: 25px;
+}
+
+.tool-icon {
+    width: 46px;
+    height: 46px;
+
+    flex: 0 0 46px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 13px;
+
+    background:
+        rgba(79, 140, 255, 0.08);
+
+    font-size: 21px;
+}
+
+.tool-header h3 {
+    margin-top: 3px;
+
+    font-size: 18px;
+}
+
+
+/* =========================================================
+   CHECKLIST
+   ========================================================= */
+
+.checklist {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 11px;
+}
+
+.check-item {
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 10px;
+
+    padding: 10px;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    color: var(--muted);
+
+    font-size: 12px;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease;
+}
+
+.check-item:hover {
+    background: rgba(255, 255, 255, 0.035);
+}
+
+.check-item input {
+    width: 16px;
+    height: 16px;
+
+    margin-top: 2px;
+
+    accent-color: var(--blue);
+
+    cursor: pointer;
+}
+
+.check-item:has(input:checked) {
+    color: #e1e7ef;
+
+    text-decoration: line-through;
+
+    text-decoration-color:
+        rgba(79, 140, 255, 0.5);
+}
+
+.checklist-progress {
+    margin-top: 15px;
+
+    color: #789eff;
+
+    font-size: 11px;
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   LOCATION
+   ========================================================= */
+
+.tool-description {
+    min-height: 60px;
+
+    color: var(--muted);
+
+    font-size: 13px;
+}
+
+.tool-button {
+    width: 100%;
+
+    min-height: 46px;
+
+    margin-top: 16px;
+
+    border: 1px solid
+        rgba(79, 140, 255, 0.25);
+
+    border-radius: 11px;
+
+    background:
+        rgba(79, 140, 255, 0.08);
+
+    color: #8db2ff;
+
+    font-size: 13px;
+    font-weight: 750;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.tool-button:hover {
+    transform: translateY(-2px);
+
+    background:
+        rgba(79, 140, 255, 0.14);
+}
+
+.location-status {
+    margin-top: 12px;
+
+    padding: 9px 11px;
+
+    border-radius: 9px;
+
+    background:
+        rgba(255, 255, 255, 0.035);
+
+    color: var(--muted);
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   TRUSTED CONTACT
+   ========================================================= */
+
+.trusted-contact {
+    margin-top: 14px;
+
+    padding: 25px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 25px;
+
+    border: 1px solid var(--border);
+
+    border-radius: var(--radius);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(57, 217, 138, 0.045),
+            rgba(79, 140, 255, 0.035)
+        );
+}
+
+.trusted-contact h3 {
+    font-size: 20px;
+}
+
+.trusted-contact p {
+    max-width: 620px;
+
+    margin-top: 5px;
+
+    color: var(--muted);
+
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   V2.7 RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .quick-actions {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+
+@media (max-width: 680px) {
+
+    .emergency-alert {
+        align-items: flex-start;
+
+        flex-wrap: wrap;
+    }
+
+    .alert-content {
+        min-width: calc(100% - 65px);
+    }
+
+    .alert-button {
+        width: 100%;
+
+        text-align: center;
+    }
+
+    .quick-actions {
+        grid-template-columns: 1fr;
+    }
+
+    .emergency-tools {
+        grid-template-columns: 1fr;
+    }
+
+    .trusted-contact {
+        align-items: flex-start;
+
+        flex-direction: column;
+    }
+
+    .trusted-contact .btn {
+        width: 100%;
+    }
+
+}
