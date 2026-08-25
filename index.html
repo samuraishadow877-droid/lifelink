@@ -196,242 +196,359 @@
         </section>
 
 
-        <!-- =================================================
-             EMERGENCY SECTION
-             ================================================= -->
+       <!-- =================================================
+     V2.7 EMERGENCY COMMAND CENTER
+     ================================================= -->
 
-        <section
-            class="section emergency-section"
-            id="emergency"
+<section
+    class="section emergency-section"
+    id="emergency"
+>
+
+    <div class="section-heading">
+
+        <span class="section-label">
+            EMERGENCY COMMAND CENTER
+        </span>
+
+        <h2>
+            Get help quickly.
+        </h2>
+
+        <p>
+            Use the options below to find the appropriate
+            emergency service and follow basic safety steps.
+        </p>
+
+    </div>
+
+
+    <!-- Emergency Alert -->
+
+    <div class="emergency-alert">
+
+        <div class="alert-icon">
+            ⚠️
+        </div>
+
+        <div class="alert-content">
+
+            <strong>
+                In immediate danger?
+            </strong>
+
+            <p>
+                Move to a safe place if possible and contact
+                the appropriate official emergency service.
+            </p>
+
+        </div>
+
+        <a
+            href="tel:112"
+            class="alert-button"
+        >
+            Call 112
+        </a>
+
+    </div>
+
+
+    <!-- Quick Actions -->
+
+    <div class="quick-actions">
+
+        <button
+            class="quick-action"
+            data-emergency="112"
+            type="button"
         >
 
-            <div class="section-heading">
-
-                <span class="section-label">
-                    NEED HELP?
-                </span>
-
-                <h2>
-                    Emergency contacts
-                </h2>
-
-                <p>
-                    Keep these official emergency numbers
-                    available when you need immediate assistance.
-                </p>
-
-            </div>
-
-
-            <div class="emergency-grid">
-
-
-                <!-- 112 -->
-
-                <article class="emergency-card emergency-main">
-
-                    <div class="emergency-icon">
-                        🆘
-                    </div>
-
-                    <div class="emergency-content">
-
-                        <span class="card-label">
-                            ALL-IN-ONE EMERGENCY
-                        </span>
-
-                        <h3>
-                            112
-                        </h3>
-
-                        <p>
-                            India's unified emergency response
-                            number for police, fire and medical
-                            emergencies.
-                        </p>
-
-                    </div>
-
-
-                    <a
-                        href="tel:112"
-                        class="call-button"
-                    >
-                        📞 Call 112
-                    </a>
-
-                </article>
-
-
-                <!-- Police -->
-
-                <article class="emergency-card">
-
-                    <div class="emergency-icon">
-                        🚓
-                    </div>
-
-                    <span class="card-label">
-                        POLICE
-                    </span>
-
-                    <h3>
-                        100
-                    </h3>
-
-                    <p>
-                        Police emergency assistance.
-                    </p>
-
-                    <a
-                        href="tel:100"
-                        class="small-call-button"
-                    >
-                        Call
-                    </a>
-
-                </article>
-
-
-                <!-- Fire -->
-
-                <article class="emergency-card">
-
-                    <div class="emergency-icon">
-                        🚒
-                    </div>
-
-                    <span class="card-label">
-                        FIRE
-                    </span>
-
-                    <h3>
-                        101
-                    </h3>
-
-                    <p>
-                        Fire and rescue emergency assistance.
-                    </p>
-
-                    <a
-                        href="tel:101"
-                        class="small-call-button"
-                    >
-                        Call
-                    </a>
-
-                </article>
-
-
-                <!-- Ambulance -->
-
-                <article class="emergency-card">
-
-                    <div class="emergency-icon">
-                        🚑
-                    </div>
-
-                    <span class="card-label">
-                        AMBULANCE
-                    </span>
-
-                    <h3>
-                        108
-                    </h3>
-
-                    <p>
-                        Ambulance and emergency medical assistance.
-                    </p>
-
-                    <a
-                        href="tel:108"
-                        class="small-call-button"
-                    >
-                        Call
-                    </a>
-
-                </article>
-
-
-                <!-- Women Helpline -->
-
-                <article class="emergency-card">
-
-                    <div class="emergency-icon">
-                        🛡️
-                    </div>
-
-                    <span class="card-label">
-                        WOMEN HELPLINE
-                    </span>
-
-                    <h3>
-                        181
-                    </h3>
-
-                    <p>
-                        Women helpline service.
-                    </p>
-
-                    <a
-                        href="tel:181"
-                        class="small-call-button"
-                    >
-                        Call
-                    </a>
-
-                </article>
-
-
-                <!-- Child Helpline -->
-
-                <article class="emergency-card">
-
-                    <div class="emergency-icon">
-                        👶
-                    </div>
-
-                    <span class="card-label">
-                        CHILD HELPLINE
-                    </span>
-
-                    <h3>
-                        1098
-                    </h3>
-
-                    <p>
-                        Child helpline service.
-                    </p>
-
-                    <a
-                        href="tel:1098"
-                        class="small-call-button"
-                    >
-                        Call
-                    </a>
-
-                </article>
-
-            </div>
-
-
-            <div class="emergency-note">
-
+            <span class="quick-action-icon">
+                🆘
+            </span>
+
+            <span>
                 <strong>
-                    ⚠️ Important
+                    General Emergency
                 </strong>
 
-                <span>
-                    In a life-threatening emergency, contact the
-                    appropriate official emergency service directly.
-                    LIFELINK is an information prototype and does
-                    not replace emergency services.
-                </span>
+                <small>
+                    112
+                </small>
+            </span>
+
+        </button>
+
+
+        <button
+            class="quick-action"
+            data-emergency="100"
+            type="button"
+        >
+
+            <span class="quick-action-icon">
+                🚓
+            </span>
+
+            <span>
+                <strong>
+                    Police
+                </strong>
+
+                <small>
+                    100
+                </small>
+            </span>
+
+        </button>
+
+
+        <button
+            class="quick-action"
+            data-emergency="101"
+            type="button"
+        >
+
+            <span class="quick-action-icon">
+                🚒
+            </span>
+
+            <span>
+                <strong>
+                    Fire
+                </strong>
+
+                <small>
+                    101
+                </small>
+            </span>
+
+        </button>
+
+
+        <button
+            class="quick-action"
+            data-emergency="108"
+            type="button"
+        >
+
+            <span class="quick-action-icon">
+                🚑
+            </span>
+
+            <span>
+                <strong>
+                    Ambulance
+                </strong>
+
+                <small>
+                    108
+                </small>
+            </span>
+
+        </button>
+
+    </div>
+
+
+    <!-- Emergency Checklist -->
+
+    <div class="emergency-tools">
+
+        <div class="emergency-tool-card">
+
+            <div class="tool-header">
+
+                <div class="tool-icon">
+                    📋
+                </div>
+
+                <div>
+
+                    <span class="card-label">
+                        QUICK CHECKLIST
+                    </span>
+
+                    <h3>
+                        Before contacting help
+                    </h3>
+
+                </div>
 
             </div>
 
-        </section>
 
+            <div class="checklist">
+
+                <label class="check-item">
+
+                    <input
+                        type="checkbox"
+                        class="emergency-check"
+                    >
+
+                    <span>
+                        Move to a safer location if possible.
+                    </span>
+
+                </label>
+
+
+                <label class="check-item">
+
+                    <input
+                        type="checkbox"
+                        class="emergency-check"
+                    >
+
+                    <span>
+                        Keep your phone available.
+                    </span>
+
+                </label>
+
+
+                <label class="check-item">
+
+                    <input
+                        type="checkbox"
+                        class="emergency-check"
+                    >
+
+                    <span>
+                        Identify your location.
+                    </span>
+
+                </label>
+
+
+                <label class="check-item">
+
+                    <input
+                        type="checkbox"
+                        class="emergency-check"
+                    >
+
+                    <span>
+                        Follow instructions from responders.
+                    </span>
+
+                </label>
+
+            </div>
+
+
+            <div
+                class="checklist-progress"
+                id="checklistProgress"
+            >
+                0 of 4 completed
+            </div>
+
+        </div>
+
+
+        <!-- Location -->
+
+        <div class="emergency-tool-card">
+
+            <div class="tool-header">
+
+                <div class="tool-icon">
+                    📍
+                </div>
+
+                <div>
+
+                    <span class="card-label">
+                        LOCATION
+                    </span>
+
+                    <h3>
+                        Share your location
+                    </h3>
+
+                </div>
+
+            </div>
+
+
+            <p class="tool-description">
+                LIFELINK can prepare a location-sharing
+                action for a future map integration.
+            </p>
+
+
+            <button
+                id="locationShareButton"
+                class="tool-button"
+                type="button"
+            >
+                📍 Get My Location
+            </button>
+
+
+            <div
+                id="locationStatus"
+                class="location-status"
+            >
+                Location not requested.
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Trusted Contact -->
+
+    <div class="trusted-contact">
+
+        <div>
+
+            <span class="section-label">
+                TRUSTED CONTACT
+            </span>
+
+            <h3>
+                Keep someone informed.
+            </h3>
+
+            <p>
+                Save an important contact on your device so
+                you can reach someone you trust quickly.
+            </p>
+
+        </div>
+
+
+        <a
+            href="tel:"
+            id="trustedContactButton"
+            class="btn btn-secondary"
+        >
+            📞 Contact Trusted Person
+        </a>
+
+    </div>
+
+
+    <div class="emergency-note">
+
+        <strong>
+            ⚠️ Important
+        </strong>
+
+        <span>
+            LIFELINK is an information prototype. It does not
+            dispatch emergency services or replace official
+            emergency systems.
+        </span>
+
+    </div>
+
+</section>
 
         <!-- =================================================
              RESOURCES
