@@ -1,517 +1,1401 @@
-<!DOCTYPE html>
-<html lang="en">
+/* =========================================================
+   LIFELINK V2.5
+   CLEAN REAL LEAFLET MAP SCRIPT
+   ========================================================= */
 
-<head>
-
-    <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <meta
-        name="description"
-        content="LIFELINK — A community emergency resource discovery platform."
-    >
-
-    <title>LIFELINK V2.5</title>
+"use strict";
 
 
-    <!-- =================================================
-         LEAFLET CSS
-    ================================================== -->
+/* =========================================================
+   GLOBAL STATE
+   ========================================================= */
 
-    <link
-        rel="stylesheet"
-        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-    >
+let lifelinkMap = null;
 
+let userMarker = null;
 
-    <!-- =================================================
-         LIFELINK CSS
-    ================================================== -->
+let userCircle = null;
 
-    <link
-        rel="stylesheet"
-        href="style.css"
-    >
+let resourceMarkers = [];
 
-</head>
+let activeFilter = "all";
 
 
-<body>
+/* =========================================================
+   DEMO RESOURCE DATA
+   =========================================================
+   
+   IMPORTANT:
+   These are DEMONSTRATION locations for the prototype.
+   They are NOT verified emergency facilities.
+   
+   Do not present them as real emergency-service locations.
+   ========================================================= */
+
+const resources = [
+
+    {
+        id: 1,
+
+        name: "Demo Hospital",
+
+        type: "hospital",
+
+        icon: "🏥",
+
+        lat: 19.1334,
+
+        lng: 72.9150,
+
+        description:
+            "Prototype hospital marker for testing the LIFELINK map."
+    },
+
+    {
+        id: 2,
+
+        name: "Demo Police Point",
+
+        type: "police",
+
+        icon: "🚓",
+
+        lat: 19.1197,
+
+        lng: 72.9056,
+
+        description:
+            "Prototype police marker for testing map interaction."
+    },
+
+    {
+        id: 3,
+
+        name: "Demo Fire Station",
+
+        type: "fire",
+
+        icon: "🚒",
+
+        lat: 19.1287,
+
+        lng: 72.9212,
+
+        description:
+            "Prototype fire-service marker for testing."
+    },
+
+    {
+        id: 4,
+
+        name: "Demo Pharmacy",
+
+        type: "pharmacy",
+
+        icon: "💊",
+
+        lat: 19.1244,
+
+        lng: 72.9132,
+
+        description:
+            "Prototype pharmacy marker for testing."
+    },
+
+    {
+        id: 5,
+
+        name: "Demo Community Shelter",
+
+        type: "shelter",
+
+        icon: "🏠",
+
+        lat: 19.1390,
+
+        lng: 72.9065,
+
+        description:
+            "Prototype shelter marker for testing."
+    },
+
+    {
+        id: 6,
+
+        name: "Demo Medical Centre",
+
+        type: "hospital",
+
+        icon: "🏥",
+
+        lat: 19.1158,
+
+        lng: 72.9180,
+
+        description:
+            "Prototype medical marker for testing."
+    }
+
+];
 
 
-    <!-- =================================================
-         HEADER
-    ================================================== -->
+/* =========================================================
+   WAIT FOR PAGE
+   ========================================================= */
 
-    <header class="site-header">
+document.addEventListener(
+    "DOMContentLoaded",
+    initializeLifelink
+);
 
-        <div class="header-inner">
 
-            <a
-                href="#home"
-                class="logo"
+/* =========================================================
+   MAIN INITIALIZATION
+   ========================================================= */
+
+function initializeLifelink() {
+
+    initializeMap();
+
+    initializeFilters();
+
+    initializeSearch();
+
+    initializeLocationButtons();
+
+    initializeNavigation();
+
+}
+
+
+/* =========================================================
+   MAP INITIALIZATION
+   ========================================================= */
+
+function initializeMap() {
+
+    const mapElement =
+        document.getElementById("mapCanvas");
+
+
+    if (!mapElement) {
+
+        console.error(
+            "LIFELINK: #mapCanvas was not found."
+        );
+
+        updateMapStatus(
+            "Map container was not found."
+        );
+
+        return;
+    }
+
+
+    /*
+       Check that Leaflet loaded.
+    */
+
+    if (typeof L === "undefined") {
+
+        console.error(
+            "LIFELINK: Leaflet failed to load."
+        );
+
+        updateMapStatus(
+            "Map library failed to load. Check your internet connection."
+        );
+
+        return;
+    }
+
+
+    try {
+
+        /*
+           Mumbai / Powai starting position.
+        */
+
+        lifelinkMap = L.map(
+            mapElement,
+            {
+                center: [
+                    19.1334,
+                    72.9150
+                ],
+
+                zoom: 14,
+
+                zoomControl: true,
+
+                attributionControl: true,
+
+                preferCanvas: true
+            }
+        );
+
+
+        /*
+           Carto dark map tiles.
+        */
+
+        L.tileLayer(
+            "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
+            {
+                attribution:
+                    '&copy; OpenStreetMap contributors &copy; CARTO',
+
+                subdomains:
+                    "abcd",
+
+                maxZoom: 20,
+
+                minZoom: 2,
+
+                updateWhenIdle: true,
+
+                keepBuffer: 2
+            }
+        )
+        .addTo(lifelinkMap);
+
+
+        /*
+           Add prototype markers.
+        */
+
+        addResourceMarkers();
+
+
+        /*
+           Tell Leaflet to calculate its size
+           after the page has rendered.
+        */
+
+        setTimeout(
+            function () {
+
+                if (lifelinkMap) {
+
+                    lifelinkMap.invalidateSize(
+                        true
+                    );
+
+                }
+
+            },
+            300
+        );
+
+
+        /*
+           Additional resize support.
+        */
+
+        window.addEventListener(
+            "resize",
+            function () {
+
+                if (lifelinkMap) {
+
+                    lifelinkMap.invalidateSize(
+                        false
+                    );
+
+                }
+
+            }
+        );
+
+
+        updateMapStatus(
+            "Interactive map ready."
+        );
+
+
+        console.log(
+            "LIFELINK V2.5 map initialized successfully."
+        );
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "LIFELINK map initialization error:",
+            error
+        );
+
+        updateMapStatus(
+            "Unable to initialize the map."
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   CREATE RESOURCE MARKERS
+   ========================================================= */
+
+function addResourceMarkers() {
+
+    if (!lifelinkMap) {
+        return;
+    }
+
+
+    /*
+       Clear old markers.
+    */
+
+    resourceMarkers.forEach(
+        function (item) {
+
+            lifelinkMap.removeLayer(
+                item.marker
+            );
+
+        }
+    );
+
+
+    resourceMarkers = [];
+
+
+    resources.forEach(
+        function (resource) {
+
+            const marker =
+                createResourceMarker(
+                    resource
+                );
+
+
+            marker.addTo(
+                lifelinkMap
+            );
+
+
+            resourceMarkers.push(
+                {
+                    resource: resource,
+
+                    marker: marker
+                }
+            );
+
+        }
+    );
+
+
+    applyCurrentFilter();
+
+}
+
+
+/* =========================================================
+   CREATE CUSTOM MARKER
+   ========================================================= */
+
+function createResourceMarker(
+    resource
+) {
+
+    const markerIcon =
+        L.divIcon(
+            {
+                className:
+                    "",
+
+                html:
+                    `
+                    <div class="lifelink-marker ${resource.type}">
+                        <span>${resource.icon}</span>
+                    </div>
+                    `,
+
+                iconSize: [
+                    42,
+                    42
+                ],
+
+                iconAnchor: [
+                    21,
+                    42
+                ],
+
+                popupAnchor: [
+                    0,
+                    -40
+                ]
+            }
+        );
+
+
+    const marker =
+        L.marker(
+            [
+                resource.lat,
+                resource.lng
+            ],
+            {
+                icon: markerIcon,
+
+                title:
+                    resource.name
+            }
+        );
+
+
+    marker.bindPopup(
+        createPopupHTML(
+            resource
+        )
+    );
+
+
+    return marker;
+}
+
+
+/* =========================================================
+   POPUP HTML
+   ========================================================= */
+
+function createPopupHTML(
+    resource
+) {
+
+    return `
+        <div class="lifelink-popup">
+
+            <div class="lifelink-popup-category">
+                ${escapeHTML(resource.type)}
+            </div>
+
+            <div class="lifelink-popup-title">
+                ${escapeHTML(resource.name)}
+            </div>
+
+            <div class="lifelink-popup-description">
+                ${escapeHTML(resource.description)}
+            </div>
+
+            <button
+                class="lifelink-popup-button"
+                type="button"
+                onclick="focusResource(${resource.id})"
             >
-                LIFE<span>LINK</span>
-            </a>
-
-
-            <nav class="navigation">
-
-                <a href="#home">
-                    Home
-                </a>
-
-                <a href="#map">
-                    Map
-                </a>
-
-                <a href="#resources">
-                    Resources
-                </a>
-
-                <a href="#guide">
-                    Guide
-                </a>
-
-            </nav>
+                View on Map
+            </button>
 
         </div>
-
-    </header>
-
-
-
-    <main>
+    `;
+}
 
 
-        <!-- =================================================
-             HERO
-        ================================================== -->
+/* =========================================================
+   FOCUS RESOURCE
+   ========================================================= */
 
-        <section
-            id="home"
-            class="hero"
-        >
+function focusResource(
+    resourceId
+) {
 
-            <div class="hero-content">
+    const item =
+        resourceMarkers.find(
+            function (entry) {
 
-                <div class="hero-badge">
-                    COMMUNITY SAFETY PLATFORM
-                </div>
+                return entry.resource.id === resourceId;
 
-                <h1>
-                    Help is
-                    <span>closer</span>
-                    than you think.
-                </h1>
-
-                <p>
-                    LIFELINK helps people discover nearby
-                    emergency and community resources through
-                    one simple interface.
-                </p>
+            }
+        );
 
 
-                <div class="hero-actions">
+    if (!item || !lifelinkMap) {
+        return;
+    }
 
-                    <a
-                        href="#map"
-                        class="btn btn-primary"
-                    >
-                        Explore Map
-                    </a>
 
-                    <button
-                        id="heroLocationButton"
-                        class="btn"
-                        type="button"
-                    >
-                        📍 Find My Location
-                    </button>
+    /*
+       If hidden by a filter,
+       switch to its type first.
+    */
 
-                </div>
+    if (
+        activeFilter !== "all" &&
+        item.resource.type !== activeFilter
+    ) {
 
+        activeFilter =
+            item.resource.type;
+
+        updateFilterButtons();
+
+        applyCurrentFilter();
+
+    }
+
+
+    lifelinkMap.setView(
+        [
+            item.resource.lat,
+            item.resource.lng
+        ],
+        16,
+        {
+            animate: true
+        }
+    );
+
+
+    setTimeout(
+        function () {
+
+            item.marker.openPopup();
+
+        },
+        350
+    );
+
+}
+
+
+/* =========================================================
+   FILTER INITIALIZATION
+   ========================================================= */
+
+function initializeFilters() {
+
+    const buttons =
+        document.querySelectorAll(
+            ".map-filter"
+        );
+
+
+    buttons.forEach(
+        function (button) {
+
+            button.addEventListener(
+                "click",
+                function () {
+
+                    activeFilter =
+                        button.dataset.type ||
+                        "all";
+
+
+                    updateFilterButtons();
+
+                    applyCurrentFilter();
+
+                }
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   UPDATE FILTER BUTTONS
+   ========================================================= */
+
+function updateFilterButtons() {
+
+    const buttons =
+        document.querySelectorAll(
+            ".map-filter"
+        );
+
+
+    buttons.forEach(
+        function (button) {
+
+            const type =
+                button.dataset.type ||
+                "all";
+
+
+            button.classList.toggle(
+                "active",
+                type === activeFilter
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   APPLY FILTER
+   ========================================================= */
+
+function applyCurrentFilter() {
+
+    if (!lifelinkMap) {
+        return;
+    }
+
+
+    resourceMarkers.forEach(
+        function (item) {
+
+            const shouldShow =
+                activeFilter === "all" ||
+                item.resource.type === activeFilter;
+
+
+            if (shouldShow) {
+
+                if (
+                    !lifelinkMap.hasLayer(
+                        item.marker
+                    )
+                ) {
+
+                    item.marker.addTo(
+                        lifelinkMap
+                    );
+
+                }
+
+            }
+
+            else {
+
+                if (
+                    lifelinkMap.hasLayer(
+                        item.marker
+                    )
+                ) {
+
+                    lifelinkMap.removeLayer(
+                        item.marker
+                    );
+
+                }
+
+            }
+
+        }
+    );
+
+
+    updateMapStatus(
+        activeFilter === "all"
+            ? "Showing all prototype resources."
+            : `Showing ${activeFilter} resources.`
+    );
+
+}
+
+
+/* =========================================================
+   SEARCH
+   ========================================================= */
+
+function initializeSearch() {
+
+    const searchInput =
+        document.getElementById(
+            "mapSearch"
+        );
+
+
+    if (!searchInput) {
+        return;
+    }
+
+
+    searchInput.addEventListener(
+        "input",
+        function () {
+
+            performSearch(
+                searchInput.value
+            );
+
+        }
+    );
+
+
+    searchInput.addEventListener(
+        "keydown",
+        function (event) {
+
+            if (
+                event.key === "Enter"
+            ) {
+
+                performSearch(
+                    searchInput.value
+                );
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   PERFORM SEARCH
+   ========================================================= */
+
+function performSearch(
+    query
+) {
+
+    const cleanQuery =
+        query
+            .trim()
+            .toLowerCase();
+
+
+    if (!cleanQuery) {
+
+        applyCurrentFilter();
+
+        updateMapStatus(
+            "Showing all prototype resources."
+        );
+
+        return;
+    }
+
+
+    const matches =
+        resourceMarkers.filter(
+            function (item) {
+
+                const resource =
+                    item.resource;
+
+
+                return (
+                    resource.name
+                        .toLowerCase()
+                        .includes(cleanQuery)
+
+                    ||
+
+                    resource.type
+                        .toLowerCase()
+                        .includes(cleanQuery)
+
+                    ||
+
+                    resource.description
+                        .toLowerCase()
+                        .includes(cleanQuery)
+                );
+
+            }
+        );
+
+
+    resourceMarkers.forEach(
+        function (item) {
+
+            if (
+                matches.includes(item)
+            ) {
+
+                if (
+                    !lifelinkMap.hasLayer(
+                        item.marker
+                    )
+                ) {
+
+                    item.marker.addTo(
+                        lifelinkMap
+                    );
+
+                }
+
+            }
+
+            else {
+
+                if (
+                    lifelinkMap.hasLayer(
+                        item.marker
+                    )
+                ) {
+
+                    lifelinkMap.removeLayer(
+                        item.marker
+                    );
+
+                }
+
+            }
+
+        }
+    );
+
+
+    if (matches.length === 0) {
+
+        updateMapStatus(
+            "No prototype resources matched your search."
+        );
+
+        return;
+    }
+
+
+    updateMapStatus(
+        `${matches.length} prototype resource(s) found.`
+    );
+
+
+    /*
+       Move map to first result.
+    */
+
+    const first =
+        matches[0].resource;
+
+
+    lifelinkMap.setView(
+        [
+            first.lat,
+            first.lng
+        ],
+        15,
+        {
+            animate: true
+        }
+    );
+
+
+    matches[0].marker.openPopup();
+
+}
+
+
+/* =========================================================
+   LOCATION BUTTONS
+   ========================================================= */
+
+function initializeLocationButtons() {
+
+    const mapLocationButton =
+        document.getElementById(
+            "locationButton"
+        );
+
+
+    const heroLocationButton =
+        document.getElementById(
+            "heroLocationButton"
+        );
+
+
+    if (mapLocationButton) {
+
+        mapLocationButton.addEventListener(
+            "click",
+            locateUser
+        );
+
+    }
+
+
+    if (heroLocationButton) {
+
+        heroLocationButton.addEventListener(
+            "click",
+            function () {
+
+                document
+                    .getElementById("map")
+                    ?.scrollIntoView(
+                        {
+                            behavior:
+                                "smooth"
+                        }
+                    );
+
+
+                setTimeout(
+                    locateUser,
+                    600
+                );
+
+            }
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   LOCATE USER
+   ========================================================= */
+
+function locateUser() {
+
+    if (!navigator.geolocation) {
+
+        updateMapStatus(
+            "Your browser does not support location services."
+        );
+
+        return;
+    }
+
+
+    updateMapStatus(
+        "Requesting your location..."
+    );
+
+
+    navigator.geolocation.getCurrentPosition(
+
+        function (position) {
+
+            const latitude =
+                position.coords.latitude;
+
+
+            const longitude =
+                position.coords.longitude;
+
+
+            const accuracy =
+                position.coords.accuracy;
+
+
+            showUserLocation(
+                latitude,
+                longitude,
+                accuracy
+            );
+
+        },
+
+
+        function (error) {
+
+            console.error(
+                "Location error:",
+                error
+            );
+
+
+            let message =
+                "Unable to get your location.";
+
+
+            if (
+                error.code ===
+                error.PERMISSION_DENIED
+            ) {
+
+                message =
+                    "Location permission was denied.";
+
+            }
+
+            else if (
+                error.code ===
+                error.POSITION_UNAVAILABLE
+            ) {
+
+                message =
+                    "Your location is currently unavailable.";
+
+            }
+
+            else if (
+                error.code ===
+                error.TIMEOUT
+            ) {
+
+                message =
+                    "Location request timed out.";
+
+            }
+
+
+            updateMapStatus(
+                message
+            );
+
+        },
+
+
+        {
+            enableHighAccuracy:
+                true,
+
+            timeout:
+                15000,
+
+            maximumAge:
+                60000
+        }
+
+    );
+
+}
+
+
+/* =========================================================
+   SHOW USER LOCATION
+   ========================================================= */
+
+function showUserLocation(
+    latitude,
+    longitude,
+    accuracy
+) {
+
+    if (!lifelinkMap) {
+        return;
+    }
+
+
+    /*
+       Remove previous marker.
+    */
+
+    if (userMarker) {
+
+        lifelinkMap.removeLayer(
+            userMarker
+        );
+
+    }
+
+
+    if (userCircle) {
+
+        lifelinkMap.removeLayer(
+            userCircle
+        );
+
+    }
+
+
+    /*
+       User icon.
+    */
+
+    const userIcon =
+        L.divIcon(
+            {
+                className:
+                    "",
+
+                html:
+                    `
+                    <div style="
+                        width:18px;
+                        height:18px;
+                        border:3px solid white;
+                        border-radius:50%;
+                        background:#347cff;
+                        box-shadow:0 0 0 6px rgba(52,124,255,0.22),
+                                   0 4px 15px rgba(0,0,0,0.45);
+                    "></div>
+                    `,
+
+                iconSize: [
+                    18,
+                    18
+                ],
+
+                iconAnchor: [
+                    9,
+                    9
+                ]
+            }
+        );
+
+
+    userMarker =
+        L.marker(
+            [
+                latitude,
+                longitude
+            ],
+            {
+                icon:
+                    userIcon,
+
+                zIndexOffset:
+                    1000
+            }
+        )
+        .addTo(
+            lifelinkMap
+        );
+
+
+    userMarker.bindPopup(
+        `
+        <div class="lifelink-popup">
+
+            <div class="lifelink-popup-category">
+                YOUR LOCATION
             </div>
 
-        </section>
-
-
-
-        <!-- =================================================
-             MAP
-        ================================================== -->
-
-        <section
-            id="map"
-            class="map-section"
-        >
-
-            <div class="section-title">
-
-                <h2>
-                    Emergency Resource Map
-                </h2>
-
-                <p>
-                    Explore nearby community resources.
-                </p>
-
+            <div class="lifelink-popup-title">
+                You are here
             </div>
 
-
-            <!-- SEARCH -->
-
-            <div class="map-toolbar">
-
-                <input
-                    id="mapSearch"
-                    class="map-search"
-                    type="search"
-                    placeholder="Search hospitals, police, pharmacies..."
-                    autocomplete="off"
-                >
-
-
-                <button
-                    id="locationButton"
-                    class="map-location-button"
-                    type="button"
-                >
-                    📍 Use My Location
-                </button>
-
+            <div class="lifelink-popup-description">
+                Approximate accuracy:
+                ${Math.round(accuracy)} metres.
             </div>
 
+        </div>
+        `
+    );
 
-            <!-- FILTERS -->
-
-            <div
-                id="mapFilters"
-                class="map-filters"
-            >
 
-                <button
-                    class="map-filter active"
-                    data-type="all"
-                    type="button"
-                >
-                    All
-                </button>
+    /*
+       Accuracy circle.
+    */
 
-                <button
-                    class="map-filter"
-                    data-type="hospital"
-                    type="button"
-                >
-                    🏥 Hospitals
-                </button>
+    userCircle =
+        L.circle(
+            [
+                latitude,
+                longitude
+            ],
+            {
+                radius:
+                    accuracy,
 
-                <button
-                    class="map-filter"
-                    data-type="police"
-                    type="button"
-                >
-                    🚓 Police
-                </button>
+                color:
+                    "#347cff",
 
-                <button
-                    class="map-filter"
-                    data-type="fire"
-                    type="button"
-                >
-                    🚒 Fire
-                </button>
+                fillColor:
+                    "#347cff",
 
-                <button
-                    class="map-filter"
-                    data-type="pharmacy"
-                    type="button"
-                >
-                    💊 Pharmacy
-                </button>
+                fillOpacity:
+                    0.08,
 
-                <button
-                    class="map-filter"
-                    data-type="shelter"
-                    type="button"
-                >
-                    🏠 Shelter
-                </button>
+                weight:
+                    1
+            }
+        )
+        .addTo(
+            lifelinkMap
+        );
 
-            </div>
 
+    /*
+       Move map.
+    */
 
-            <!-- =================================================
-                 MAP CONTAINER
+    lifelinkMap.setView(
+        [
+            latitude,
+            longitude
+        ],
+        15,
+        {
+            animate: true
+        }
+    );
 
-                 IMPORTANT:
-                 Leaflet owns everything INSIDE this element.
-            ================================================== -->
 
-            <div
-                id="mapCanvas"
-                aria-label="Interactive emergency resource map"
-            ></div>
+    updateMapStatus(
+        "Your approximate location is shown on the map."
+    );
 
 
-            <!-- STATUS -->
+    showLocationResult(
+        latitude,
+        longitude,
+        accuracy
+    );
 
-            <div
-                id="mapStatus"
-                class="map-status"
-            >
+}
 
-                <span>🗺️</span>
 
-                <div>
+/* =========================================================
+   LOCATION RESULT CARD
+   ========================================================= */
 
-                    <strong>
-                        LIFELINK Map
-                    </strong>
+function showLocationResult(
+    latitude,
+    longitude,
+    accuracy
+) {
 
-                    <small id="mapStatusText">
-                        Loading map...
-                    </small>
+    const result =
+        document.getElementById(
+            "locationResult"
+        );
 
-                </div>
 
-            </div>
+    if (!result) {
+        return;
+    }
 
 
-            <!-- LOCATION RESULT -->
+    result.innerHTML = `
 
-            <div
-                id="locationResult"
-                class="location-card hidden"
-            ></div>
+        <div class="location-card-category">
+            LOCATION DETECTED
+        </div>
 
-        </section>
+        <h3>
+            Your approximate position
+        </h3>
 
+        <p>
+            Accuracy:
+            approximately
+            ${Math.round(accuracy)}
+            metres.
+        </p>
 
+    `;
 
-        <!-- =================================================
-             GUIDE
-        ================================================== -->
 
-        <section id="guide">
+    result.classList.remove(
+        "hidden"
+    );
 
-            <div class="section-title">
+}
 
-                <h2>
-                    Emergency Guide
-                </h2>
 
-                <p>
-                    Quick information for common emergencies.
-                </p>
+/* =========================================================
+   MAP STATUS
+   ========================================================= */
 
-            </div>
+function updateMapStatus(
+    message
+) {
 
+    const status =
+        document.getElementById(
+            "mapStatusText"
+        );
 
-            <div class="guide-grid">
 
-                <article class="guide-card">
+    if (status) {
 
-                    <div class="icon">
-                        🚑
-                    </div>
+        status.textContent =
+            message;
 
-                    <h3>
-                        Medical Emergency
-                    </h3>
+    }
 
-                    <p>
-                        Seek professional medical assistance
-                        immediately when someone is seriously ill
-                        or injured.
-                    </p>
+}
 
-                </article>
 
+/* =========================================================
+   NAVIGATION
+   ========================================================= */
 
-                <article class="guide-card">
+function initializeNavigation() {
 
-                    <div class="icon">
-                        🔥
-                    </div>
+    const links =
+        document.querySelectorAll(
+            ".navigation a"
+        );
 
-                    <h3>
-                        Fire Emergency
-                    </h3>
 
-                    <p>
-                        Move away from danger and contact
-                        your local emergency services.
-                    </p>
+    links.forEach(
+        function (link) {
 
-                </article>
+            link.addEventListener(
+                "click",
+                function () {
 
+                    /*
+                       Small delay lets the browser
+                       finish scrolling before resizing
+                       the Leaflet map.
+                    */
 
-                <article class="guide-card">
+                    setTimeout(
+                        function () {
 
-                    <div class="icon">
-                        🌧️
-                    </div>
+                            if (lifelinkMap) {
 
-                    <h3>
-                        Severe Weather
-                    </h3>
+                                lifelinkMap.invalidateSize(
+                                    true
+                                );
 
-                    <p>
-                        Follow official warnings and move
-                        to a safe indoor location when advised.
-                    </p>
+                            }
 
-                </article>
+                        },
+                        500
+                    );
 
-            </div>
+                }
+            );
 
-        </section>
+        }
+    );
 
+}
 
 
-        <!-- =================================================
-             RESOURCES
-        ================================================== -->
+/* =========================================================
+   ESCAPE HTML
+   ========================================================= */
 
-        <section id="resources">
+function escapeHTML(
+    value
+) {
 
-            <div class="section-title">
+    return String(value)
 
-                <h2>
-                    Community Resources
-                </h2>
+        .replace(
+            /&/g,
+            "&amp;"
+        )
 
-                <p>
-                    Information and tools for staying prepared.
-                </p>
+        .replace(
+            /</g,
+            "&lt;"
+        )
 
-            </div>
+        .replace(
+            />/g,
+            "&gt;"
+        )
 
+        .replace(
+            /"/g,
+            "&quot;"
+        )
 
-            <div class="resource-list">
+        .replace(
+            /'/g,
+            "&#039;"
+        );
 
-                <article class="resource-card">
+}
 
-                    <span class="resource-tag">
-                        PREPAREDNESS
-                    </span>
 
-                    <h3>
-                        Emergency Contacts
-                    </h3>
+/* =========================================================
+   GLOBAL FUNCTION
+   =========================================================
+   
+   Needed because popup buttons use onclick.
+   ========================================================= */
 
-                    <p>
-                        Keep important local emergency
-                        contact numbers saved and accessible.
-                    </p>
+window.focusResource =
+    focusResource;
 
-                </article>
 
-
-                <article class="resource-card">
-
-                    <span class="resource-tag">
-                        SAFETY
-                    </span>
-
-                    <h3>
-                        Emergency Kit
-                    </h3>
-
-                    <p>
-                        A basic emergency kit can include
-                        water, food, a torch, first-aid supplies
-                        and essential medicines.
-                    </p>
-
-                </article>
-
-
-                <article class="resource-card">
-
-                    <span class="resource-tag">
-                        COMMUNITY
-                    </span>
-
-                    <h3>
-                        Help Your Community
-                    </h3>
-
-                    <p>
-                        Learn about local resources and share
-                        reliable safety information with others.
-                    </p>
-
-                </article>
-
-
-                <article class="resource-card">
-
-                    <span class="resource-tag">
-                        LIFELINK
-                    </span>
-
-                    <h3>
-                        Prototype Notice
-                    </h3>
-
-                    <p>
-                        Map locations in this prototype are
-                        demonstration data and should not be
-                        relied upon as verified emergency facilities.
-                    </p>
-
-                </article>
-
-            </div>
-
-        </section>
-
-
-    </main>
-
-
-
-    <!-- =================================================
-         FOOTER
-    ================================================== -->
-
-    <footer>
-
-        <strong>
-            LIFELINK V2.5
-        </strong>
-
-        <br>
-
-        Community safety technology prototype.
-
-    </footer>
-
-
-
-    <!-- =================================================
-         LEAFLET JS
-
-         MUST COME BEFORE script.js
-    ================================================== -->
-
-    <script
-        src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-    ></script>
-
-
-    <!-- =================================================
-         LIFELINK JS
-    ================================================== -->
-
-    <script src="script.js"></script>
-
-</body>
-
-</html>
+/* =========================================================
+   END LIFELINK V2.5
+   ========================================================= */
