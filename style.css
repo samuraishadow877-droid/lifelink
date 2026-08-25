@@ -1864,3 +1864,81 @@ footer small {
     }
 
 }
+/* =====================================================
+   LIFELINK MAP VISIBILITY FIX
+===================================================== */
+
+#mapCanvas {
+    display: block !important;
+
+    position: relative !important;
+
+    width: 100% !important;
+    height: 570px !important;
+
+    min-height: 570px !important;
+
+    overflow: hidden !important;
+
+    visibility: visible !important;
+
+    opacity: 1 !important;
+
+    background: #101820 !important;
+
+    border: 1px solid #263344 !important;
+
+    border-radius: 18px !important;
+}
+
+
+/* Leaflet must fill the map container */
+
+#mapCanvas.leaflet-container {
+    width: 100% !important;
+    height: 100% !important;
+
+    min-height: 0 !important;
+
+    display: block !important;
+
+    visibility: visible !important;
+
+    opacity: 1 !important;
+}
+
+
+/* Leaflet's map layers */
+
+#mapCanvas .leaflet-map-pane,
+#mapCanvas .leaflet-tile-pane,
+#mapCanvas .leaflet-overlay-pane,
+#mapCanvas .leaflet-shadow-pane,
+#mapCanvas .leaflet-marker-pane,
+#mapCanvas .leaflet-tooltip-pane,
+#mapCanvas .leaflet-popup-pane {
+    display: block !important;
+}
+
+
+/* Make tiles visible */
+
+#mapCanvas .leaflet-tile {
+    display: block !important;
+
+    visibility: visible !important;
+
+    opacity: 1 !important;
+}
+
+
+/* Mobile */
+
+@media (max-width: 650px) {
+
+    #mapCanvas {
+        height: 480px !important;
+        min-height: 480px !important;
+    }
+
+}
