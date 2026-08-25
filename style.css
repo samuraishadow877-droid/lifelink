@@ -88,10 +88,6 @@ a {
     text-decoration: none;
 }
 
-img {
-    max-width: 100%;
-}
-
 
 /* =========================================================
    SELECTION
@@ -1426,3 +1422,65 @@ input:focus-visible {
 /* =========================================================
    END LIFELINK V2.5
    ========================================================= */
+/* =========================================================
+   LEAFLET V2.5 — TILE FIX
+   ========================================================= */
+
+#mapCanvas {
+    width: 100%;
+    height: 570px;
+    min-height: 570px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Leaflet needs to control tile dimensions itself */
+#mapCanvas .leaflet-container {
+    width: 100%;
+    height: 100%;
+    background: #101820;
+}
+
+#mapCanvas .leaflet-tile {
+    max-width: none !important;
+    max-height: none !important;
+    width: 256px;
+    height: 256px;
+}
+
+#mapCanvas .leaflet-tile-container img {
+    max-width: none !important;
+    max-height: none !important;
+}
+
+#mapCanvas .leaflet-pane {
+    position: absolute;
+}
+
+#mapCanvas .leaflet-map-pane {
+    position: absolute;
+}
+
+#mapCanvas .leaflet-tile-pane {
+    position: absolute;
+}
+
+#mapCanvas .leaflet-overlay-pane,
+#mapCanvas .leaflet-shadow-pane,
+#mapCanvas .leaflet-marker-pane,
+#mapCanvas .leaflet-tooltip-pane,
+#mapCanvas .leaflet-popup-pane {
+    position: absolute;
+}
+
+
+/* Mobile */
+
+@media (max-width: 650px) {
+
+    #mapCanvas {
+        height: 470px;
+        min-height: 470px;
+    }
+
+}
