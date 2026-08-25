@@ -1643,3 +1643,279 @@ document.addEventListener(
 
     }
 );
+/* =========================================================
+   LIFELINK V2.9 — SAFETY INTELLIGENCE
+   ========================================================= */
+
+const safetyGuidance = {
+
+    medical: {
+        icon: "🚑",
+        label: "MEDICAL SAFETY",
+        title: "Get appropriate medical help.",
+        description:
+            "If someone may have a serious or life-threatening medical problem, contact emergency medical services and follow the instructions of the emergency operator.",
+        emergency: "108",
+        emergencyLabel: "📞 Emergency Medical Help",
+        steps: [
+            "Move away from immediate hazards if it is safe to do so.",
+            "Contact emergency medical services when the situation is urgent.",
+            "Follow the instructions given by the emergency operator.",
+            "Do not give medication or treatment unless it is appropriate and safe."
+        ]
+    },
+
+    fire: {
+        icon: "🔥",
+        label: "FIRE SAFETY",
+        title: "Get away from the hazard.",
+        description:
+            "If there is a fire or significant smoke, prioritize getting to a safe location and contacting fire and rescue services.",
+        emergency: "101",
+        emergencyLabel: "📞 Fire & Rescue",
+        steps: [
+            "Leave the affected area if you can do so safely.",
+            "Avoid entering smoke-filled or burning areas.",
+            "Move away from the building or hazard.",
+            "Contact fire and rescue services."
+        ]
+    },
+
+    personal: {
+        icon: "🚨",
+        label: "PERSONAL SAFETY",
+        title: "Move toward safety.",
+        description:
+            "If you feel threatened or unsafe, prioritize getting to a safer environment and contacting trusted people.",
+        emergency: "112",
+        emergencyLabel: "📞 Emergency Help",
+        steps: [
+            "Move toward a safer location if possible.",
+            "Avoid confronting someone who may pose a danger.",
+            "Contact someone you trust.",
+            "Contact emergency services if there is an immediate threat."
+        ]
+    },
+
+    disaster: {
+        icon: "🌊",
+        label: "DISASTER SAFETY",
+        title: "Follow official instructions.",
+        description:
+            "During floods, severe weather, earthquakes, or other disasters, move away from hazards and follow local authority instructions.",
+        emergency: "112",
+        emergencyLabel: "📞 Emergency Help",
+        steps: [
+            "Move away from immediate hazards.",
+            "Follow evacuation or shelter instructions.",
+            "Keep your phone available for official alerts.",
+            "Avoid damaged structures and unsafe areas."
+        ]
+    },
+
+    other: {
+        icon: "🛡️",
+        label: "GENERAL SAFETY",
+        title: "Prioritize your immediate safety.",
+        description:
+            "If you are unsure what to do, move away from immediate danger and seek help from a trusted person or appropriate service.",
+        emergency: "112",
+        emergencyLabel: "📞 Emergency Help",
+        steps: [
+            "Identify the immediate hazard.",
+            "Move to a safer environment.",
+            "Contact the appropriate emergency service if necessary.",
+            "Follow instructions from trained professionals."
+        ]
+    }
+};
+
+
+/* =========================================================
+   INITIALIZE SAFETY INTELLIGENCE
+   ========================================================= */
+
+function initializeSafetyV29() {
+
+    const options =
+        document.querySelectorAll(".safety-option");
+
+    const question =
+        document.getElementById("safetyQuestion");
+
+    const result =
+        document.getElementById("safetyResult");
+
+    const progress =
+        document.getElementById("safetyProgressBar");
+
+    const stepLabel =
+        document.getElementById("safetyStepLabel");
+
+    const resultIcon =
+        document.getElementById("safetyResultIcon");
+
+    const resultLabel =
+        document.getElementById("safetyResultLabel");
+
+    const resultTitle =
+        document.getElementById("safetyResultTitle");
+
+    const resultDescription =
+        document.getElementById("safetyResultDescription");
+
+    const resultActions =
+        document.getElementById("safetyResultActions");
+
+    const stepsList =
+        document.getElementById("safetyStepsList");
+
+    const resetButton =
+        document.getElementById("safetyReset");
+
+
+    /* Safety section isn't on this page yet */
+    if (!options.length) {
+        console.log(
+            "LIFELINK V2.9 loaded — Safety section not found."
+        );
+        return;
+    }
+
+
+    /* =====================================================
+       OPTION BUTTONS
+       ===================================================== */
+
+    options.forEach(option => {
+
+        option.addEventListener("click", function () {
+
+            const type =
+                this.dataset.safetyType;
+
+            const data =
+                safetyGuidance[type];
+
+            if (!data) return;
+
+
+            resultIcon.textContent =
+                data.icon;
+
+            resultLabel.textContent =
+                data.label;
+
+            resultTitle.textContent =
+                data.title;
+
+            resultDescription.textContent =
+                data.description;
+
+
+            /* Emergency button */
+
+            resultActions.innerHTML = `
+                <a
+                    href="tel:${data.emergency}"
+                    class="safety-emergency-link"
+                >
+                    ${data.emergencyLabel} — ${data.emergency}
+                </a>
+
+                <a
+                    href="#resources"
+                    class="safety-info-link"
+                >
+                    View Resources
+                </a>
+            `;
+
+
+            /* Safety steps */
+
+            stepsList.innerHTML = "";
+
+            data.steps.forEach(step => {
+
+                const li =
+                    document.createElement("li");
+
+                li.textContent = step;
+
+                stepsList.appendChild(li);
+
+            });
+
+
+            /* Switch screen */
+
+            question.classList.remove("active");
+
+            result.classList.add("visible");
+
+
+            progress.style.width = "100%";
+
+            stepLabel.textContent =
+                "Step 2 of 2";
+
+        });
+
+    });
+
+
+    /* =====================================================
+       RESET BUTTON
+       ===================================================== */
+
+    if (resetButton) {
+
+        resetButton.addEventListener(
+            "click",
+            function () {
+
+                result.classList.remove(
+                    "visible"
+                );
+
+                question.classList.add(
+                    "active"
+                );
+
+                progress.style.width =
+                    "50%";
+
+                stepLabel.textContent =
+                    "Step 1 of 2";
+
+            }
+        );
+
+    }
+
+
+    console.log(
+        "LIFELINK V2.9 Safety Intelligence loaded."
+    );
+}
+
+
+/* =========================================================
+   START V2.9
+   ========================================================= */
+
+if (
+    document.readyState === "loading"
+) {
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        initializeSafetyV29
+    );
+
+} else {
+
+    initializeSafetyV29();
+
+}
