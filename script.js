@@ -552,3 +552,239 @@ console.log(
 console.log(
     "Map module intentionally disabled in V2.6."
 );
+/* =========================================================
+   LIFELINK V2.7
+   EMERGENCY COMMAND CENTER
+   ========================================================= */
+
+
+/* =========================================================
+   QUICK EMERGENCY ACTIONS
+   ========================================================= */
+
+document.addEventListener(
+    "click",
+    (event) => {
+
+        const button =
+            event.target.closest(
+                ".quick-action"
+            );
+
+        if (!button) {
+            return;
+        }
+
+        const number =
+            button.dataset.emergency;
+
+        if (!number) {
+            return;
+        }
+
+        /*
+         * On phones this opens the dialer.
+         * Desktop browsers may not support tel: actions.
+         */
+
+        window.location.href =
+            `tel:${number}`;
+
+    }
+);
+
+
+/* =========================================================
+   EMERGENCY CHECKLIST
+   ========================================================= */
+
+function initializeEmergencyChecklist() {
+
+    const checkboxes =
+        document.querySelectorAll(
+            ".emergency-check"
+        );
+
+    const progress =
+        document.getElementById(
+            "checklistProgress"
+        );
+
+    if (!checkboxes.length || !progress) {
+        return;
+    }
+
+
+    function updateProgress() {
+
+        const completed =
+            document.querySelectorAll(
+                ".emergency-check:checked"
+            ).length;
+
+        const total =
+            checkboxes.length;
+
+
+        progress.textContent =
+            `${completed} of ${total} completed`;
+
+    }
+
+
+    checkboxes.forEach((checkbox) => {
+
+        checkbox.addEventListener(
+            "change",
+            updateProgress
+        );
+
+    });
+
+
+    updateProgress();
+
+}
+
+
+/* =========================================================
+   LOCATION
+   ========================================================= */
+
+function initializeLocationFeature() {
+
+    const button =
+        document.getElementById(
+            "locationShareButton"
+        );
+
+    const status =
+        document.getElementById(
+            "locationStatus"
+        );
+
+    if (!button || !status) {
+        return;
+    }
+
+
+    button.addEventListener(
+        "click",
+        () => {
+
+            if (!navigator.geolocation) {
+
+                status.textContent =
+                    "Location services are not supported by this browser.";
+
+                return;
+            }
+
+
+            status.textContent =
+                "Requesting your location…";
+
+
+            button.disabled = true;
+
+
+            navigator.geolocation.getCurrentPosition(
+
+                (position) => {
+
+                    const latitude =
+                        position.coords.latitude
+                            .toFixed(5);
+
+                    const longitude =
+                        position.coords.longitude
+                            .toFixed(5);
+
+
+                    status.textContent =
+                        `Location detected: ${latitude}, ${longitude}`;
+
+                    button.textContent =
+                        "✓ Location Detected";
+
+                    button.disabled = false;
+
+                },
+
+
+                (error) => {
+
+                    button.disabled = false;
+
+                    button.textContent =
+                        "📍 Get My Location";
+
+
+                    switch (error.code) {
+
+                        case error.PERMISSION_DENIED:
+
+                            status.textContent =
+                                "Location permission was denied.";
+
+                            break;
+
+
+                        case error.POSITION_UNAVAILABLE:
+
+                            status.textContent =
+                                "Location information is unavailable.";
+
+                            break;
+
+
+                        case error.TIMEOUT:
+
+                            status.textContent =
+                                "Location request timed out.";
+
+                            break;
+
+
+                        default:
+
+                            status.textContent =
+                                "Unable to determine your location.";
+
+                    }
+
+                },
+
+
+                {
+                    enableHighAccuracy: true,
+                    timeout: 10000,
+                    maximumAge: 60000
+                }
+
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   INITIALIZE V2.7
+   ========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+        initializeEmergencyChecklist();
+
+        initializeLocationFeature();
+
+        console.log(
+            "LIFELINK V2.7 Emergency Command Center loaded."
+        );
+
+    }
+);
