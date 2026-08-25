@@ -550,302 +550,687 @@
 
 </section>
 
-        <!-- =================================================
-             RESOURCES
-             ================================================= -->
+       <!-- =====================================================
+     LIFELINK V2.8 — RESOURCES INTELLIGENCE
+     ===================================================== -->
 
-        <section
-            class="section"
-            id="resources"
+<section class="section resources-section" id="resources">
+
+    <div class="section-heading">
+
+        <span class="section-label">
+            EMERGENCY RESOURCES
+        </span>
+
+        <h2>
+            Find the right help.
+        </h2>
+
+        <p>
+            Search verified resource information and
+            quickly access the service you need.
+        </p>
+
+    </div>
+
+
+    <!-- SEARCH -->
+
+    <div class="resource-search-wrapper">
+
+        <span class="search-icon">
+            🔎
+        </span>
+
+        <input
+            type="search"
+            id="resourceSearch"
+            class="resource-search"
+            placeholder="Search hospitals, police, fire, blood banks..."
+            autocomplete="off"
         >
 
-            <div class="section-heading">
+    </div>
 
-                <span class="section-label">
-                    RESOURCES
+
+    <!-- FILTERS -->
+
+    <div
+        class="resource-filters"
+        id="resourceFilters"
+    >
+
+        <button
+            class="resource-filter active"
+            data-category="all"
+            type="button"
+        >
+            All
+        </button>
+
+        <button
+            class="resource-filter"
+            data-category="medical"
+            type="button"
+        >
+            🏥 Medical
+        </button>
+
+        <button
+            class="resource-filter"
+            data-category="police"
+            type="button"
+        >
+            🚓 Police
+        </button>
+
+        <button
+            class="resource-filter"
+            data-category="fire"
+            type="button"
+        >
+            🚒 Fire
+        </button>
+
+        <button
+            class="resource-filter"
+            data-category="blood"
+            type="button"
+        >
+            🩸 Blood
+        </button>
+
+        <button
+            class="resource-filter"
+            data-category="support"
+            type="button"
+        >
+            🛡️ Support
+        </button>
+
+    </div>
+
+
+    <!-- RESOURCE COUNT -->
+
+    <div class="resource-toolbar">
+
+        <span id="resourceCount">
+            Showing resources
+        </span>
+
+        <span class="resource-data-note">
+            Prototype directory
+        </span>
+
+    </div>
+
+
+    <!-- RESOURCE GRID -->
+
+    <div
+        class="resource-grid"
+        id="resourceGrid"
+    >
+
+
+        <!-- MEDICAL -->
+
+        <article
+            class="resource-card"
+            data-category="medical"
+            data-search="hospital emergency medical ambulance healthcare mumbai"
+        >
+
+            <div class="resource-card-top">
+
+                <div class="resource-card-icon">
+                    🏥
+                </div>
+
+                <span class="resource-status">
+                    Emergency Care
                 </span>
 
-                <h2>
-                    Find what you need
-                </h2>
-
-                <p>
-                    Browse important categories of public safety
-                    and emergency resources.
-                </p>
-
             </div>
 
+            <span class="resource-tag">
+                MEDICAL
+            </span>
 
-            <!-- Search -->
+            <h3>
+                Emergency Hospital
+            </h3>
 
-            <div class="resource-search-wrapper">
+            <p>
+                Emergency medical care and hospital
+                services.
+            </p>
 
-                <span class="search-icon">
-                    🔎
+            <div class="resource-info">
+
+                <span>
+                    📍 Mumbai
                 </span>
 
-                <input
-                    id="resourceSearch"
-                    class="resource-search"
-                    type="search"
-                    placeholder="Search resources..."
-                    autocomplete="off"
-                >
+                <span>
+                    🚑 Emergency care
+                </span>
 
             </div>
 
+            <div class="resource-actions">
 
-            <!-- Filters -->
+                <a
+                    href="tel:108"
+                    class="resource-call"
+                >
+                    📞 Call 108
+                </a>
 
-            <div
-                class="resource-filters"
-                id="resourceFilters"
+                <button
+                    class="resource-details"
+                    type="button"
+                    data-name="Emergency Hospital"
+                    data-category="Medical"
+                    data-location="Mumbai"
+                    data-phone="108"
+                    data-services="Emergency medical care"
+                >
+                    Details
+                </button>
+
+            </div>
+
+        </article>
+
+
+        <!-- POLICE -->
+
+        <article
+            class="resource-card"
+            data-category="police"
+            data-search="police law enforcement emergency mumbai security"
+        >
+
+            <div class="resource-card-top">
+
+                <div class="resource-card-icon">
+                    🚓
+                </div>
+
+                <span class="resource-status">
+                    Emergency
+                </span>
+
+            </div>
+
+            <span class="resource-tag">
+                POLICE
+            </span>
+
+            <h3>
+                Police Emergency
+            </h3>
+
+            <p>
+                Contact emergency police services for
+                immediate assistance.
+            </p>
+
+            <div class="resource-info">
+
+                <span>
+                    📍 India
+                </span>
+
+                <span>
+                    🛡️ Police assistance
+                </span>
+
+            </div>
+
+            <div class="resource-actions">
+
+                <a
+                    href="tel:112"
+                    class="resource-call"
+                >
+                    📞 Call 112
+                </a>
+
+                <button
+                    class="resource-details"
+                    type="button"
+                    data-name="Police Emergency"
+                    data-category="Police"
+                    data-location="India"
+                    data-phone="112"
+                    data-services="Emergency police assistance"
+                >
+                    Details
+                </button>
+
+            </div>
+
+        </article>
+
+
+        <!-- FIRE -->
+
+        <article
+            class="resource-card"
+            data-category="fire"
+            data-search="fire fire brigade rescue emergency mumbai"
+        >
+
+            <div class="resource-card-top">
+
+                <div class="resource-card-icon">
+                    🚒
+                </div>
+
+                <span class="resource-status">
+                    Emergency
+                </span>
+
+            </div>
+
+            <span class="resource-tag">
+                FIRE & RESCUE
+            </span>
+
+            <h3>
+                Fire Emergency
+            </h3>
+
+            <p>
+                Contact fire and rescue services during
+                a fire or rescue emergency.
+            </p>
+
+            <div class="resource-info">
+
+                <span>
+                    📍 India
+                </span>
+
+                <span>
+                    🚒 Fire & rescue
+                </span>
+
+            </div>
+
+            <div class="resource-actions">
+
+                <a
+                    href="tel:101"
+                    class="resource-call"
+                >
+                    📞 Call 101
+                </a>
+
+                <button
+                    class="resource-details"
+                    type="button"
+                    data-name="Fire Emergency"
+                    data-category="Fire & Rescue"
+                    data-location="India"
+                    data-phone="101"
+                    data-services="Fire and rescue services"
+                >
+                    Details
+                </button>
+
+            </div>
+
+        </article>
+
+
+        <!-- BLOOD -->
+
+        <article
+            class="resource-card"
+            data-category="blood"
+            data-search="blood bank blood donation transfusion hospital mumbai"
+        >
+
+            <div class="resource-card-top">
+
+                <div class="resource-card-icon">
+                    🩸
+                </div>
+
+                <span class="resource-status">
+                    Directory
+                </span>
+
+            </div>
+
+            <span class="resource-tag">
+                BLOOD SERVICES
+            </span>
+
+            <h3>
+                Blood Bank
+            </h3>
+
+            <p>
+                Find blood donation and transfusion
+                resources.
+            </p>
+
+            <div class="resource-info">
+
+                <span>
+                    📍 Mumbai
+                </span>
+
+                <span>
+                    🩸 Blood services
+                </span>
+
+            </div>
+
+            <div class="resource-actions">
+
+                <button
+                    class="resource-details"
+                    type="button"
+                    data-name="Blood Bank"
+                    data-category="Blood Services"
+                    data-location="Mumbai"
+                    data-phone="Not listed"
+                    data-services="Blood donation and transfusion resources"
+                >
+                    View Information
+                </button>
+
+            </div>
+
+        </article>
+
+
+        <!-- SUPPORT -->
+
+        <article
+            class="resource-card"
+            data-category="support"
+            data-search="child helpline support safety assistance india emergency"
+        >
+
+            <div class="resource-card-top">
+
+                <div class="resource-card-icon">
+                    🛡️
+                </div>
+
+                <span class="resource-status">
+                    Support
+                </span>
+
+            </div>
+
+            <span class="resource-tag">
+                SUPPORT
+            </span>
+
+            <h3>
+                Child Helpline
+            </h3>
+
+            <p>
+                Support resource for children and young
+                people who need assistance.
+            </p>
+
+            <div class="resource-info">
+
+                <span>
+                    📍 India
+                </span>
+
+                <span>
+                    🛡️ Child support
+                </span>
+
+            </div>
+
+            <div class="resource-actions">
+
+                <a
+                    href="tel:1098"
+                    class="resource-call"
+                >
+                    📞 Call 1098
+                </a>
+
+                <button
+                    class="resource-details"
+                    type="button"
+                    data-name="Child Helpline"
+                    data-category="Support"
+                    data-location="India"
+                    data-phone="1098"
+                    data-services="Child support"
+                >
+                    Details
+                </button>
+
+            </div>
+
+        </article>
+
+
+        <!-- GENERAL -->
+
+        <article
+            class="resource-card"
+            data-category="support"
+            data-search="women helpline women safety assistance india emergency"
+        >
+
+            <div class="resource-card-top">
+
+                <div class="resource-card-icon">
+                    👩
+                </div>
+
+                <span class="resource-status">
+                    Support
+                </span>
+
+            </div>
+
+            <span class="resource-tag">
+                SUPPORT
+            </span>
+
+            <h3>
+                Women Helpline
+            </h3>
+
+            <p>
+                Government support resource for women
+                seeking emergency assistance.
+            </p>
+
+            <div class="resource-info">
+
+                <span>
+                    📍 India
+                </span>
+
+                <span>
+                    🛡️ Support
+                </span>
+
+            </div>
+
+            <div class="resource-actions">
+
+                <a
+                    href="tel:181"
+                    class="resource-call"
+                >
+                    📞 Call 181
+                </a>
+
+                <button
+                    class="resource-details"
+                    type="button"
+                    data-name="Women Helpline"
+                    data-category="Support"
+                    data-location="India"
+                    data-phone="181"
+                    data-services="Women support services"
+                >
+                    Details
+                </button>
+
+            </div>
+
+        </article>
+
+    </div>
+
+
+    <!-- NO RESULTS -->
+
+    <div
+        id="noResources"
+        class="no-results hidden"
+    >
+
+        <div class="no-results-icon">
+            🔎
+        </div>
+
+        <h3>
+            No matching resources
+        </h3>
+
+        <p>
+            Try another search term or category.
+        </p>
+
+    </div>
+
+
+    <!-- RESOURCE DISCLAIMER -->
+
+    <div class="resource-disclaimer">
+
+        <strong>
+            ⚠️ Data notice
+        </strong>
+
+        <span>
+            Emergency numbers and service information should
+            always be verified against current official
+            sources before relying on them during an emergency.
+        </span>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     V2.8 RESOURCE DETAILS MODAL
+     ===================================================== -->
+
+<div
+    class="resource-modal"
+    id="resourceModal"
+    aria-hidden="true"
+>
+
+    <div
+        class="resource-modal-backdrop"
+        data-close-modal
+    ></div>
+
+
+    <div
+        class="resource-modal-box"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modalResourceName"
+    >
+
+        <button
+            class="modal-close"
+            id="closeResourceModal"
+            type="button"
+            aria-label="Close"
+        >
+            ✕
+        </button>
+
+
+        <span
+            class="resource-tag"
+            id="modalResourceCategory"
+        >
+            RESOURCE
+        </span>
+
+
+        <h2 id="modalResourceName">
+            Resource
+        </h2>
+
+
+        <div class="modal-details">
+
+            <div>
+                <span>📍 Location</span>
+                <strong id="modalResourceLocation">
+                    —
+                </strong>
+            </div>
+
+            <div>
+                <span>📞 Phone</span>
+                <strong id="modalResourcePhone">
+                    —
+                </strong>
+            </div>
+
+            <div>
+                <span>🛠️ Services</span>
+                <strong id="modalResourceServices">
+                    —
+                </strong>
+            </div>
+
+        </div>
+
+
+        <div class="modal-actions">
+
+            <a
+                id="modalCallButton"
+                href="#"
+                class="btn btn-primary"
             >
+                📞 Call
+            </a>
 
-                <button
-                    class="resource-filter active"
-                    data-category="all"
-                    type="button"
-                >
-                    All
-                </button>
-
-                <button
-                    class="resource-filter"
-                    data-category="medical"
-                    type="button"
-                >
-                    🏥 Medical
-                </button>
-
-                <button
-                    class="resource-filter"
-                    data-category="safety"
-                    type="button"
-                >
-                    🛡️ Safety
-                </button>
-
-                <button
-                    class="resource-filter"
-                    data-category="fire"
-                    type="button"
-                >
-                    🚒 Fire
-                </button>
-
-                <button
-                    class="resource-filter"
-                    data-category="community"
-                    type="button"
-                >
-                    🏠 Community
-                </button>
-
-            </div>
-
-
-            <!-- Resource cards -->
-
-            <div
-                class="resource-grid"
-                id="resourceGrid"
+            <button
+                id="modalCopyButton"
+                class="btn"
+                type="button"
             >
+                📋 Copy Information
+            </button>
 
+        </div>
 
-                <article
-                    class="resource-card"
-                    data-category="medical"
-                    data-search="hospital medical ambulance healthcare"
-                >
+    </div>
 
-                    <div class="resource-card-icon">
-                        🏥
-                    </div>
-
-                    <span class="resource-tag">
-                        MEDICAL
-                    </span>
-
-                    <h3>
-                        Hospitals
-                    </h3>
-
-                    <p>
-                        Information about hospitals and medical
-                        facilities that can provide healthcare
-                        services.
-                    </p>
-
-                    <a href="#future-map">
-                        Explore →
-                    </a>
-
-                </article>
-
-
-                <article
-                    class="resource-card"
-                    data-category="medical"
-                    data-search="pharmacy medicine medical"
-                >
-
-                    <div class="resource-card-icon">
-                        💊
-                    </div>
-
-                    <span class="resource-tag">
-                        MEDICAL
-                    </span>
-
-                    <h3>
-                        Pharmacies
-                    </h3>
-
-                    <p>
-                        Find pharmacy resources and information
-                        about obtaining medicines safely.
-                    </p>
-
-                    <a href="#future-map">
-                        Explore →
-                    </a>
-
-                </article>
-
-
-                <article
-                    class="resource-card"
-                    data-category="safety"
-                    data-search="police law safety security"
-                >
-
-                    <div class="resource-card-icon">
-                        🚓
-                    </div>
-
-                    <span class="resource-tag">
-                        SAFETY
-                    </span>
-
-                    <h3>
-                        Police
-                    </h3>
-
-                    <p>
-                        Police and public safety resources for
-                        situations requiring official assistance.
-                    </p>
-
-                    <a href="#emergency">
-                        Emergency →
-                    </a>
-
-                </article>
-
-
-                <article
-                    class="resource-card"
-                    data-category="fire"
-                    data-search="fire rescue fire station emergency"
-                >
-
-                    <div class="resource-card-icon">
-                        🚒
-                    </div>
-
-                    <span class="resource-tag">
-                        FIRE & RESCUE
-                    </span>
-
-                    <h3>
-                        Fire Services
-                    </h3>
-
-                    <p>
-                        Fire prevention, rescue and emergency
-                        response information.
-                    </p>
-
-                    <a href="#emergency">
-                        Emergency →
-                    </a>
-
-                </article>
-
-
-                <article
-                    class="resource-card"
-                    data-category="community"
-                    data-search="shelter community disaster relief"
-                >
-
-                    <div class="resource-card-icon">
-                        🏠
-                    </div>
-
-                    <span class="resource-tag">
-                        COMMUNITY
-                    </span>
-
-                    <h3>
-                        Shelters
-                    </h3>
-
-                    <p>
-                        Community shelter information for emergency
-                        and disaster situations.
-                    </p>
-
-                    <a href="#future-map">
-                        Explore →
-                    </a>
-
-                </article>
-
-
-                <article
-                    class="resource-card"
-                    data-category="community"
-                    data-search="government public service official"
-                >
-
-                    <div class="resource-card-icon">
-                        🏛️
-                    </div>
-
-                    <span class="resource-tag">
-                        GOVERNMENT
-                    </span>
-
-                    <h3>
-                        Government Services
-                    </h3>
-
-                    <p>
-                        Access information about public services
-                        and official support systems.
-                    </p>
-
-                    <a href="#about">
-                        Learn more →
-                    </a>
-
-                </article>
-
-
-            </div>
-
-
-            <div
-                id="noResources"
-                class="no-results hidden"
-            >
-                No matching resources found.
-            </div>
-
-        </section>
+</div>
 
 
         <!-- =================================================
