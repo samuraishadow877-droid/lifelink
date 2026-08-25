@@ -2454,3 +2454,528 @@ button {
     }
 
 }
+/* =========================================================
+   LIFELINK V2.9
+   SAFETY INTELLIGENCE
+   ========================================================= */
+
+
+/* =========================================================
+   SAFETY HELPER
+   ========================================================= */
+
+.safety-helper {
+    max-width: 900px;
+
+    margin: 0 auto;
+
+    padding: 30px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 24px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(16, 24, 35, 0.96),
+            rgba(7, 11, 17, 0.98)
+        );
+
+    box-shadow:
+        0 25px 70px rgba(0, 0, 0, 0.25);
+}
+
+
+/* =========================================================
+   PROGRESS
+   ========================================================= */
+
+.safety-progress {
+    margin-bottom: 35px;
+}
+
+.safety-progress-top {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 9px;
+
+    color: var(--muted);
+
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.safety-progress-bar {
+    height: 4px;
+
+    overflow: hidden;
+
+    border-radius: 999px;
+
+    background:
+        rgba(255, 255, 255, 0.06);
+}
+
+.safety-progress-bar span {
+    display: block;
+
+    width: 50%;
+    height: 100%;
+
+    border-radius: inherit;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--blue),
+            var(--purple)
+        );
+
+    transition:
+        width 0.3s ease;
+}
+
+
+/* =========================================================
+   QUESTION
+   ========================================================= */
+
+.safety-step {
+    display: none;
+}
+
+.safety-step.active {
+    display: block;
+}
+
+.safety-question-label {
+    color: #789fff;
+
+    font-size: 10px;
+    font-weight: 850;
+
+    letter-spacing: 1.5px;
+}
+
+.safety-question-label + h3 {
+    margin-top: 8px;
+}
+
+.safety-step h3 {
+    max-width: 650px;
+
+    font-size: 30px;
+
+    line-height: 1.1;
+
+    letter-spacing: -1px;
+}
+
+.safety-step > p {
+    max-width: 620px;
+
+    margin-top: 10px;
+
+    color: var(--muted);
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   SAFETY OPTIONS
+   ========================================================= */
+
+.safety-options {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 10px;
+
+    margin-top: 28px;
+}
+
+.safety-option {
+    min-height: 90px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+
+    padding: 15px;
+
+    text-align: left;
+
+    border: 1px solid var(--border);
+
+    border-radius: 14px;
+
+    background:
+        rgba(255, 255, 255, 0.025);
+
+    color: white;
+
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        background 0.2s ease;
+}
+
+.safety-option:hover {
+    transform: translateY(-2px);
+
+    border-color:
+        rgba(79, 140, 255, 0.35);
+
+    background:
+        rgba(79, 140, 255, 0.06);
+}
+
+.safety-option-icon {
+    width: 43px;
+    height: 43px;
+
+    flex: 0 0 43px;
+
+    display: grid;
+
+    place-items: center;
+
+    border-radius: 12px;
+
+    background:
+        rgba(255, 255, 255, 0.05);
+
+    font-size: 20px;
+}
+
+.safety-option strong {
+    display: block;
+
+    font-size: 13px;
+}
+
+.safety-option small {
+    display: block;
+
+    margin-top: 3px;
+
+    color: var(--muted);
+
+    font-size: 10px;
+
+    line-height: 1.4;
+}
+
+
+/* =========================================================
+   RESULT
+   ========================================================= */
+
+.safety-result {
+    display: none;
+}
+
+.safety-result.visible {
+    display: block;
+
+    animation:
+        safetyResultIn 0.25s ease;
+}
+
+@keyframes safetyResultIn {
+
+    from {
+        opacity: 0;
+
+        transform:
+            translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            translateY(0);
+    }
+
+}
+
+.safety-result-icon {
+    width: 58px;
+    height: 58px;
+
+    display: grid;
+
+    place-items: center;
+
+    margin-bottom: 20px;
+
+    border-radius: 16px;
+
+    background:
+        rgba(79, 140, 255, 0.09);
+
+    font-size: 27px;
+}
+
+.safety-result-label {
+    color: #789fff;
+
+    font-size: 10px;
+    font-weight: 850;
+
+    letter-spacing: 1.5px;
+}
+
+.safety-result h3 {
+    margin-top: 6px;
+
+    font-size: 34px;
+
+    line-height: 1.05;
+
+    letter-spacing: -1px;
+}
+
+.safety-result > p {
+    max-width: 680px;
+
+    margin-top: 11px;
+
+    color: var(--muted);
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   RESULT ACTIONS
+   ========================================================= */
+
+.safety-result-actions {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 9px;
+
+    margin-top: 23px;
+}
+
+.safety-emergency-link {
+    min-height: 43px;
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 0 15px;
+
+    border-radius: 10px;
+
+    background:
+        rgba(255, 92, 108, 0.11);
+
+    border: 1px solid
+        rgba(255, 92, 108, 0.23);
+
+    color: #ff8b96;
+
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.safety-emergency-link:hover {
+    background:
+        rgba(255, 92, 108, 0.17);
+}
+
+.safety-info-link {
+    min-height: 43px;
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 0 15px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 10px;
+
+    background:
+        rgba(255, 255, 255, 0.035);
+
+    color: var(--muted);
+
+    font-size: 12px;
+    font-weight: 750;
+}
+
+.safety-info-link:hover {
+    color: white;
+
+    background:
+        rgba(255, 255, 255, 0.07);
+}
+
+
+/* =========================================================
+   SAFETY STEPS
+   ========================================================= */
+
+.safety-steps {
+    margin-top: 28px;
+
+    padding: 20px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 15px;
+
+    background:
+        rgba(255, 255, 255, 0.025);
+}
+
+.safety-steps > span {
+    color: #dce3ed;
+
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.safety-steps ol {
+    margin-top: 13px;
+
+    padding-left: 20px;
+}
+
+.safety-steps li {
+    padding: 5px 0;
+
+    color: var(--muted);
+
+    font-size: 12px;
+}
+
+.safety-steps li::marker {
+    color: #7ea4ff;
+
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   RESULT NOTE
+   ========================================================= */
+
+.safety-result-note {
+    margin-top: 17px;
+
+    padding: 14px 16px;
+
+    display: flex;
+
+    gap: 9px;
+
+    align-items: flex-start;
+
+    border: 1px solid
+        rgba(255, 159, 67, 0.14);
+
+    border-radius: 12px;
+
+    background:
+        rgba(255, 159, 67, 0.035);
+
+    color: var(--muted);
+
+    font-size: 10px;
+}
+
+.safety-result-note strong {
+    color: #ffb45e;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   RESET
+   ========================================================= */
+
+.safety-reset {
+    margin-top: 20px;
+
+    padding: 9px 13px;
+
+    border: none;
+
+    background: transparent;
+
+    color: #789fff;
+
+    font-size: 12px;
+    font-weight: 750;
+}
+
+.safety-reset:hover {
+    color: white;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 680px) {
+
+    .safety-helper {
+        padding: 21px;
+
+        border-radius: 18px;
+    }
+
+    .safety-step h3 {
+        font-size: 25px;
+    }
+
+    .safety-options {
+        grid-template-columns: 1fr;
+    }
+
+    .safety-option {
+        min-height: 78px;
+    }
+
+    .safety-result h3 {
+        font-size: 29px;
+    }
+
+    .safety-result-actions {
+        flex-direction: column;
+    }
+
+    .safety-emergency-link,
+    .safety-info-link {
+        width: 100%;
+    }
+
+    .safety-result-note {
+        flex-direction: column;
+
+        gap: 5px;
+    }
+
+}
