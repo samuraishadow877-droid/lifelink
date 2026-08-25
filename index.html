@@ -11,28 +11,27 @@
     >
 
     <meta
-        name="theme-color"
-        content="#05070b"
-    >
-
-    <meta
         name="description"
-        content="LIFELINK — Public safety information and map platform."
+        content="LIFELINK — A community emergency resource discovery platform."
     >
 
-    <title>
-        LIFELINK V2.4 — Public Safety
-    </title>
+    <title>LIFELINK V2.5</title>
 
 
-    <!-- Leaflet Map CSS -->
-   <link
-    rel="stylesheet"
-    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
->
+    <!-- =================================================
+         LEAFLET CSS
+    ================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    >
 
 
-    <!-- LIFELINK CSS -->
+    <!-- =================================================
+         LIFELINK CSS
+    ================================================== -->
+
     <link
         rel="stylesheet"
         href="style.css"
@@ -44,348 +43,151 @@
 <body>
 
 
-<!-- =====================================================
-     BACKGROUND
-===================================================== -->
+    <!-- =================================================
+         HEADER
+    ================================================== -->
 
-<div class="background-glow glow-one"></div>
-<div class="background-glow glow-two"></div>
+    <header class="site-header">
 
-
-
-<!-- =====================================================
-     NAVBAR
-===================================================== -->
-
-<header class="navbar">
-
-    <a
-        href="#home"
-        class="brand"
-    >
-
-        <span class="brand-icon">
-            ♥
-        </span>
-
-        <span class="brand-text">
-
-            <strong>
-                LIFELINK
-            </strong>
-
-            <small>
-                WHEN HELP MATTERS, CONNECT.
-            </small>
-
-        </span>
-
-    </a>
-
-
-    <nav class="navigation">
-
-        <a href="#home">
-            Home
-        </a>
-
-        <a href="#emergency">
-            Emergency
-        </a>
-
-        <a href="#lifelink-map">
-            Map
-        </a>
-
-        <a href="#resources">
-            Resources
-        </a>
-
-        <a href="#guide">
-            Guide
-        </a>
-
-    </nav>
-
-
-    <a
-        href="tel:112"
-        class="call-button"
-    >
-        🚨 Call 112
-    </a>
-
-</header>
-
-
-
-<!-- =====================================================
-     MAIN
-===================================================== -->
-
-<main>
-
-
-<!-- =====================================================
-     HERO
-===================================================== -->
-
-<section
-    id="home"
-    class="hero"
->
-
-    <div class="hero-content">
-
-
-        <div class="version-badge">
-
-            ● LIFELINK V2.4
-
-            <span>
-                REAL MAP
-            </span>
-
-        </div>
-
-
-        <h1>
-
-            Help should be
-
-            <span>
-                easier to find.
-            </span>
-
-        </h1>
-
-
-        <p>
-
-            LIFELINK connects people with public
-            safety information, nearby services and
-            trusted resources through one simple
-            interface.
-
-        </p>
-
-
-        <div class="hero-buttons">
+        <div class="header-inner">
 
             <a
-                href="#lifelink-map"
-                class="button primary-button"
+                href="#home"
+                class="logo"
             >
-                🗺️ Open LIFELINK Map
+                LIFE<span>LINK</span>
             </a>
 
 
-            <a
-                href="#emergency"
-                class="button secondary-button"
-            >
-                🚨 Emergency Help
-            </a>
+            <nav class="navigation">
+
+                <a href="#home">
+                    Home
+                </a>
+
+                <a href="#map">
+                    Map
+                </a>
+
+                <a href="#resources">
+                    Resources
+                </a>
+
+                <a href="#guide">
+                    Guide
+                </a>
+
+            </nav>
 
         </div>
 
-
-        <div class="hero-trust">
-
-            <span>
-                ✓ Public-service focused
-            </span>
-
-            <span>
-                ✓ Location aware
-            </span>
-
-            <span>
-                ✓ Transparent information
-            </span>
-
-        </div>
-
-
-    </div>
-
-</section>
+    </header>
 
 
 
-<!-- =====================================================
-     EMERGENCY
-===================================================== -->
-
-<section
-    id="emergency"
-    class="section"
->
-
-    <div class="container">
+    <main>
 
 
-        <div class="section-label">
-            EMERGENCY
-        </div>
+        <!-- =================================================
+             HERO
+        ================================================== -->
 
+        <section
+            id="home"
+            class="hero"
+        >
 
-        <h2>
-            Need help immediately?
-        </h2>
+            <div class="hero-content">
 
-
-        <p class="section-description">
-
-            For an immediate emergency in India,
-            use the official emergency response
-            service.
-
-        </p>
-
-
-        <div class="emergency-card">
-
-
-            <div class="emergency-icon">
-                🚨
-            </div>
-
-
-            <div class="emergency-content">
-
-                <div class="live-indicator">
-
-                    <span></span>
-
-                    OFFICIAL EMERGENCY SERVICE
-
+                <div class="hero-badge">
+                    COMMUNITY SAFETY PLATFORM
                 </div>
 
-
-                <h3>
-                    112 India
-                </h3>
-
+                <h1>
+                    Help is
+                    <span>closer</span>
+                    than you think.
+                </h1>
 
                 <p>
-
-                    India's unified emergency response
-                    number for police, fire, ambulance
-                    and other emergency assistance.
-
+                    LIFELINK helps people discover nearby
+                    emergency and community resources through
+                    one simple interface.
                 </p>
 
 
-                <div class="emergency-actions">
+                <div class="hero-actions">
 
                     <a
-                        href="tel:112"
-                        class="button danger-button"
+                        href="#map"
+                        class="btn btn-primary"
                     >
-                        📞 CALL 112
+                        Explore Map
                     </a>
 
-
-                    <a
-                        href="https://112.gov.in/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="official-link"
+                    <button
+                        id="heroLocationButton"
+                        class="btn"
+                        type="button"
                     >
-                        Official 112 India ↗
-                    </a>
+                        📍 Find My Location
+                    </button>
 
                 </div>
 
             </div>
 
-        </div>
-
-    </div>
-
-</section>
-
-
-
-<!-- =====================================================
-     REAL MAP
-===================================================== -->
-
-<section
-    id="lifelink-map"
-    class="section dark-section"
->
-
-    <div class="container">
-
-
-        <div class="section-label">
-            LIFELINK MAP • V2.4
-        </div>
-
-
-        <h2>
-            Find help around you.
-        </h2>
-
-
-        <p class="section-description">
-
-            Explore a real geographic map and search
-            for public-service locations. Location
-            access is optional.
-
-        </p>
+        </section>
 
 
 
         <!-- =================================================
-             MAP APPLICATION
-        ================================================= -->
+             MAP
+        ================================================== -->
 
-        <div class="map-application">
+        <section
+            id="map"
+            class="map-section"
+        >
+
+            <div class="section-title">
+
+                <h2>
+                    Emergency Resource Map
+                </h2>
+
+                <p>
+                    Explore nearby community resources.
+                </p>
+
+            </div>
 
 
-            <!-- MAP TOOLBAR -->
+            <!-- SEARCH -->
 
             <div class="map-toolbar">
 
-
-                <div class="map-search">
-
-                    <span>
-                        🔎
-                    </span>
-
-                    <input
-                        id="mapSearch"
-                        type="search"
-                        placeholder="Search for a place..."
-                        autocomplete="off"
-                    >
-
-                </div>
+                <input
+                    id="mapSearch"
+                    class="map-search"
+                    type="search"
+                    placeholder="Search hospitals, police, pharmacies..."
+                    autocomplete="off"
+                >
 
 
                 <button
-                    id="mapLocationButton"
-                    class="map-control-button"
+                    id="locationButton"
+                    class="map-location-button"
                     type="button"
                 >
-
-                    📍
-                    <span>
-                        My Location
-                    </span>
-
+                    📍 Use My Location
                 </button>
 
             </div>
 
 
-
-            <!-- MAP FILTERS -->
+            <!-- FILTERS -->
 
             <div
                 id="mapFilters"
@@ -394,104 +196,85 @@
 
                 <button
                     class="map-filter active"
-                    data-category="all"
+                    data-type="all"
                     type="button"
                 >
-                    🌐 All
+                    All
                 </button>
-
 
                 <button
                     class="map-filter"
-                    data-category="hospital"
+                    data-type="hospital"
                     type="button"
                 >
                     🏥 Hospitals
                 </button>
 
-
                 <button
                     class="map-filter"
-                    data-category="pharmacy"
-                    type="button"
-                >
-                    💊 Pharmacies
-                </button>
-
-
-                <button
-                    class="map-filter"
-                    data-category="police"
+                    data-type="police"
                     type="button"
                 >
                     🚓 Police
                 </button>
 
-
                 <button
                     class="map-filter"
-                    data-category="fire"
+                    data-type="fire"
                     type="button"
                 >
                     🚒 Fire
                 </button>
 
-
                 <button
                     class="map-filter"
-                    data-category="government"
+                    data-type="pharmacy"
                     type="button"
                 >
-                    🏛️ Government
+                    💊 Pharmacy
                 </button>
 
-
                 <button
                     class="map-filter"
-                    data-category="shelter"
+                    data-type="shelter"
                     type="button"
                 >
-                    🏫 Shelters
+                    🏠 Shelter
                 </button>
 
             </div>
-
 
 
             <!-- =================================================
-                 REAL MAP CONTAINER
-            ================================================= -->
+                 MAP CONTAINER
+
+                 IMPORTANT:
+                 Leaflet owns everything INSIDE this element.
+            ================================================== -->
 
             <div
                 id="mapCanvas"
-                class="map-canvas real-map"
-            >
-
-                <!-- Leaflet will load here -->
-
-            </div>
+                aria-label="Interactive emergency resource map"
+            ></div>
 
 
-
-            <!-- MAP STATUS -->
+            <!-- STATUS -->
 
             <div
                 id="mapStatus"
                 class="map-status"
             >
 
-                <span>
-                    🗺️
-                </span>
+                <span>🗺️</span>
 
                 <div>
 
                     <strong>
-                        Map ready
+                        LIFELINK Map
                     </strong>
 
-                    <small>
-                        Search for a location or use My Location.
+                    <small id="mapStatusText">
+                        Loading map...
                     </small>
 
                 </div>
@@ -499,486 +282,235 @@
             </div>
 
 
-
-            <!-- =================================================
-                 LOCATION CARD
-            ================================================= -->
+            <!-- LOCATION RESULT -->
 
             <div
-                id="locationCard"
-                class="map-location-card hidden"
-            >
+                id="locationResult"
+                class="location-card hidden"
+            ></div>
 
-                <div
-                    id="locationCardIcon"
-                    class="location-card-icon"
-                >
-                    📍
-                </div>
+        </section>
 
 
-                <div class="location-card-content">
 
-                    <div
-                        id="locationCardCategory"
-                        class="location-card-category"
-                    >
-                        LOCATION
-                    </div>
+        <!-- =================================================
+             GUIDE
+        ================================================== -->
 
+        <section id="guide">
 
-                    <h3 id="locationCardTitle">
-                        Location
-                    </h3>
-
-
-                    <p id="locationCardDescription">
-                        Location information will appear here.
-                    </p>
-
-
-                    <div class="location-card-actions">
-
-                        <button
-                            id="locationDirections"
-                            class="button primary-button"
-                            type="button"
-                        >
-                            🧭 Directions
-                        </button>
-
-
-                        <button
-                            id="locationClose"
-                            class="button secondary-button"
-                            type="button"
-                        >
-                            Close
-                        </button>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-
-            <!-- =================================================
-                 MAP DISCLAIMER
-            ================================================= -->
-
-            <div class="map-disclaimer">
-
-                <span>
-                    ℹ️
-                </span>
-
-                <p>
-
-                    Map tiles are provided by
-                    OpenStreetMap contributors.
-                    Public-service information may come
-                    from different sources and should be
-                    independently verified before relying
-                    on it during an emergency.
-
-                </p>
-
-            </div>
-
-
-        </div>
-
-    </div>
-
-</section>
-
-
-
-<!-- =====================================================
-     RESOURCES
-===================================================== -->
-
-<section
-    id="resources"
-    class="section"
->
-
-    <div class="container">
-
-
-        <div class="section-label">
-            RESOURCE DIRECTORY
-        </div>
-
-
-        <h2>
-            Trusted information.
-        </h2>
-
-
-        <p class="section-description">
-
-            Access official public resources and
-            government information.
-
-        </p>
-
-
-        <div class="resource-controls">
-
-
-            <div class="search-box">
-
-                🔎
-
-                <input
-                    id="resourceSearch"
-                    type="search"
-                    placeholder="Search resources..."
-                >
-
-            </div>
-
-
-            <select
-                id="resourceFilter"
-            >
-
-                <option value="all">
-                    All categories
-                </option>
-
-                <option value="Emergency">
-                    Emergency
-                </option>
-
-                <option value="Health">
-                    Health
-                </option>
-
-                <option value="Disaster">
-                    Disaster
-                </option>
-
-                <option value="Government">
-                    Government
-                </option>
-
-            </select>
-
-
-        </div>
-
-
-        <div
-            id="resourceList"
-            class="resource-grid"
-        ></div>
-
-
-        <div
-            id="noResources"
-            class="empty-message hidden"
-        >
-
-            🔎
-
-            <strong>
-                No resources found
-            </strong>
-
-            <small>
-                Try another search.
-            </small>
-
-        </div>
-
-
-    </div>
-
-</section>
-
-
-
-<!-- =====================================================
-     SMART GUIDE
-===================================================== -->
-
-<section
-    id="guide"
-    class="section dark-section"
->
-
-    <div class="container">
-
-
-        <div class="section-label">
-            LIFELINK GUIDE
-        </div>
-
-
-        <h2>
-            What kind of help do you need?
-        </h2>
-
-
-        <div class="guide-grid">
-
-
-            <button
-                class="guide-card"
-                data-guide="Emergency"
-                type="button"
-            >
-
-                <span>
-                    🚨
-                </span>
-
-                <strong>
-                    Emergency
-                </strong>
-
-                <small>
-                    Immediate assistance
-                </small>
-
-            </button>
-
-
-            <button
-                class="guide-card"
-                data-guide="Medical"
-                type="button"
-            >
-
-                <span>
-                    🏥
-                </span>
-
-                <strong>
-                    Medical
-                </strong>
-
-                <small>
-                    Health information
-                </small>
-
-            </button>
-
-
-            <button
-                class="guide-card"
-                data-guide="Disaster"
-                type="button"
-            >
-
-                <span>
-                    🌪️
-                </span>
-
-                <strong>
-                    Disaster
-                </strong>
-
-                <small>
-                    Disaster information
-                </small>
-
-            </button>
-
-
-            <button
-                class="guide-card"
-                data-guide="Nearby"
-                type="button"
-            >
-
-                <span>
-                    📍
-                </span>
-
-                <strong>
-                    Nearby Help
-                </strong>
-
-                <small>
-                    Find nearby services
-                </small>
-
-            </button>
-
-
-            <button
-                class="guide-card"
-                data-guide="Government"
-                type="button"
-            >
-
-                <span>
-                    🏛️
-                </span>
-
-                <strong>
-                    Government
-                </strong>
-
-                <small>
-                    Public services
-                </small>
-
-            </button>
-
-
-        </div>
-
-
-        <div
-            id="guideResult"
-            class="guide-result"
-        >
-
-            <span>
-                💡
-            </span>
-
-            <span>
-                Choose a category to get started.
-            </span>
-
-        </div>
-
-
-    </div>
-
-</section>
-
-
-
-<!-- =====================================================
-     TRUST
-===================================================== -->
-
-<section class="section">
-
-    <div class="container">
-
-
-        <div class="trust-card">
-
-
-            <div class="trust-icon">
-                🛡️
-            </div>
-
-
-            <div>
-
-                <div class="section-label">
-                    SAFETY FIRST
-                </div>
-
+            <div class="section-title">
 
                 <h2>
-                    Transparent by design.
+                    Emergency Guide
                 </h2>
 
-
                 <p>
-
-                    LIFELINK is designed to clearly
-                    distinguish official information,
-                    map data and community resources.
-
+                    Quick information for common emergencies.
                 </p>
 
             </div>
 
 
-        </div>
+            <div class="guide-grid">
+
+                <article class="guide-card">
+
+                    <div class="icon">
+                        🚑
+                    </div>
+
+                    <h3>
+                        Medical Emergency
+                    </h3>
+
+                    <p>
+                        Seek professional medical assistance
+                        immediately when someone is seriously ill
+                        or injured.
+                    </p>
+
+                </article>
 
 
-    </div>
+                <article class="guide-card">
 
-</section>
+                    <div class="icon">
+                        🔥
+                    </div>
 
+                    <h3>
+                        Fire Emergency
+                    </h3>
 
-</main>
+                    <p>
+                        Move away from danger and contact
+                        your local emergency services.
+                    </p>
 
-
-
-<!-- =====================================================
-     FLOATING EMERGENCY BUTTON
-===================================================== -->
-
-<a
-    href="tel:112"
-    class="floating-emergency"
-    aria-label="Call 112"
->
-
-    <span>
-        🚨
-    </span>
-
-    <strong>
-        112
-    </strong>
-
-</a>
+                </article>
 
 
+                <article class="guide-card">
 
-<!-- =====================================================
-     FOOTER
-===================================================== -->
+                    <div class="icon">
+                        🌧️
+                    </div>
 
-<footer>
+                    <h3>
+                        Severe Weather
+                    </h3>
 
-    <div>
+                    <p>
+                        Follow official warnings and move
+                        to a safe indoor location when advised.
+                    </p>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             RESOURCES
+        ================================================== -->
+
+        <section id="resources">
+
+            <div class="section-title">
+
+                <h2>
+                    Community Resources
+                </h2>
+
+                <p>
+                    Information and tools for staying prepared.
+                </p>
+
+            </div>
+
+
+            <div class="resource-list">
+
+                <article class="resource-card">
+
+                    <span class="resource-tag">
+                        PREPAREDNESS
+                    </span>
+
+                    <h3>
+                        Emergency Contacts
+                    </h3>
+
+                    <p>
+                        Keep important local emergency
+                        contact numbers saved and accessible.
+                    </p>
+
+                </article>
+
+
+                <article class="resource-card">
+
+                    <span class="resource-tag">
+                        SAFETY
+                    </span>
+
+                    <h3>
+                        Emergency Kit
+                    </h3>
+
+                    <p>
+                        A basic emergency kit can include
+                        water, food, a torch, first-aid supplies
+                        and essential medicines.
+                    </p>
+
+                </article>
+
+
+                <article class="resource-card">
+
+                    <span class="resource-tag">
+                        COMMUNITY
+                    </span>
+
+                    <h3>
+                        Help Your Community
+                    </h3>
+
+                    <p>
+                        Learn about local resources and share
+                        reliable safety information with others.
+                    </p>
+
+                </article>
+
+
+                <article class="resource-card">
+
+                    <span class="resource-tag">
+                        LIFELINK
+                    </span>
+
+                    <h3>
+                        Prototype Notice
+                    </h3>
+
+                    <p>
+                        Map locations in this prototype are
+                        demonstration data and should not be
+                        relied upon as verified emergency facilities.
+                    </p>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- =================================================
+         FOOTER
+    ================================================== -->
+
+    <footer>
 
         <strong>
-            LIFELINK V2.4
+            LIFELINK V2.5
         </strong>
 
-        <small>
-            When help matters, connect.
-        </small>
+        <br>
 
-    </div>
+        Community safety technology prototype.
 
-
-    <div>
-
-        <span>
-            OpenStreetMap-powered map prototype
-        </span>
-
-    </div>
-
-</footer>
+    </footer>
 
 
 
-<!-- =====================================================
-     LEAFLET JAVASCRIPT
-===================================================== -->
+    <!-- =================================================
+         LEAFLET JS
 
-<script
-    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-    crossorigin=""
-></script>
+         MUST COME BEFORE script.js
+    ================================================== -->
+
+    <script
+        src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    ></script>
 
 
-<!-- =====================================================
-     LIFELINK JAVASCRIPT
-===================================================== -->
+    <!-- =================================================
+         LIFELINK JS
+    ================================================== -->
 
-<script src="script.js"></script>
-
+    <script src="script.js"></script>
 
 </body>
 
