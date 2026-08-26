@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="description"
+        content="LIFELINK — Safety, emergency resources and intelligent public information."
+    >
+
+    <meta name="theme-color" content="#05070b">
+
+    <title>LIFELINK — Safety & Emergency Resources</title>
+
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+
+<header class="site-header">
+    <div class="header-inner">
+
+        <a href="#home" class="logo">
+            <span class="logo-mark">✦</span>
+            <span>LIFELINK</span>
+        </a>
+
+        <nav class="navigation" id="mainNavigation">
+            <a href="#home">Home</a>
+            <a href="#emergency">Emergency</a>
+            <a href="#resources">Resources</a>
+            <a href="#map">Map</a>
+            <a href="#guide">Safety Guide</a>
+            <a href="#about">About</a>
+        </nav>
+
+        <button
+            class="mobile-menu-button"
+            id="mobileMenuButton"
+            type="button"
+            aria-label="Open navigation"
+            aria-expanded="false"
+        >
+            ☰
+        </button>
+
+    </div>
+</header>
+
+
+<main>
+
+<!-- =====================================================
+     HERO
+     ===================================================== -->
+
+<section class="hero" id="home">
+
+    <div class="hero-orb hero-orb-one"></div>
+    <div class="hero-orb hero-orb-two"></div>
+
+    <div class="hero-content">
+
+        <div class="hero-badge">
+            ✦ LIFELINK INDIA • SAFETY • RESOURCE • CONNECTION
+        </div>
+
+        <h1>
+            When help matters,
+            <span>connect.</span>
+        </h1>
+
+        <p class="hero-description">
+            Find emergency information, safety guidance and
+            essential public resources in one simple platform.
+        </p>
+
+        <div class="hero-actions">
+
+            <a href="#emergency" class="btn btn-primary">
+                🆘 I Need Help
+            </a>
+
+            <a href="#map" class="btn btn-secondary">
+                📍 Find Nearby
+            </a>
+
+        </div>
+
+        <div class="hero-stats">
+
+            <div class="hero-stat">
+                <strong>112</strong>
+                <span>India emergency</span>
+            </div>
+
+            <div class="hero-stat">
+                <strong>24/7</strong>
+                <span>Emergency services</span>
+            </div>
+
+            <div class="hero-stat">
+                <strong>LIVE</strong>
+                <span>Resource interface</span>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     EMERGENCY
+     ===================================================== -->
+
+<section class="section emergency-section" id="emergency">
+
+    <div class="section-heading">
+
+        <span class="section-label">
+            EMERGENCY COMMAND CENTER
+        </span>
+
+        <h2>Get help quickly.</h2>
+
+        <p>
+            Choose the service that matches your situation
+            and follow basic safety steps.
+        </p>
+
+    </div>
+
+
+    <div class="emergency-alert">
+
+        <div class="alert-icon">⚠️</div>
+
+        <div class="alert-content">
+            <strong>In immediate danger?</strong>
+
+            <p>
+                Move somewhere safer if possible and contact
+                the appropriate official emergency service.
+            </p>
+        </div>
+
+        <a href="tel:112" class="alert-button">
+            Call 112
+        </a>
+
+    </div>
+
+
+    <div class="quick-actions">
+
+        <button class="quick-action" data-emergency="112">
+            <span class="quick-action-icon">🆘</span>
+            <span>
+                <strong>General Emergency</strong>
+                <small>112</small>
+            </span>
+        </button>
+
+        <button class="quick-action" data-emergency="100">
+            <span class="quick-action-icon">🚓</span>
+            <span>
+                <strong>Police</strong>
+                <small>100</small>
+            </span>
+        </button>
+
+        <button class="quick-action" data-emergency="101">
+            <span class="quick-action-icon">🚒</span>
+            <span>
+                <strong>Fire</strong>
+                <small>101</small>
+            </span>
+        </button>
+
+        <button class="quick-action" data-emergency="108">
+            <span class="quick-action-icon">🚑</span>
+            <span>
+                <strong>Ambulance</strong>
+                <small>108</small>
+            </span>
+        </button>
+
+    </div>
+
+
+    <div class="emergency-tools">
+
+        <div class="glass-card">
+
+            <div class="tool-header">
+                <div class="tool-icon">📋</div>
+
+                <div>
+                    <span class="card-label">QUICK CHECKLIST</span>
+                    <h3>Before contacting help</h3>
+                </div>
+            </div>
+
+            <div class="checklist">
+
+                <label class="check-item">
+                    <input type="checkbox" class="emergency-check">
+                    <span>Move to a safer location if possible.</span>
+                </label>
+
+                <label class="check-item">
+                    <input type="checkbox" class="emergency-check">
+                    <span>Keep your phone available.</span>
+                </label>
+
+                <label class="check-item">
+                    <input type="checkbox" class="emergency-check">
+                    <span>Identify your location.</span>
+                </label>
+
+                <label class="check-item">
+                    <input type="checkbox" class="emergency-check">
+                    <span>Follow responder instructions.</span>
+                </label>
+
+            </div>
+
+            <div id="checklistProgress" class="checklist-progress">
+                0 of 4 completed
+            </div>
+
+        </div>
+
+
+        <div class="glass-card">
+
+            <div class="tool-header">
+                <div class="tool-icon">📍</div>
+
+                <div>
+                    <span class="card-label">LOCATION</span>
+                    <h3>Find yourself on the map</h3>
+                </div>
+            </div>
+
+            <p class="tool-description">
+                Your browser can provide your current position
+                when you choose the location button.
+            </p>
+
+            <a href="#map" class="tool-button">
+                📍 Open Map
+            </a>
+
+            <div class="location-status">
+                Location is only requested when you choose
+                "My Location".
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="trusted-contact">
+
+        <div>
+            <span class="section-label">TRUSTED CONTACT</span>
+
+            <h3>Keep someone informed.</h3>
+
+            <p>
+                Keep an important person available in your phone
+                so you can reach them quickly.
+            </p>
+        </div>
+
+        <a href="tel:" class="btn btn-secondary">
+            📞 Contact Trusted Person
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     RESOURCES
+     ===================================================== -->
+
+<section class="section resources-section" id="resources">
+
+    <div class="section-heading">
+
+        <span class="section-label">
+            RESOURCE INTELLIGENCE
+        </span>
+
+        <h2>Find the right help.</h2>
+
+        <p>
+            Browse emergency and public-support information.
+        </p>
+
+    </div>
+
+
+    <div class="resource-search-wrapper">
+
+        <span>🔎</span>
+
+        <input
+            id="resourceSearch"
+            type="search"
+            placeholder="Search hospitals, police, fire..."
+            autocomplete="off"
+        >
+
+    </div>
+
+
+    <div class="resource-filters">
+
+        <button class="resource-filter active" data-category="all">
+            All
+        </button>
+
+        <button class="resource-filter" data-category="medical">
+            🏥 Medical
+        </button>
+
+        <button class="resource-filter" data-category="police">
+            🚓 Police
+        </button>
+
+        <button class="resource-filter" data-category="fire">
+            🚒 Fire
+        </button>
+
+        <button class="resource-filter" data-category="blood">
+            🩸 Blood
+        </button>
+
+        <button class="resource-filter" data-category="support">
+            🛡️ Support
+        </button>
+
+    </div>
+
+
+    <div class="resource-toolbar">
+
+        <span id="resourceCount">
+            Showing resources
+        </span>
+
+        <span>Prototype directory</span>
+
+    </div>
+
+
+    <div class="resource-grid" id="resourceGrid">
+
+        <article
+            class="resource-card"
+            data-category="medical"
+            data-search="hospital emergency medical ambulance healthcare mumbai"
+        >
+
+            <div class="resource-card-top">
+                <div class="resource-card-icon">🏥</div>
+                <span class="resource-status">Emergency Care</span>
+            </div>
+
+            <span class="resource-tag">MEDICAL</span>
+
+            <h3>Emergency Hospital</h3>
+
+            <p>
+                Emergency medical care and hospital services.
+            </p>
+
+            <div class="resource-info">
+                <span>📍 Mumbai</span>
+                <span>🚑 Emergency care</span>
+            </div>
+
+            <div class="resource-actions">
+                <a href="tel:108" class="resource-call">
+                    📞 Call 108
+                </a>
+
+                <button
+                    class="resource-details"
+                    data-name="Emergency Hospital"
+                    data-category="Medical"
+                    data-location="Mumbai"
+                    data-phone="108"
+                    data-services="Emergency medical care"
+                >
+                    Details
+                </button>
+            </div>
+
+        </article>
+
+
+        <article
+            class="resource-card"
+            data-category="police"
+            data-search="police law enforcement emergency security india mumbai"
+        >
+
+            <div class="resource-card-top">
+                <div class="resource-card-icon">🚓</div>
+                <span class="resource-status">Emergency</span>
+            </div>
+
+            <span class="resource-tag">POLICE</span>
+
+            <h3>Police Emergency</h3>
+
+            <p>
+                Contact emergency police services for assistance.
+            </p>
+
+            <div class="resource-info">
+                <span>📍 India</span>
+                <span>🛡️ Police assistance</span>
+            </div>
+
+            <div class="resource-actions">
+                <a href="tel:112" class="resource-call">
+                    📞 Call 112
+                </a>
+
+                <button
+                    class="resource-details"
+                    data-name="Police Emergency"
+                    data-category="Police"
+                    data-location="India"
+                    data-phone="112"
+                    data-services="Emergency police assistance"
+                >
+                    Details
+                </button>
+            </div>
+
+        </article>
+
+
+        <article
+            class="resource-card"
+            data-category="fire"
+            data-search="fire brigade rescue emergency fire mumbai"
+        >
+
+            <div class="resource-card-top">
+                <div class="resource-card-icon">🚒</div>
+                <span class="resource-status">Emergency</span>
+            </div>
+
+            <span class="resource-tag">FIRE & RESCUE</span>
+
+            <h3>Fire Emergency</h3>
+
+            <p>
+                Contact fire and rescue services during a fire.
+            </p>
+
+            <div class="resource-info">
+                <span>📍 India</span>
+                <span>🚒 Fire & rescue</span>
+            </div>
+
+            <div class="resource-actions">
+                <a href="tel:101" class="resource-call">
+                    📞 Call 101
+                </a>
+
+                <button
+                    class="resource-details"
+                    data-name="Fire Emergency"
+                    data-category="Fire & Rescue"
+                    data-location="India"
+                    data-phone="101"
+                    data-services="Fire and rescue services"
+                >
+                    Details
+                </button>
+            </div>
+
+        </article>
+
+
+        <article
+            class="resource-card"
+            data-category="blood"
+            data-search="blood bank blood donation transfusion mumbai"
+        >
+
+            <div class="resource-card-top">
+                <div class="resource-card-icon">🩸</div>
+                <span class="resource-status">Directory</span>
+            </div>
+
+            <span class="resource-tag">BLOOD SERVICES</span>
+
+            <h3>Blood Bank</h3>
+
+            <p>
+                Find blood donation and transfusion resources.
+            </p>
+
+            <div class="resource-info">
+                <span>📍 Mumbai</span>
+                <span>🩸 Blood services</span>
+            </div>
+
+            <div class="resource-actions">
+                <button
+                    class="resource-details"
+                    data-name="Blood Bank"
+                    data-category="Blood Services"
+                    data-location="Mumbai"
+                    data-phone="Not listed"
+                    data-services="Blood donation and transfusion resources"
+                >
+                    View Information
+                </button>
+            </div>
+
+        </article>
+
+
+        <article
+            class="resource-card"
+            data-category="support"
+            data-search="child helpline support safety assistance india"
+        >
+
+            <div class="resource-card-top">
+                <div class="resource-card-icon">🛡️</div>
+                <span class="resource-status">Support</span>
+            </div>
+
+            <span class="resource-tag">SUPPORT</span>
+
+            <h3>Child Helpline</h3>
+
+            <p>
+                Support resource for children and young people.
+            </p>
+
+            <div class="resource-info">
+                <span>📍 India</span>
+                <span>🛡️ Child support</span>
+            </div>
+
+            <div class="resource-actions">
+                <a href="tel:1098" class="resource-call">
+                    📞 Call 1098
+                </a>
+
+                <button
+                    class="resource-details"
+                    data-name="Child Helpline"
+                    data-category="Support"
+                    data-location="India"
+                    data-phone="1098"
+                    data-services="Child support"
+                >
+                    Details
+                </button>
+            </div>
+
+        </article>
+
+
+        <article
+            class="resource-card"
+            data-category="support"
+            data-search="women helpline women safety assistance india"
+        >
+
+            <div class="resource-card-top">
+                <div class="resource-card-icon">👩</div>
+                <span class="resource-status">Support</span>
+            </div>
+
+            <span class="resource-tag">SUPPORT</span>
+
+            <h3>Women Helpline</h3>
+
+            <p>
+                Government support resource for women.
+            </p>
+
+            <div class="resource-info">
+                <span>📍 India</span>
+                <span>🛡️ Support</span>
+            </div>
+
+            <div class="resource-actions">
+                <a href="tel:181" class="resource-call">
+                    📞 Call 181
+                </a>
+
+                <button
+                    class="resource-details"
+                    data-name="Women Helpline"
+                    data-category="Support"
+                    data-location="India"
+                    data-phone="181"
+                    data-services="Women support services"
+                >
+                    Details
+                </button>
+            </div>
+
+        </article>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     V3.1 MAP
+     ===================================================== -->
+
+<section class="section map-section" id="map">
+
+    <div class="section-heading">
+
+        <span class="section-label">
+            LIFELINK V3.1 • LIVE MAP
+        </span>
+
+        <h2>Find help near you.</h2>
+
+        <p>
+            Explore demonstration emergency-resource locations
+            around Mumbai. Use search or your current location
+            to navigate the map.
+        </p>
+
+    </div>
+
+
+    <div class="map-shell">
+
+        <div class="map-toolbar">
+
+            <div class="map-search">
+
+                <span>🔎</span>
+
+                <input
+                    id="mapSearch"
+                    type="search"
+                    placeholder="Search a place..."
+                    autocomplete="off"
+                >
+
+                <button id="mapSearchButton" type="button">
+                    Search
+                </button>
+
+            </div>
+
+
+            <button
+                id="myLocationButton"
+                class="location-button"
+                type="button"
+            >
+                📍 My Location
+            </button>
+
+        </div>
+
+
+        <div class="map-filters" id="mapFilters">
+
+            <button class="map-filter active" data-map-filter="all">
+                All
+            </button>
+
+            <button class="map-filter" data-map-filter="hospital">
+                🏥 Hospitals
+            </button>
+
+            <button class="map-filter" data-map-filter="pharmacy">
+                💊 Pharmacies
+            </button>
+
+            <button class="map-filter" data-map-filter="police">
+                🚓 Police
+            </button>
+
+            <button class="map-filter" data-map-filter="fire">
+                🚒 Fire
+            </button>
+
+            <button class="map-filter" data-map-filter="government">
+                🏛️ Government
+            </button>
+
+            <button class="map-filter" data-map-filter="shelter">
+                🏠 Shelters
+            </button>
+
+        </div>
+
+
+        <div class="map-frame">
+
+            <div
+                id="lifelinkMap"
+                class="lifelink-map"
+                aria-label="LIFELINK interactive map"
+            ></div>
+
+            <div
+                id="mapLoading"
+                class="map-loading"
+            >
+                <div class="loading-spinner"></div>
+                <span>Loading map...</span>
+            </div>
+
+        </div>
+
+
+        <div class="map-status" id="mapStatus">
+            🗺️ Preparing map...
+        </div>
+
+
+        <div class="map-info-grid">
+
+            <div class="map-info-card">
+                <span>📍</span>
+                <div>
+                    <strong>Your location</strong>
+                    <small>
+                        Location is requested only when you select
+                        My Location.
+                    </small>
+                </div>
+            </div>
+
+            <div class="map-info-card">
+                <span>🛡️</span>
+                <div>
+                    <strong>Prototype data</strong>
+                    <small>
+                        Marker locations are demonstrations and
+                        should be independently verified.
+                    </small>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="map-attribution-note">
+            © OpenStreetMap contributors • Map powered by MapLibre GL JS
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     SAFETY GUIDE
+     ===================================================== -->
+
+<section class="section guide-section" id="guide">
+
+    <div class="section-heading">
+
+        <span class="section-label">SAFETY GUIDE</span>
+
+        <h2>Know what to do.</h2>
+
+        <p>
+            Simple general guidance for common emergency
+            situations.
+        </p>
+
+    </div>
+
+
+    <div class="guide-grid">
+
+        <article class="guide-card">
+            <span class="guide-number">01</span>
+            <div class="guide-icon">🚨</div>
+            <h3>Emergency</h3>
+            <p>
+                Move to a safe location if possible and contact
+                the appropriate emergency service.
+            </p>
+        </article>
+
+        <article class="guide-card">
+            <span class="guide-number">02</span>
+            <div class="guide-icon">🔥</div>
+            <h3>Fire safety</h3>
+            <p>
+                Leave the affected area safely and contact
+                fire and rescue services.
+            </p>
+        </article>
+
+        <article class="guide-card">
+            <span class="guide-number">03</span>
+            <div class="guide-icon">🚗</div>
+            <h3>Road accident</h3>
+            <p>
+                Stay away from traffic danger and contact
+                emergency services.
+            </p>
+        </article>
+
+        <article class="guide-card">
+            <span class="guide-number">04</span>
+            <div class="guide-icon">🌧️</div>
+            <h3>Severe weather</h3>
+            <p>
+                Follow official instructions and monitor
+                trusted alerts.
+            </p>
+        </article>
+
+        <article class="guide-card">
+            <span class="guide-number">05</span>
+            <div class="guide-icon">📱</div>
+            <h3>Stay connected</h3>
+            <p>
+                Keep your phone charged and communicate with
+                trusted people when appropriate.
+            </p>
+        </article>
+
+        <article class="guide-card">
+            <span class="guide-number">06</span>
+            <div class="guide-icon">🧠</div>
+            <h3>Stay calm</h3>
+            <p>
+                Clear thinking can help you make safer decisions
+                and communicate useful information.
+            </p>
+        </article>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     SAFETY INTELLIGENCE
+     ===================================================== -->
+
+<section class="section safety-section" id="safety">
+
+    <div class="section-heading">
+
+        <span class="section-label">
+            SAFETY INTELLIGENCE
+        </span>
+
+        <h2>Not sure what to do?</h2>
+
+        <p>
+            Select the situation and get simple safety-focused
+            next steps.
+        </p>
+
+    </div>
+
+
+    <div class="safety-helper">
+
+        <div class="safety-question">
+
+            <span class="card-label">SAFETY HELPER</span>
+
+            <h3>
+                What kind of situation are you dealing with?
+            </h3>
+
+            <div class="safety-options">
+
+                <button data-safety="medical">
+                    🚑 Medical emergency
+                </button>
+
+                <button data-safety="fire">
+                    🔥 Fire or smoke
+                </button>
+
+                <button data-safety="personal">
+                    🚨 Personal safety
+                </button>
+
+                <button data-safety="disaster">
+                    🌊 Disaster or severe weather
+                </button>
+
+                <button data-safety="other">
+                    🛡️ Something else
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div class="safety-result hidden" id="safetyResult">
+
+            <div id="safetyResultIcon" class="safety-result-icon">
+                🛡️
+            </div>
+
+            <span class="card-label">RECOMMENDED GUIDANCE</span>
+
+            <h3 id="safetyResultTitle">
+                Stay safe.
+            </h3>
+
+            <p id="safetyResultDescription"></p>
+
+            <ol id="safetySteps"></ol>
+
+            <button id="safetyReset" class="btn btn-secondary">
+                ← Start Again
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     ABOUT
+     ===================================================== -->
+
+<section class="section about-section" id="about">
+
+    <div class="about-layout">
+
+        <div>
+
+            <span class="section-label">
+                ABOUT LIFELINK
+            </span>
+
+            <h2>
+                Built around one simple idea:
+                <span>help should be easier to find.</span>
+            </h2>
+
+            <p>
+                LIFELINK is a student-built safety and emergency
+                resource platform designed to bring useful
+                information together in one interface.
+            </p>
+
+            <p>
+                The project is being developed step by step,
+                with accessibility, clarity and reliability
+                as core goals.
+            </p>
+
+        </div>
+
+
+        <div class="about-points">
+
+            <div class="about-point">
+                <span>✓</span>
+                <div>
+                    <strong>Simple</strong>
+                    <p>Designed for quick understanding.</p>
+                </div>
+            </div>
+
+            <div class="about-point">
+                <span>✓</span>
+                <div>
+                    <strong>Accessible</strong>
+                    <p>Responsive across devices.</p>
+                </div>
+            </div>
+
+            <div class="about-point">
+                <span>✓</span>
+                <div>
+                    <strong>Information focused</strong>
+                    <p>Useful public safety information.</p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+</main>
+
+
+<footer class="site-footer">
+
+    <div class="footer-inner">
+
+        <div>
+            <div class="footer-logo">✦ LIFELINK</div>
+            <p>Safety • Resource • Connection</p>
+        </div>
+
+        <div class="footer-links">
+            <a href="#home">Home</a>
+            <a href="#emergency">Emergency</a>
+            <a href="#resources">Resources</a>
+            <a href="#map">Map</a>
+            <a href="#guide">Guide</a>
+        </div>
+
+        <div class="footer-disclaimer">
+            <strong>Important</strong>
+            <p>
+                LIFELINK is an information prototype.
+                Always rely on official emergency services
+                for urgent assistance.
+            </p>
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+        © 2026 LIFELINK • Student Project
+    </div>
+
+</footer>
+
+
+<!-- =====================================================
+     ONLY ONE JAVASCRIPT FILE
+     ===================================================== -->
+
+<script src="./script.js" defer></script>
+
+</body>
+</html>
