@@ -285,36 +285,47 @@
        POPUP HTML
        ===================================================== */
 
-  function createPopup(resource) {
+ ```javascript
+function createPopup(resource) {
 
-    return `
-        <div class="map-popup">
+    const popup = document.createElement("div");
 
-            <div class="map-popup-category">
-                ${resource.icon}
-                ${escapeHTML(resource.category)}
-            </div>
+    popup.className = "map-popup";
 
-            <div class="map-popup-title">
-                ${escapeHTML(resource.name)}
-            </div>
+    const category = document.createElement("div");
+    category.className = "map-popup-category";
+    category.textContent =
+        resource.icon + " " + resource.category;
 
-            <p class="map-popup-location">
-                📍 ${escapeHTML(resource.location)}
-            </p>
+    const title = document.createElement("div");
+    title.className = "map-popup-title";
+    title.textContent = resource.name;
 
-            <p class="map-popup-location">
-                🛠️ ${escapeHTML(resource.service)}
-            </p>
+    const location = document.createElement("p");
+    location.className = "map-popup-location";
+    location.textContent =
+        "📍 " + resource.location;
 
-            <p class="map-popup-location">
-                ℹ️ Prototype resource location
-            </p>
+    const service = document.createElement("p");
+    service.className = "map-popup-location";
+    service.textContent =
+        "🛠️ " + resource.service;
 
-        </div>
-    `;
+    const note = document.createElement("p");
+    note.className = "map-popup-location";
+    note.textContent =
+        "ℹ️ Prototype resource location";
 
+    popup.appendChild(category);
+    popup.appendChild(title);
+    popup.appendChild(location);
+    popup.appendChild(service);
+    popup.appendChild(note);
+
+    return popup.outerHTML;
 }
+```
+
     /* =====================================================
        CREATE MARKER
        ===================================================== */
