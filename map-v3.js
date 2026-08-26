@@ -285,38 +285,36 @@
        POPUP HTML
        ===================================================== */
 
-    function createPopup(resource) {
+  function createPopup(resource) {
 
-        return `
-            <div class="map-popup">
+    return `
+        <div class="map-popup">
 
-                <div class="map-popup-category">
-                    ${resource.icon}
-                    ${escapeHTML(resource.category)}
-                </div>
-
-                <div class="map-popup-title">
-                    ${escapeHTML(resource.name)}
-                </div>
-
-                <p class="map-popup-location">
-                    📍 ${escapeHTML(resource.location)}
-                </p>
-
-                <p class="map-popup-location">
-                    🛠️ ${escapeHTML(resource.service)}
-                </p>
-
-                <p class="map-popup-location">
-                    ℹ️ Prototype resource location
-                </p>
-
+            <div class="map-popup-category">
+                ${resource.icon}
+                ${escapeHTML(resource.category)}
             </div>
-        `;
 
-    }
+            <div class="map-popup-title">
+                ${escapeHTML(resource.name)}
+            </div>
 
+            <p class="map-popup-location">
+                📍 ${escapeHTML(resource.location)}
+            </p>
 
+            <p class="map-popup-location">
+                🛠️ ${escapeHTML(resource.service)}
+            </p>
+
+            <p class="map-popup-location">
+                ℹ️ Prototype resource location
+            </p>
+
+        </div>
+    `;
+
+}
     /* =====================================================
        CREATE MARKER
        ===================================================== */
