@@ -285,7 +285,6 @@
        POPUP HTML
        ===================================================== */
 
- ```javascript
 function createPopup(resource) {
 
     const popup = document.createElement("div");
