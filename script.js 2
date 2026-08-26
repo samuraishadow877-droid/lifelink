@@ -1,0 +1,1645 @@
+/* =========================================================
+   LIFELINK V3.1
+   SINGLE JAVASCRIPT FILE
+   NO LEAFLET
+   NO MAPBOX
+   NO API TOKEN
+   MAPLIBRE + OPENSTREETMAP
+   ========================================================= */
+
+"use strict";
+
+
+/* =========================================================
+   GLOBAL APP
+   ========================================================= */
+
+const LIFELINK = {
+
+    map: null,
+
+    mapMarkers: [],
+
+    userMarker: null,
+
+    activeMapFilter: "all",
+
+    activeResourceFilter: "all",
+
+    mapReady: false
+
+};
+
+
+/* =========================================================
+   DOM READY
+   ========================================================= */
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    console.log("LIFELINK V3.1 starting...");
+
+    initializeNavigation();
+
+    initializeEmergencyActions();
+
+    initializeChecklist();
+
+    initializeResources();
+
+    initializeSafetyHelper();
+
+    initializeMap();
+
+});
+
+
+/* =========================================================
+   NAVIGATION
+   ========================================================= */
+
+function initializeNavigation() {
+
+    const menuButton =
+        document.getElementById("mobileMenuButton");
+
+    const navigation =
+        document.getElementById("mainNavigation");
+
+
+    if (!menuButton || !navigation) {
+        return;
+    }
+
+
+    menuButton.addEventListener("click", function () {
+
+        const isOpen =
+            navigation.classList.toggle("open");
+
+        menuButton.setAttribute(
+            "aria-expanded",
+            String(isOpen)
+        );
+
+    });
+
+
+    navigation.querySelectorAll("a").forEach(function (link) {
+
+        link.addEventListener("click", function () {
+
+            navigation.classList.remove("open");
+
+            menuButton.setAttribute(
+                "aria-expanded",
+                "false"
+            );
+
+        });
+
+    });
+
+}
+
+
+/* =========================================================
+   EMERGENCY ACTIONS
+   ========================================================= */
+
+function initializeEmergencyActions() {
+
+    document
+        .querySelectorAll("[data-emergency]")
+        .forEach(function (button) {
+
+            button.addEventListener("click", function () {
+
+                const number =
+                    this.dataset.emergency;
+
+                if (!number) {
+                    return;
+                }
+
+                window.location.href =
+                    "tel:" + number;
+
+            });
+
+        });
+
+}
+
+
+/* =========================================================
+   CHECKLIST
+   ========================================================= */
+
+function initializeChecklist() {
+
+    const checks =
+        document.querySelectorAll(".emergency-check");
+
+    const progress =
+        document.getElementById("checklistProgress");
+
+
+    if (!checks.length || !progress) {
+        return;
+    }
+
+
+    function updateProgress() {
+
+        let completed = 0;
+
+        checks.forEach(function (check) {
+
+            if (check.checked) {
+                completed++;
+            }
+
+        });
+
+
+        progress.textContent =
+            completed +
+            " of " +
+            checks.length +
+            " completed";
+
+    }
+
+
+    checks.forEach(function (check) {
+
+        check.addEventListener(
+            "change",
+            updateProgress
+        );
+
+    });
+
+}
+
+
+/* =========================================================
+   RESOURCES
+   ========================================================= */
+
+function initializeResources() {
+
+    const search =
+        document.getElementById("resourceSearch");
+
+    const cards =
+        Array.from(
+            document.querySelectorAll(".resource-card")
+        );
+
+    const filters =
+        document.querySelectorAll(".resource-filter");
+
+    const count =
+        document.getElementById("resourceCount");
+
+
+    if (!cards.length) {
+        return;
+    }
+
+
+    function updateResources() {
+
+        const query =
+            search
+                ? search.value
+                    .trim()
+                    .toLowerCase()
+                : "";
+
+
+        let visible = 0;
+
+
+        cards.forEach(function (card) {
+
+            const category =
+                card.dataset.category || "";
+
+            const searchable =
+                card.dataset.search || "";
+
+
+            const categoryMatches =
+                LIFELINK.activeResourceFilter === "all" ||
+                category === LIFELINK.activeResourceFilter;
+
+
+            const searchMatches =
+                !query ||
+                searchable.toLowerCase().includes(query);
+
+
+            const shouldShow =
+                categoryMatches &&
+                searchMatches;
+
+
+            card.classList.toggle(
+                "hidden",
+                !shouldShow
+            );
+
+
+            if (shouldShow) {
+                visible++;
+            }
+
+        });
+
+
+        if (count) {
+
+            count.textContent =
+                "Showing " +
+                visible +
+                " resource" +
+                (visible === 1 ? "" : "s");
+
+        }
+
+    }
+
+
+    filters.forEach(function (button) {
+
+        button.addEventListener("click", function () {
+
+            filters.forEach(function (item) {
+
+                item.classList.remove("active");
+
+            });
+
+
+            this.classList.add("active");
+
+
+            LIFELINK.activeResourceFilter =
+                this.dataset.category ||
+                "all";
+
+
+            updateResources();
+
+        });
+
+    });
+
+
+    if (search) {
+
+        search.addEventListener(
+            "input",
+            updateResources
+        );
+
+    }
+
+
+    document
+        .querySelectorAll(".resource-details")
+        .forEach(function (button) {
+
+            button.addEventListener("click", function () {
+
+                const name =
+                    this.dataset.name || "Resource";
+
+                const category =
+                    this.dataset.category || "Resource";
+
+                const location =
+                    this.dataset.location || "—";
+
+                const phone =
+                    this.dataset.phone || "—";
+
+                const services =
+                    this.dataset.services || "—";
+
+
+                window.alert(
+                    name +
+                    "\n\n" +
+                    "Category: " +
+                    category +
+                    "\n" +
+                    "Location: " +
+                    location +
+                    "\n" +
+                    "Phone: " +
+                    phone +
+                    "\n" +
+                    "Services: " +
+                    services
+                );
+
+            });
+
+        });
+
+
+    updateResources();
+
+}
+
+
+/* =========================================================
+   SAFETY HELPER
+   ========================================================= */
+
+function initializeSafetyHelper() {
+
+    const options =
+        document.querySelectorAll("[data-safety]");
+
+    const result =
+        document.getElementById("safetyResult");
+
+    const icon =
+        document.getElementById("safetyResultIcon");
+
+    const title =
+        document.getElementById("safetyResultTitle");
+
+    const description =
+        document.getElementById("safetyResultDescription");
+
+    const steps =
+        document.getElementById("safetySteps");
+
+    const reset =
+        document.getElementById("safetyReset");
+
+
+    if (!options.length || !result) {
+        return;
+    }
+
+
+    const guidance = {
+
+        medical: {
+
+            icon: "🚑",
+
+            title: "Prioritize immediate safety.",
+
+            description:
+                "If someone may need urgent medical attention, contact appropriate emergency medical services.",
+
+            steps: [
+                "Move away from immediate danger if possible.",
+                "Contact an appropriate emergency service.",
+                "Give responders your location and useful information.",
+                "Follow instructions from qualified responders."
+            ]
+
+        },
+
+
+        fire: {
+
+            icon: "🔥",
+
+            title: "Leave the affected area safely.",
+
+            description:
+                "If there is a fire or significant smoke, prioritize getting to a safer location.",
+
+            steps: [
+                "Move away from the fire or smoke.",
+                "Avoid elevators during a building fire.",
+                "Contact fire and rescue services.",
+                "Follow official evacuation instructions."
+            ]
+
+        },
+
+
+        personal: {
+
+            icon: "🚨",
+
+            title: "Move toward safety.",
+
+            description:
+                "If you feel threatened, prioritize getting somewhere safer and contacting trusted or official help.",
+
+            steps: [
+                "Move toward a safer public or protected location if possible.",
+                "Contact an appropriate emergency service when necessary.",
+                "Tell a trusted person what is happening.",
+                "Follow instructions from authorities."
+            ]
+
+        },
+
+
+        disaster: {
+
+            icon: "🌊",
+
+            title: "Follow official instructions.",
+
+            description:
+                "During severe weather or disasters, use trusted official alerts and move away from immediate hazards.",
+
+            steps: [
+                "Move away from immediate hazards.",
+                "Monitor official warnings.",
+                "Follow evacuation or shelter instructions.",
+                "Keep communication available."
+            ]
+
+        },
+
+
+        other: {
+
+            icon: "🛡️",
+
+            title: "Choose the safest available option.",
+
+            description:
+                "For an unfamiliar situation, prioritize immediate safety and seek appropriate official assistance when needed.",
+
+            steps: [
+                "Move away from immediate danger if possible.",
+                "Identify what kind of assistance is needed.",
+                "Contact appropriate official services when necessary.",
+                "Follow qualified instructions."
+            ]
+
+        }
+
+    };
+
+
+    options.forEach(function (button) {
+
+        button.addEventListener("click", function () {
+
+            const type =
+                this.dataset.safety;
+
+            const data =
+                guidance[type];
+
+            if (!data) {
+                return;
+            }
+
+
+            icon.textContent =
+                data.icon;
+
+            title.textContent =
+                data.title;
+
+            description.textContent =
+                data.description;
+
+
+            steps.innerHTML = "";
+
+
+            data.steps.forEach(function (step) {
+
+                const li =
+                    document.createElement("li");
+
+                li.textContent =
+                    step;
+
+                steps.appendChild(li);
+
+            });
+
+
+            result.classList.remove("hidden");
+
+            result.scrollIntoView({
+                behavior: "smooth",
+                block: "nearest"
+            });
+
+        });
+
+    });
+
+
+    if (reset) {
+
+        reset.addEventListener("click", function () {
+
+            result.classList.add("hidden");
+
+        });
+
+    }
+
+}
+
+
+/* =========================================================
+   MAP STATUS
+   ========================================================= */
+
+function setMapStatus(message) {
+
+    const status =
+        document.getElementById("mapStatus");
+
+    if (status) {
+        status.textContent = message;
+    }
+
+}
+
+
+/* =========================================================
+   LOAD MAPLIBRE
+   ========================================================= */
+
+function loadMapLibre() {
+
+    return new Promise(function (resolve, reject) {
+
+        if (window.maplibregl) {
+
+            resolve();
+
+            return;
+
+        }
+
+
+        const existingScript =
+            document.querySelector(
+                'script[data-lifelink-maplibre="js"]'
+            );
+
+
+        if (existingScript) {
+
+            existingScript.addEventListener(
+                "load",
+                function () {
+
+                    if (window.maplibregl) {
+                        resolve();
+                    } else {
+                        reject(
+                            new Error(
+                                "MapLibre did not initialize."
+                            )
+                        );
+                    }
+
+                }
+            );
+
+
+            existingScript.addEventListener(
+                "error",
+                function () {
+
+                    reject(
+                        new Error(
+                            "MapLibre script failed."
+                        )
+                    );
+
+                }
+            );
+
+
+            return;
+
+        }
+
+
+        const css =
+            document.createElement("link");
+
+        css.rel = "stylesheet";
+
+        css.href =
+            "https://unpkg.com/maplibre-gl@5.6.2/dist/maplibre-gl.css";
+
+        css.dataset.lifelinkMaplibre =
+            "css";
+
+        document.head.appendChild(css);
+
+
+        const script =
+            document.createElement("script");
+
+        script.src =
+            "https://unpkg.com/maplibre-gl@5.6.2/dist/maplibre-gl.js";
+
+        script.dataset.lifelinkMaplibre =
+            "js";
+
+        script.async = true;
+
+
+        script.onload = function () {
+
+            if (window.maplibregl) {
+
+                resolve();
+
+            } else {
+
+                reject(
+                    new Error(
+                        "MapLibre loaded but global object is missing."
+                    )
+                );
+
+            }
+
+        };
+
+
+        script.onerror = function () {
+
+            reject(
+                new Error(
+                    "Could not download MapLibre GL JS."
+                )
+            );
+
+        };
+
+
+        document.head.appendChild(script);
+
+    });
+
+}
+
+
+/* =========================================================
+   MAP RESOURCE DATA
+   ========================================================= */
+
+const MAP_RESOURCES = [
+
+    {
+        id: "hospital-1",
+        name: "LIFELINK Medical Point",
+        category: "hospital",
+        icon: "🏥",
+        latitude: 19.0760,
+        longitude: 72.8777,
+        location: "Mumbai",
+        service: "Emergency medical assistance"
+    },
+
+    {
+        id: "hospital-2",
+        name: "LIFELINK Hospital Resource",
+        category: "hospital",
+        icon: "🏥",
+        latitude: 19.0178,
+        longitude: 72.8478,
+        location: "Mumbai",
+        service: "Medical emergency resource"
+    },
+
+    {
+        id: "pharmacy-1",
+        name: "LIFELINK Pharmacy Point",
+        category: "pharmacy",
+        icon: "💊",
+        latitude: 19.1136,
+        longitude: 72.8697,
+        location: "Mumbai",
+        service: "Pharmacy resource"
+    },
+
+    {
+        id: "police-1",
+        name: "LIFELINK Police Resource",
+        category: "police",
+        icon: "🚓",
+        latitude: 19.0330,
+        longitude: 73.0297,
+        location: "Mumbai Region",
+        service: "Police assistance resource"
+    },
+
+    {
+        id: "fire-1",
+        name: "LIFELINK Fire Resource",
+        category: "fire",
+        icon: "🚒",
+        latitude: 19.2183,
+        longitude: 72.9781,
+        location: "Mumbai Region",
+        service: "Fire and rescue resource"
+    },
+
+    {
+        id: "government-1",
+        name: "LIFELINK Government Resource",
+        category: "government",
+        icon: "🏛️",
+        latitude: 19.2183,
+        longitude: 72.9781,
+        location: "Mumbai Region",
+        service: "Public government resource"
+    },
+
+    {
+        id: "shelter-1",
+        name: "LIFELINK Safety Shelter",
+        category: "shelter",
+        icon: "🏠",
+        latitude: 19.0825,
+        longitude: 72.8811,
+        location: "Mumbai",
+        service: "Safety shelter resource"
+    }
+
+];
+
+
+/* =========================================================
+   POPUP
+   ========================================================= */
+
+function createMapPopup(resource) {
+
+    const wrapper =
+        document.createElement("div");
+
+    wrapper.className =
+        "map-popup";
+
+
+    const category =
+        document.createElement("div");
+
+    category.className =
+        "map-popup-category";
+
+    category.textContent =
+        resource.icon +
+        " " +
+        resource.category;
+
+
+    const title =
+        document.createElement("div");
+
+    title.className =
+        "map-popup-title";
+
+    title.textContent =
+        resource.name;
+
+
+    const location =
+        document.createElement("p");
+
+    location.className =
+        "map-popup-text";
+
+    location.textContent =
+        "📍 " +
+        resource.location;
+
+
+    const service =
+        document.createElement("p");
+
+    service.className =
+        "map-popup-text";
+
+    service.textContent =
+        "🛠️ " +
+        resource.service;
+
+
+    const note =
+        document.createElement("p");
+
+    note.className =
+        "map-popup-text";
+
+    note.textContent =
+        "ℹ️ Demonstration resource location";
+
+
+    wrapper.appendChild(category);
+    wrapper.appendChild(title);
+    wrapper.appendChild(location);
+    wrapper.appendChild(service);
+    wrapper.appendChild(note);
+
+
+    return wrapper;
+
+}
+
+
+/* =========================================================
+   MARKERS
+   ========================================================= */
+
+function createMapMarkers(map) {
+
+    LIFELINK.mapMarkers = [];
+
+
+    MAP_RESOURCES.forEach(function (resource) {
+
+        const element =
+            document.createElement("button");
+
+        element.type =
+            "button";
+
+        element.className =
+            "lifelink-marker";
+
+        element.textContent =
+            resource.icon;
+
+        element.title =
+            resource.name;
+
+        element.setAttribute(
+            "aria-label",
+            resource.name
+        );
+
+
+        const popup =
+            new maplibregl.Popup({
+                offset: 25,
+                closeButton: true
+            })
+            .setDOMContent(
+                createMapPopup(resource)
+            );
+
+
+        const marker =
+            new maplibregl.Marker({
+                element: element,
+                anchor: "center"
+            })
+            .setLngLat([
+                resource.longitude,
+                resource.latitude
+            ])
+            .setPopup(popup)
+            .addTo(map);
+
+
+        LIFELINK.mapMarkers.push({
+
+            resource: resource,
+
+            marker: marker,
+
+            element: element
+
+        });
+
+    });
+
+}
+
+
+/* =========================================================
+   FILTER MAP
+   ========================================================= */
+
+function applyMapFilter(category) {
+
+    LIFELINK.activeMapFilter =
+        category;
+
+
+    let visible = 0;
+
+
+    LIFELINK.mapMarkers.forEach(function (item) {
+
+        const show =
+            category === "all" ||
+            item.resource.category === category;
+
+
+        item.element.style.display =
+            show ? "grid" : "none";
+
+
+        if (show) {
+            visible++;
+        }
+
+    });
+
+
+    if (category === "all") {
+
+        setMapStatus(
+            "🟢 Map ready — showing all " +
+            visible +
+            " demonstration resources."
+        );
+
+    } else {
+
+        setMapStatus(
+            "📍 Showing " +
+            visible +
+            " " +
+            category +
+            " resource" +
+            (visible === 1 ? "" : "s") +
+            "."
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   MAP FILTER BUTTONS
+   ========================================================= */
+
+function initializeMapFilters() {
+
+    const buttons =
+        document.querySelectorAll(".map-filter");
+
+
+    buttons.forEach(function (button) {
+
+        button.addEventListener("click", function () {
+
+            buttons.forEach(function (item) {
+
+                item.classList.remove("active");
+
+            });
+
+
+            this.classList.add("active");
+
+
+            applyMapFilter(
+                this.dataset.mapFilter || "all"
+            );
+
+        });
+
+    });
+
+}
+
+
+/* =========================================================
+   MAP SEARCH
+   ========================================================= */
+
+function initializeMapSearch(map) {
+
+    const input =
+        document.getElementById("mapSearch");
+
+    const button =
+        document.getElementById("mapSearchButton");
+
+
+    if (!input || !button) {
+        return;
+    }
+
+
+    let searchMarker =
+        null;
+
+
+    async function performSearch() {
+
+        const query =
+            input.value.trim();
+
+
+        if (!query) {
+
+            setMapStatus(
+                "🔎 Enter a place to search."
+            );
+
+            return;
+
+        }
+
+
+        setMapStatus(
+            "🔎 Searching for " +
+            query +
+            "..."
+        );
+
+
+        try {
+
+            const url =
+                "https://nominatim.openstreetmap.org/search" +
+                "?format=jsonv2" +
+                "&limit=1" +
+                "&q=" +
+                encodeURIComponent(query);
+
+
+            const response =
+                await fetch(url, {
+                    headers: {
+                        Accept:
+                            "application/json"
+                    }
+                });
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    "Search request failed."
+                );
+
+            }
+
+
+            const results =
+                await response.json();
+
+
+            if (!Array.isArray(results) ||
+                results.length === 0) {
+
+                setMapStatus(
+                    "❌ No matching place found."
+                );
+
+                return;
+
+            }
+
+
+            const result =
+                results[0];
+
+
+            const longitude =
+                Number(result.lon);
+
+            const latitude =
+                Number(result.lat);
+
+
+            if (
+                !Number.isFinite(longitude) ||
+                !Number.isFinite(latitude)
+            ) {
+
+                throw new Error(
+                    "Search returned invalid coordinates."
+                );
+
+            }
+
+
+            map.flyTo({
+
+                center: [
+                    longitude,
+                    latitude
+                ],
+
+                zoom: 14,
+
+                speed: 1.2,
+
+                essential: true
+
+            });
+
+
+            if (searchMarker) {
+
+                searchMarker.remove();
+
+            }
+
+
+            searchMarker =
+                new maplibregl.Marker({
+                    color: "#5c8dff"
+                })
+                .setLngLat([
+                    longitude,
+                    latitude
+                ])
+                .setPopup(
+                    new maplibregl.Popup({
+                        offset: 25
+                    })
+                    .setText(
+                        "📍 " +
+                        result.display_name
+                    )
+                )
+                .addTo(map);
+
+
+            searchMarker.togglePopup();
+
+
+            setMapStatus(
+                "📍 Showing: " +
+                result.display_name
+            );
+
+
+        } catch (error) {
+
+            console.error(
+                "LIFELINK map search error:",
+                error
+            );
+
+
+            setMapStatus(
+                "⚠️ Search could not be completed."
+            );
+
+        }
+
+    }
+
+
+    button.addEventListener(
+        "click",
+        performSearch
+    );
+
+
+    input.addEventListener(
+        "keydown",
+        function (event) {
+
+            if (event.key === "Enter") {
+
+                event.preventDefault();
+
+                performSearch();
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   USER LOCATION
+   ========================================================= */
+
+function initializeLocation(map) {
+
+    const button =
+        document.getElementById("myLocationButton");
+
+
+    if (!button) {
+        return;
+    }
+
+
+    button.addEventListener("click", function () {
+
+        if (!navigator.geolocation) {
+
+            setMapStatus(
+                "❌ Geolocation is not supported by this browser."
+            );
+
+            return;
+
+        }
+
+
+        setMapStatus(
+            "📍 Requesting your location..."
+        );
+
+
+        navigator.geolocation.getCurrentPosition(
+
+            function (position) {
+
+                const latitude =
+                    position.coords.latitude;
+
+                const longitude =
+                    position.coords.longitude;
+
+
+                if (
+                    !Number.isFinite(latitude) ||
+                    !Number.isFinite(longitude)
+                ) {
+
+                    setMapStatus(
+                        "⚠️ Your browser returned invalid coordinates."
+                    );
+
+                    return;
+
+                }
+
+
+                map.flyTo({
+
+                    center: [
+                        longitude,
+                        latitude
+                    ],
+
+                    zoom: 15,
+
+                    speed: 1.2,
+
+                    essential: true
+
+                });
+
+
+                if (LIFELINK.userMarker) {
+
+                    LIFELINK.userMarker.remove();
+
+                }
+
+
+                const element =
+                    document.createElement("div");
+
+                element.style.width =
+                    "22px";
+
+                element.style.height =
+                    "22px";
+
+                element.style.borderRadius =
+                    "50%";
+
+                element.style.background =
+                    "#5c8dff";
+
+                element.style.border =
+                    "4px solid white";
+
+                element.style.boxShadow =
+                    "0 0 0 7px rgba(92,141,255,.25), 0 5px 20px rgba(0,0,0,.5)";
+
+
+                LIFELINK.userMarker =
+                    new maplibregl.Marker({
+                        element: element
+                    })
+                    .setLngLat([
+                        longitude,
+                        latitude
+                    ])
+                    .setPopup(
+                        new maplibregl.Popup({
+                            offset: 18
+                        })
+                        .setText(
+                            "📍 Your current location"
+                        )
+                    )
+                    .addTo(map);
+
+
+                LIFELINK.userMarker.togglePopup();
+
+
+                setMapStatus(
+                    "📍 Your location is shown on the map."
+                );
+
+            },
+
+
+            function (error) {
+
+                console.warn(
+                    "LIFELINK geolocation error:",
+                    error
+                );
+
+
+                if (
+                    error.code ===
+                    error.PERMISSION_DENIED
+                ) {
+
+                    setMapStatus(
+                        "⚠️ Location permission was denied."
+                    );
+
+                } else if (
+                    error.code ===
+                    error.TIMEOUT
+                ) {
+
+                    setMapStatus(
+                        "⚠️ Location request timed out."
+                    );
+
+                } else {
+
+                    setMapStatus(
+                        "⚠️ Unable to determine your location."
+                    );
+
+                }
+
+            },
+
+
+            {
+
+                enableHighAccuracy: true,
+
+                timeout: 10000,
+
+                maximumAge: 60000
+
+            }
+
+        );
+
+    });
+
+}
+
+
+/* =========================================================
+   MAP INITIALIZATION
+   ========================================================= */
+
+function initializeMap() {
+
+    const container =
+        document.getElementById("lifelinkMap");
+
+    const loading =
+        document.getElementById("mapLoading");
+
+
+    if (!container) {
+
+        console.warn(
+            "LIFELINK V3.1: map container not found."
+        );
+
+        return;
+
+    }
+
+
+    /*
+       We deliberately use a simple raster map here.
+
+       Why?
+
+       - No Mapbox token.
+       - No Mapbox billing.
+       - No vector sprite dependency.
+       - No Leaflet.
+       - No style JSON sprite errors.
+       - MapLibre still handles navigation,
+         markers, popups and controls.
+    */
+
+    loadMapLibre()
+
+        .then(function () {
+
+            const map =
+                new maplibregl.Map({
+
+                    container:
+                        "lifelinkMap",
+
+                    center: [
+                        72.8777,
+                        19.0760
+                    ],
+
+                    zoom: 11,
+
+                    attributionControl: true,
+
+                    style: {
+
+                        version: 8,
+
+                        sources: {
+
+                            "osm-raster": {
+
+                                type: "raster",
+
+                                tiles: [
+                                    "https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                ],
+
+                                tileSize: 256,
+
+                                attribution:
+                                    "© OpenStreetMap contributors"
+
+                            }
+
+                        },
+
+                        layers: [
+
+                            {
+
+                                id: "osm-raster-layer",
+
+                                type: "raster",
+
+                                source: "osm-raster",
+
+                                minzoom: 0,
+
+                                maxzoom: 19
+
+                            }
+
+                        ]
+
+                    }
+
+                });
+
+
+            LIFELINK.map =
+                map;
+
+
+            map.addControl(
+                new maplibregl.NavigationControl({
+                    showCompass: true,
+                    showZoom: true
+                }),
+                "top-right"
+            );
+
+
+            map.addControl(
+                new maplibregl.FullscreenControl(),
+                "top-right"
+            );
+
+
+            map.on("load", function () {
+
+                LIFELINK.mapReady =
+                    true;
+
+
+                createMapMarkers(map);
+
+                initializeMapFilters();
+
+                initializeMapSearch(map);
+
+                initializeLocation(map);
+
+                applyMapFilter("all");
+
+
+                if (loading) {
+
+                    loading.classList.add(
+                        "loaded"
+                    );
+
+                }
+
+
+                setTimeout(function () {
+
+                    map.resize();
+
+                }, 100);
+
+
+                console.log(
+                    "LIFELINK V3.1 map initialized successfully."
+                );
+
+            });
+
+
+            map.on("error", function (event) {
+
+                console.warn(
+                    "LIFELINK V3.1 map event:",
+                    event
+                );
+
+                setMapStatus(
+                    "⚠️ Some map tiles could not be loaded."
+                );
+
+            });
+
+
+            window.addEventListener(
+                "resize",
+                function () {
+
+                    if (LIFELINK.map) {
+
+                        LIFELINK.map.resize();
+
+                    }
+
+                }
+            );
+
+        })
+
+
+        .catch(function (error) {
+
+            console.error(
+                "LIFELINK V3.1 map initialization failed:",
+                error
+            );
+
+
+            if (loading) {
+
+                loading.classList.add(
+                    "loaded"
+                );
+
+            }
+
+
+            setMapStatus(
+                "⚠️ Map could not be loaded. The rest of LIFELINK is still available."
+            );
+
+        });
+
+}
+
+
+/* =========================================================
+   GLOBAL DEBUG HANDLE
+   ========================================================= */
+
+window.LIFELINK =
+    LIFELINK;
+
+
+console.log(
+    "LIFELINK V3.1 JavaScript loaded."
+);
