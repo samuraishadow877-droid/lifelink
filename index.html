@@ -1407,40 +1407,237 @@
         <!-- =================================================
              FUTURE MAP PLACEHOLDER
              ================================================= -->
+<!-- =====================================================
+     LIFELINK V3.0 — ISOLATED REAL MAP
+     MAPLIBRE + OPENFREEMAP
+     ===================================================== -->
 
-        <section
-            class="section future-map"
-            id="future-map"
+<section
+    class="lifelink-map-module"
+    id="lifelinkMapModule"
+>
+
+    <!-- HEADER -->
+
+    <div class="map-module-header">
+
+        <div>
+
+            <span class="map-module-label">
+                LIFELINK MAP
+            </span>
+
+            <h2>
+                Find help near you.
+            </h2>
+
+            <p>
+                Explore nearby emergency resources and
+                important locations.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- SEARCH + LOCATION -->
+
+    <div class="map-toolbar">
+
+        <div class="map-search">
+
+            <span
+                class="map-search-icon"
+                aria-hidden="true"
+            >
+                🔎
+            </span>
+
+            <input
+                id="lifelinkMapSearch"
+                type="search"
+                placeholder="Search for a place..."
+                autocomplete="off"
+            >
+
+            <button
+                id="lifelinkMapSearchButton"
+                type="button"
+            >
+                Search
+            </button>
+
+        </div>
+
+
+        <button
+            id="lifelinkMyLocation"
+            class="map-location-button"
+            type="button"
         >
+            📍 My Location
+        </button>
 
-            <div class="future-map-box">
+    </div>
 
-                <div class="future-map-icon">
-                    🗺️
-                </div>
 
-                <span class="section-label">
-                    COMING NEXT
-                </span>
+    <!-- CATEGORY FILTERS -->
 
-                <h2>
-                    LIFELINK Interactive Map
-                </h2>
+    <div
+        class="map-filters"
+        id="lifelinkMapFilters"
+    >
 
-                <p>
-                    We're building the map separately so it can
-                    provide a reliable experience without affecting
-                    the rest of the platform.
-                </p>
+        <button
+            class="map-filter active"
+            data-map-filter="all"
+            type="button"
+        >
+            All
+        </button>
 
-                <div class="future-map-status">
-                    <span class="status-dot"></span>
-                    Map module under development
-                </div>
+        <button
+            class="map-filter"
+            data-map-filter="hospital"
+            type="button"
+        >
+            🏥 Hospitals
+        </button>
+
+        <button
+            class="map-filter"
+            data-map-filter="pharmacy"
+            type="button"
+        >
+            💊 Pharmacies
+        </button>
+
+        <button
+            class="map-filter"
+            data-map-filter="police"
+            type="button"
+        >
+            🚓 Police
+        </button>
+
+        <button
+            class="map-filter"
+            data-map-filter="fire"
+            type="button"
+        >
+            🚒 Fire
+        </button>
+
+        <button
+            class="map-filter"
+            data-map-filter="government"
+            type="button"
+        >
+            🏛️ Government
+        </button>
+
+        <button
+            class="map-filter"
+            data-map-filter="shelter"
+            type="button"
+        >
+            🏠 Shelters
+        </button>
+
+    </div>
+
+
+    <!-- MAP CONTAINER -->
+
+    <div
+        id="lifelinkMap"
+        class="lifelink-map"
+        role="application"
+        aria-label="Interactive LIFELINK map"
+    ></div>
+
+
+    <!-- MAP STATUS -->
+
+    <div
+        id="lifelinkMapStatus"
+        class="map-status"
+        aria-live="polite"
+    >
+        🗺️ Map is ready.
+    </div>
+
+
+    <!-- MAP INFORMATION -->
+
+    <div class="map-information">
+
+        <div class="map-information-item">
+
+            <span>
+                📍
+            </span>
+
+            <div>
+
+                <strong>
+                    Your location
+                </strong>
+
+                <small>
+                    Location is only requested when
+                    you choose "My Location".
+                </small>
 
             </div>
 
-        </section>
+        </div>
+
+
+        <div class="map-information-item">
+
+            <span>
+                🏥
+            </span>
+
+            <div>
+
+                <strong>
+                    Emergency resources
+                </strong>
+
+                <small>
+                    Resource locations will be added
+                    in the next V3.0 modules.
+                </small>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- DISCLAIMER -->
+
+    <div class="map-disclaimer">
+
+        <strong>
+            ⚠️ Important
+        </strong>
+
+        <span>
+            Map information should not be treated as
+            confirmation that an emergency service is
+            available. Always verify critical information
+            with official sources.
+        </span>
+
+    </div>
+
+</section>
+     
 <!-- =====================================================
      LIFELINK V2.9 — SAFETY INTELLIGENCE
      ===================================================== -->
