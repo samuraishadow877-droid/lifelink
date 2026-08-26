@@ -1,118 +1,95 @@
 ```javascript
-/* =========================================================
-   LIFELINK V3.1 — RESOURCE INTELLIGENCE MAP
-   MapLibre GL JS + OpenFreeMap
-   ========================================================= */
-
 (function () {
 
     "use strict";
 
     /* =====================================================
-       CONFIG
+       LIFELINK V3.2 — CLEAN MAP MODULE
+       MapLibre GL JS + OpenFreeMap
        ===================================================== */
 
-    const MAP_CONTAINER_ID = "lifelinkMap";
+    var MAP_ID = "lifelinkMap";
 
-    const DEFAULT_CENTER = [72.8777, 19.0760]; // Mumbai
-
-    const DEFAULT_ZOOM = 11;
-
-    const MAP_STYLE =
+    var MAP_STYLE =
         "https://tiles.openfreemap.org/styles/liberty";
+
+    var CENTER = [72.8777, 19.0760];
+
+    var ZOOM = 11;
 
 
     /* =====================================================
        RESOURCE DATA
        ===================================================== */
 
-    /*
-       IMPORTANT:
-
-       These are demonstration resource locations for the
-       LIFELINK prototype.
-
-       They are NOT claiming to be the exact locations of
-       official emergency facilities.
-
-       Real verified data can be connected later.
-    */
-
-    const resources = [
+    var resources = [
 
         {
-            id: "hospital-1",
             name: "LIFELINK Medical Point",
             category: "hospital",
             icon: "🏥",
-            latitude: 19.0760,
-            longitude: 72.8777,
+            lat: 19.0760,
+            lng: 72.8777,
             location: "Mumbai",
-            service: "Emergency medical assistance"
+            service: "Emergency medical resource"
         },
 
         {
-            id: "hospital-2",
             name: "LIFELINK Hospital Resource",
             category: "hospital",
             icon: "🏥",
-            latitude: 19.0178,
-            longitude: 72.8478,
+            lat: 19.0178,
+            lng: 72.8478,
             location: "Mumbai",
             service: "Medical emergency resource"
         },
 
         {
-            id: "pharmacy-1",
             name: "LIFELINK Pharmacy Point",
             category: "pharmacy",
             icon: "💊",
-            latitude: 19.1136,
-            longitude: 72.8697,
+            lat: 19.1136,
+            lng: 72.8697,
             location: "Mumbai",
             service: "Pharmacy resource"
         },
 
         {
-            id: "police-1",
             name: "LIFELINK Police Resource",
             category: "police",
             icon: "🚓",
-            latitude: 19.0330,
-            longitude: 73.0297,
+            lat: 19.0330,
+            lng: 73.0297,
             location: "Mumbai Region",
             service: "Police assistance resource"
         },
 
         {
-            id: "fire-1",
             name: "LIFELINK Fire Resource",
             category: "fire",
             icon: "🚒",
-            latitude: 19.2183,
-            longitude: 72.9781,
+            lat: 19.2183,
+            lng: 72.9781,
             location: "Mumbai Region",
             service: "Fire and rescue resource"
         },
 
         {
-            id: "government-1",
             name: "LIFELINK Government Resource",
             category: "government",
             icon: "🏛️",
-            latitude: 19.2183,
-            longitude: 72.9781,
+            lat: 19.2183,
+            lng: 72.9781,
             location: "Mumbai Region",
             service: "Public government resource"
         },
 
         {
-            id: "shelter-1",
             name: "LIFELINK Safety Shelter",
             category: "shelter",
             icon: "🏠",
-            latitude: 19.0825,
-            longitude: 72.8811,
+            lat: 19.0825,
+            lng: 72.8811,
             location: "Mumbai",
             service: "Safety shelter resource"
         }
@@ -121,47 +98,33 @@
 
 
     /* =====================================================
-       DOM
+       FIND ELEMENTS
        ===================================================== */
 
-    const mapContainer =
-        document.getElementById(MAP_CONTAINER_ID);
+    var mapElement =
+        document.getElementById(MAP_ID);
 
-    const statusElement =
+    var statusElement =
         document.getElementById("lifelinkMapStatus");
 
-    const searchInput =
+    var searchInput =
         document.getElementById("lifelinkMapSearch");
 
-    const searchButton =
+    var searchButton =
         document.getElementById("lifelinkMapSearchButton");
 
-    const locationButton =
+    var locationButton =
         document.getElementById("lifelinkMyLocation");
 
-    const filterButtons =
+    var filterButtons =
         document.querySelectorAll(".map-filter");
-
-
-    /* =====================================================
-       SAFETY CHECK
-       ===================================================== */
-
-    if (!mapContainer) {
-
-        console.warn(
-            "LIFELINK V3.1: Map container not found."
-        );
-
-        return;
-    }
 
 
     /* =====================================================
        STATUS
        ===================================================== */
 
-    function setStatus(message) {
+    function status(message) {
 
         if (statusElement) {
             statusElement.textContent = message;
@@ -170,11 +133,54 @@
     }
 
 
-    setStatus("🗺️ Loading LIFELINK map...");
+    /* =====================================================
+       SAFETY CHECK
+       ===================================================== */
+
+    if (!mapElement) {
+
+        console.error(
+            "LIFELINK V3.2: #lifelinkMap was not found."
+        );
+
+        return;
+    }
+
+
+    status("Loading map...");
 
 
     /* =====================================================
-       LOAD MAPLIBRE
+       LOAD MAPLIBRE CSS
+       ===================================================== */
+
+    function loadCSS() {
+
+        if (
+            document.querySelector(
+                "link[data-lifelink-maplibre]"
+            )
+        ) {
+            return;
+        }
+
+        var link =
+            document.createElement("link");
+
+        link.rel = "stylesheet";
+
+        link.href =
+            "https://unpkg.com/maplibre-gl@5.6.2/dist/maplibre-gl.css";
+
+        link.dataset.lifelinkMaplibre = "true";
+
+        document.head.appendChild(link);
+
+    }
+
+
+    /* =====================================================
+       LOAD MAPLIBRE JS
        ===================================================== */
 
     function loadMapLibre() {
@@ -188,45 +194,54 @@
                 return;
             }
 
+            var existing =
+                document.querySelector(
+                    "script[data-lifelink-maplibre]"
+                );
 
-            /*
-               Load MapLibre CSS
-            */
+            if (existing) {
 
-            if (
-                !document.querySelector(
-                    'link[data-lifelink-maplibre="css"]'
-                )
-            ) {
+                existing.addEventListener(
+                    "load",
+                    function () {
 
-                const css =
-                    document.createElement("link");
+                        if (window.maplibregl) {
+                            resolve();
+                        } else {
+                            reject(
+                                new Error(
+                                    "MapLibre failed to initialize."
+                                )
+                            );
+                        }
 
-                css.rel = "stylesheet";
+                    }
+                );
 
-                css.href =
-                    "https://unpkg.com/maplibre-gl@5.6.2/dist/maplibre-gl.css";
+                existing.addEventListener(
+                    "error",
+                    function () {
 
-                css.dataset.lifelinkMaplibre =
-                    "css";
+                        reject(
+                            new Error(
+                                "MapLibre script failed to load."
+                            )
+                        );
 
-                document.head.appendChild(css);
+                    }
+                );
+
+                return;
             }
 
-
-            /*
-               Load MapLibre JavaScript
-            */
-
-            const script =
+            var script =
                 document.createElement("script");
 
             script.src =
                 "https://unpkg.com/maplibre-gl@5.6.2/dist/maplibre-gl.js";
 
             script.dataset.lifelinkMaplibre =
-                "js";
-
+                "true";
 
             script.onload = function () {
 
@@ -238,7 +253,7 @@
 
                     reject(
                         new Error(
-                            "MapLibre loaded but was not found."
+                            "MapLibre loaded but maplibregl is unavailable."
                         )
                     );
 
@@ -246,17 +261,15 @@
 
             };
 
-
             script.onerror = function () {
 
                 reject(
                     new Error(
-                        "Could not load MapLibre GL JS."
+                        "Could not download MapLibre."
                     )
                 );
 
             };
-
 
             document.head.appendChild(script);
 
@@ -266,64 +279,87 @@
 
 
     /* =====================================================
-       ESCAPE HTML
+       CREATE POPUP
        ===================================================== */
 
-    function escapeHTML(value) {
+    function createPopup(resource) {
 
-        return String(value)
-            .replace(/&/g, "&amp;")
-            .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;")
-            .replace(/"/g, "&quot;")
-            .replace(/'/g, "&#039;");
+        var wrapper =
+            document.createElement("div");
+
+        wrapper.className =
+            "map-popup";
+
+
+        var category =
+            document.createElement("div");
+
+        category.className =
+            "map-popup-category";
+
+        category.textContent =
+            resource.icon +
+            " " +
+            resource.category;
+
+
+        var title =
+            document.createElement("div");
+
+        title.className =
+            "map-popup-title";
+
+        title.textContent =
+            resource.name;
+
+
+        var location =
+            document.createElement("p");
+
+        location.className =
+            "map-popup-location";
+
+        location.textContent =
+            "📍 " +
+            resource.location;
+
+
+        var service =
+            document.createElement("p");
+
+        service.className =
+            "map-popup-location";
+
+        service.textContent =
+            "🛠️ " +
+            resource.service;
+
+
+        var note =
+            document.createElement("p");
+
+        note.className =
+            "map-popup-location";
+
+        note.textContent =
+            "ℹ️ Prototype resource location";
+
+
+        wrapper.appendChild(category);
+
+        wrapper.appendChild(title);
+
+        wrapper.appendChild(location);
+
+        wrapper.appendChild(service);
+
+        wrapper.appendChild(note);
+
+
+        return wrapper;
 
     }
 
-
-    /* =====================================================
-       POPUP HTML
-       ===================================================== */
-
-function createPopup(resource) {
-
-    const popup = document.createElement("div");
-
-    popup.className = "map-popup";
-
-    const category = document.createElement("div");
-    category.className = "map-popup-category";
-    category.textContent =
-        resource.icon + " " + resource.category;
-
-    const title = document.createElement("div");
-    title.className = "map-popup-title";
-    title.textContent = resource.name;
-
-    const location = document.createElement("p");
-    location.className = "map-popup-location";
-    location.textContent =
-        "📍 " + resource.location;
-
-    const service = document.createElement("p");
-    service.className = "map-popup-location";
-    service.textContent =
-        "🛠️ " + resource.service;
-
-    const note = document.createElement("p");
-    note.className = "map-popup-location";
-    note.textContent =
-        "ℹ️ Prototype resource location";
-
-    popup.appendChild(category);
-    popup.appendChild(title);
-    popup.appendChild(location);
-    popup.appendChild(service);
-    popup.appendChild(note);
-
-    return popup.outerHTML;
-}
-```
 
     /* =====================================================
        CREATE MARKER
@@ -331,85 +367,107 @@ function createPopup(resource) {
 
     function createMarker(map, resource) {
 
-        const markerElement =
-            document.createElement("div");
+        var element =
+            document.createElement("button");
 
-        markerElement.className =
+        element.type = "button";
+
+        element.className =
             "lifelink-map-marker";
 
-        markerElement.dataset.category =
-            resource.category;
+        element.textContent =
+            resource.icon;
 
-        markerElement.setAttribute(
+        element.setAttribute(
             "aria-label",
             resource.name
         );
 
-        markerElement.innerHTML =
-            resource.icon;
+        element.style.width = "42px";
+
+        element.style.height = "42px";
+
+        element.style.borderRadius = "50%";
+
+        element.style.border =
+            "2px solid rgba(255,255,255,0.9)";
+
+        element.style.background =
+            "rgba(5,7,11,0.95)";
+
+        element.style.display =
+            "flex";
+
+        element.style.alignItems =
+            "center";
+
+        element.style.justifyContent =
+            "center";
+
+        element.style.fontSize =
+            "20px";
+
+        element.style.cursor =
+            "pointer";
 
 
-        markerElement.style.cssText = `
-            width: 42px;
-            height: 42px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            background: rgba(5, 7, 11, 0.94);
-            border: 2px solid rgba(255,255,255,0.85);
-            box-shadow: 0 5px 18px rgba(0,0,0,0.4);
-            font-size: 21px;
-            cursor: pointer;
-            user-select: none;
-        `;
+        var popup =
+            new maplibregl.Popup({
+                offset: 25,
+                closeButton: true,
+                closeOnClick: false
+            });
 
 
-        const marker =
+        popup.setDOMContent(
+            createPopup(resource)
+        );
+
+
+        var marker =
             new maplibregl.Marker({
-                element: markerElement,
+                element: element,
                 anchor: "center"
             })
             .setLngLat([
-                resource.longitude,
-                resource.latitude
+                resource.lng,
+                resource.lat
             ])
-            .setPopup(
-                new maplibregl.Popup({
-                    offset: 25,
-                    closeButton: true,
-                    closeOnClick: false
-                })
-                .setHTML(
-                    createPopup(resource)
-                )
-            )
+            .setPopup(popup)
             .addTo(map);
 
 
         return {
             resource: resource,
             marker: marker,
-            element: markerElement
+            element: element
         };
 
     }
 
 
     /* =====================================================
-       CREATE ALL MARKERS
+       CREATE MARKERS
        ===================================================== */
 
     function createMarkers(map) {
 
-        return resources.map(function (resource) {
+        var markerObjects = [];
 
-            return createMarker(
-                map,
-                resource
-            );
+        resources.forEach(
+            function (resource) {
 
-        });
+                markerObjects.push(
+                    createMarker(
+                        map,
+                        resource
+                    )
+                );
+
+            }
+        );
+
+        return markerObjects;
 
     }
 
@@ -423,18 +481,24 @@ function createPopup(resource) {
         category
     ) {
 
+        var visible = 0;
+
+
         markerObjects.forEach(
             function (item) {
 
-                const shouldShow =
+                var show =
                     category === "all" ||
                     item.resource.category === category;
 
 
                 item.element.style.display =
-                    shouldShow
-                        ? "flex"
-                        : "none";
+                    show ? "flex" : "none";
+
+
+                if (show) {
+                    visible++;
+                }
 
             }
         );
@@ -442,33 +506,20 @@ function createPopup(resource) {
 
         if (category === "all") {
 
-            setStatus(
-                "🗺️ Showing all emergency resources."
+            status(
+                "🟢 Showing all " +
+                visible +
+                " resources."
             );
 
         } else {
 
-            const visibleCount =
-                markerObjects.filter(
-                    function (item) {
-
-                        return (
-                            item.resource.category ===
-                            category
-                        );
-
-                    }
-                ).length;
-
-
-            setStatus(
+            status(
                 "📍 Showing " +
-                visibleCount +
+                visible +
                 " " +
                 category +
-                " resource" +
-                (visibleCount === 1 ? "" : "s") +
-                "."
+                " resources."
             );
 
         }
@@ -500,13 +551,14 @@ function createPopup(resource) {
                         );
 
 
-                        this.classList.add(
+                        button.classList.add(
                             "active"
                         );
 
 
-                        const category =
-                            this.dataset.mapFilter ||
+                        var category =
+                            button.dataset.mapFilter ||
+                            button.dataset.category ||
                             "all";
 
 
@@ -530,146 +582,182 @@ function createPopup(resource) {
 
     function setupSearch(map) {
 
-        if (!searchButton || !searchInput) {
+        if (!searchInput) {
             return;
         }
 
 
-        async function searchPlace() {
+        function searchPlace() {
 
-            const query =
+            var query =
                 searchInput.value.trim();
 
 
             if (!query) {
 
-                setStatus(
+                status(
                     "🔎 Enter a place to search."
                 );
 
                 return;
+
             }
 
 
-            setStatus(
+            status(
                 "🔎 Searching..."
             );
 
 
-            try {
-
-                const url =
-                    "https://nominatim.openstreetmap.org/search" +
-                    "?format=jsonv2" +
-                    "&limit=1" +
-                    "&q=" +
-                    encodeURIComponent(query);
+            var url =
+                "https://nominatim.openstreetmap.org/search" +
+                "?format=jsonv2" +
+                "&limit=1" +
+                "&q=" +
+                encodeURIComponent(query);
 
 
-                const response =
-                    await fetch(url);
+            fetch(url)
+
+                .then(
+                    function (response) {
+
+                        if (!response.ok) {
+
+                            throw new Error(
+                                "Search request failed."
+                            );
+
+                        }
+
+                        return response.json();
+
+                    }
+                )
+
+                .then(
+                    function (results) {
+
+                        if (!results.length) {
+
+                            status(
+                                "❌ No matching place found."
+                            );
+
+                            return;
+
+                        }
 
 
-                if (!response.ok) {
-
-                    throw new Error(
-                        "Search request failed."
-                    );
-
-                }
+                        var result =
+                            results[0];
 
 
-                const results =
-                    await response.json();
+                        var lng =
+                            Number(result.lon);
+
+                        var lat =
+                            Number(result.lat);
 
 
-                if (!results.length) {
-
-                    setStatus(
-                        "❌ No matching place found."
-                    );
-
-                    return;
-                }
-
-
-                const result =
-                    results[0];
+                        map.flyTo({
+                            center: [
+                                lng,
+                                lat
+                            ],
+                            zoom: 14,
+                            speed: 1.2
+                        });
 
 
-                const longitude =
-                    Number(result.lon);
-
-                const latitude =
-                    Number(result.lat);
-
-
-                map.flyTo({
-
-                    center: [
-                        longitude,
-                        latitude
-                    ],
-
-                    zoom: 14,
-
-                    speed: 1.2
-
-                });
+                        var marker =
+                            new maplibregl.Marker()
+                            .setLngLat([
+                                lng,
+                                lat
+                            ])
+                            .setPopup(
+                                new maplibregl.Popup({
+                                    offset: 25
+                                })
+                            )
+                            .addTo(map);
 
 
-                new maplibregl.Marker()
-                    .setLngLat([
-                        longitude,
-                        latitude
-                    ])
-                    .setPopup(
-                        new maplibregl.Popup({
-                            offset: 25
-                        })
-                        .setHTML(`
-                            <div class="map-popup-title">
-                                📍 ${escapeHTML(
-                                    result.display_name
-                                )}
-                            </div>
+                        var popup =
+                            document.createElement("div");
 
-                            <p class="map-popup-location">
-                                Search result
-                            </p>
-                        `)
-                    )
-                    .addTo(map)
-                    .togglePopup();
+                        popup.className =
+                            "map-popup";
 
 
-                setStatus(
-                    "📍 Showing: " +
-                    result.display_name
+                        var title =
+                            document.createElement("div");
+
+                        title.className =
+                            "map-popup-title";
+
+                        title.textContent =
+                            "📍 " +
+                            result.display_name;
+
+
+                        var text =
+                            document.createElement("p");
+
+                        text.className =
+                            "map-popup-location";
+
+                        text.textContent =
+                            "Search result";
+
+
+                        popup.appendChild(title);
+
+                        popup.appendChild(text);
+
+
+                        marker
+                            .getPopup()
+                            .setDOMContent(popup)
+                            .addTo(map);
+
+
+                        status(
+                            "📍 Showing: " +
+                            result.display_name
+                        );
+
+                    }
+                )
+
+                .catch(
+                    function (error) {
+
+                        console.error(
+                            "LIFELINK search error:",
+                            error
+                        );
+
+
+                        status(
+                            "⚠️ Search could not be completed."
+                        );
+
+                    }
                 );
-
-
-            } catch (error) {
-
-                console.error(
-                    "LIFELINK search error:",
-                    error
-                );
-
-
-                setStatus(
-                    "⚠️ Search could not be completed."
-                );
-
-            }
 
         }
 
 
-        searchButton.addEventListener(
-            "click",
-            searchPlace
-        );
+        if (searchButton) {
+
+            searchButton.addEventListener(
+                "click",
+                searchPlace
+            );
+
+        }
 
 
         searchInput.addEventListener(
@@ -689,7 +777,7 @@ function createPopup(resource) {
 
 
     /* =====================================================
-       USER LOCATION
+       LOCATION
        ===================================================== */
 
     function setupLocation(map) {
@@ -705,15 +793,16 @@ function createPopup(resource) {
 
                 if (!navigator.geolocation) {
 
-                    setStatus(
-                        "❌ Your browser does not support location."
+                    status(
+                        "❌ Location is not supported."
                     );
 
                     return;
+
                 }
 
 
-                setStatus(
+                status(
                     "📍 Requesting your location..."
                 );
 
@@ -722,53 +811,75 @@ function createPopup(resource) {
 
                     function (position) {
 
-                        const longitude =
+                        var lng =
                             position.coords.longitude;
 
-                        const latitude =
+                        var lat =
                             position.coords.latitude;
 
 
                         map.flyTo({
-
                             center: [
-                                longitude,
-                                latitude
+                                lng,
+                                lat
                             ],
-
                             zoom: 15,
-
                             speed: 1.2
-
                         });
 
 
-                        new maplibregl.Marker({
-                            color: "#ffffff"
-                        })
-                        .setLngLat([
-                            longitude,
-                            latitude
-                        ])
-                        .setPopup(
-                            new maplibregl.Popup({
-                                offset: 25
-                            })
-                            .setHTML(`
-                                <div class="map-popup-title">
-                                    📍 Your Location
-                                </div>
-
-                                <p class="map-popup-location">
-                                    Location provided by your browser.
-                                </p>
-                            `)
-                        )
-                        .addTo(map)
-                        .togglePopup();
+                        var marker =
+                            new maplibregl.Marker()
+                            .setLngLat([
+                                lng,
+                                lat
+                            ])
+                            .addTo(map);
 
 
-                        setStatus(
+                        var popup =
+                            document.createElement("div");
+
+                        popup.className =
+                            "map-popup";
+
+
+                        var title =
+                            document.createElement("div");
+
+                        title.className =
+                            "map-popup-title";
+
+                        title.textContent =
+                            "📍 Your Location";
+
+
+                        var text =
+                            document.createElement("p");
+
+                        text.className =
+                            "map-popup-location";
+
+                        text.textContent =
+                            "Location provided by your browser.";
+
+
+                        popup.appendChild(title);
+
+                        popup.appendChild(text);
+
+
+                        marker
+                            .setPopup(
+                                new maplibregl.Popup({
+                                    offset: 25
+                                })
+                                .setDOMContent(popup)
+                            )
+                            .togglePopup();
+
+
+                        status(
                             "📍 Your location is shown."
                         );
 
@@ -778,7 +889,7 @@ function createPopup(resource) {
                     function (error) {
 
                         console.warn(
-                            "Location error:",
+                            "LIFELINK location error:",
                             error
                         );
 
@@ -788,13 +899,13 @@ function createPopup(resource) {
                             error.PERMISSION_DENIED
                         ) {
 
-                            setStatus(
+                            status(
                                 "⚠️ Location permission was denied."
                             );
 
                         } else {
 
-                            setStatus(
+                            status(
                                 "⚠️ Unable to determine your location."
                             );
 
@@ -818,28 +929,28 @@ function createPopup(resource) {
 
 
     /* =====================================================
-       INITIALIZE MAP
+       INITIALIZE
        ===================================================== */
 
     function initializeMap() {
 
-        const map =
+        status(
+            "🗺️ Creating map..."
+        );
+
+
+        var map =
             new maplibregl.Map({
 
-                container:
-                    MAP_CONTAINER_ID,
+                container: MAP_ID,
 
-                style:
-                    MAP_STYLE,
+                style: MAP_STYLE,
 
-                center:
-                    DEFAULT_CENTER,
+                center: CENTER,
 
-                zoom:
-                    DEFAULT_ZOOM,
+                zoom: ZOOM,
 
-                attributionControl:
-                    true
+                attributionControl: true
 
             });
 
@@ -854,45 +965,24 @@ function createPopup(resource) {
             "load",
             function () {
 
-                /*
-                   Create resource markers only after
-                   the map has loaded.
-                */
-
-                const markerObjects =
+                var markerObjects =
                     createMarkers(map);
 
-
-                /*
-                   Activate filter system.
-                */
 
                 setupFilters(
                     markerObjects
                 );
 
 
-                /*
-                   Search.
-                */
-
                 setupSearch(
                     map
                 );
 
 
-                /*
-                   Location.
-                */
-
                 setupLocation(
                     map
                 );
 
-
-                /*
-                   Initial state.
-                */
 
                 filterMarkers(
                     markerObjects,
@@ -900,14 +990,13 @@ function createPopup(resource) {
                 );
 
 
-                setStatus(
-                    "🟢 Map ready — emergency resources loaded."
+                status(
+                    "🟢 Map ready — resources loaded."
                 );
 
 
                 console.log(
-                    "LIFELINK V3.1 initialized.",
-                    resources
+                    "LIFELINK V3.2 map initialized successfully."
                 );
 
             }
@@ -919,13 +1008,13 @@ function createPopup(resource) {
             function (event) {
 
                 console.error(
-                    "LIFELINK V3.1 map error:",
+                    "LIFELINK map error:",
                     event
                 );
 
 
-                setStatus(
-                    "⚠️ Some map data could not be loaded."
+                status(
+                    "⚠️ Map data could not be loaded."
                 );
 
             }
@@ -937,6 +1026,9 @@ function createPopup(resource) {
     /* =====================================================
        START
        ===================================================== */
+
+    loadCSS();
+
 
     loadMapLibre()
 
@@ -952,13 +1044,13 @@ function createPopup(resource) {
             function (error) {
 
                 console.error(
-                    "LIFELINK V3.1 initialization failed:",
+                    "LIFELINK V3.2 initialization failed:",
                     error
                 );
 
 
-                setStatus(
-                    "⚠️ Map could not be loaded."
+                status(
+                    "❌ Map could not be loaded."
                 );
 
             }
