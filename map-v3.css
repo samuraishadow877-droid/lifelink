@@ -1,0 +1,381 @@
+/* =========================================================
+   LIFELINK V3.0 — ISOLATED MAP STYLES
+   MapLibre + OpenFreeMap
+   ========================================================= */
+
+
+/* =========================================================
+   MAP MODULE
+   ========================================================= */
+
+.lifelink-map-module {
+    width: min(1200px, calc(100% - 32px));
+    margin: 0 auto;
+    padding: 32px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 24px;
+    background: rgba(255, 255, 255, 0.025);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.map-module-header {
+    margin-bottom: 24px;
+}
+
+.map-module-label {
+    display: inline-block;
+    margin-bottom: 8px;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    opacity: 0.65;
+}
+
+.map-module-header h2 {
+    margin: 0;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    line-height: 1.1;
+}
+
+.map-module-header p {
+    max-width: 650px;
+    margin: 12px 0 0;
+    line-height: 1.7;
+    opacity: 0.7;
+}
+
+
+/* =========================================================
+   TOOLBAR
+   ========================================================= */
+
+.map-toolbar {
+    display: flex;
+    gap: 12px;
+    align-items: stretch;
+    margin-bottom: 16px;
+}
+
+.map-search {
+    display: flex;
+    flex: 1;
+    min-width: 0;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 6px 6px 14px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 14px;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.map-search-icon {
+    flex-shrink: 0;
+    opacity: 0.7;
+}
+
+.map-search input {
+    width: 100%;
+    min-width: 0;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+}
+
+.map-search input::placeholder {
+    opacity: 0.5;
+}
+
+.map-search button,
+.map-location-button {
+    border: 0;
+    border-radius: 10px;
+    padding: 11px 16px;
+    background: rgba(255, 255, 255, 0.09);
+    color: inherit;
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease;
+}
+
+.map-search button:hover,
+.map-location-button:hover {
+    transform: translateY(-1px);
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.map-search button:active,
+.map-location-button:active {
+    transform: translateY(0);
+}
+
+.map-location-button {
+    flex-shrink: 0;
+}
+
+
+/* =========================================================
+   FILTERS
+   ========================================================= */
+
+.map-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.map-filter {
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 999px;
+    padding: 9px 14px;
+    background: rgba(255, 255, 255, 0.035);
+    color: inherit;
+    font: inherit;
+    font-size: 0.88rem;
+    cursor: pointer;
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.map-filter:hover {
+    transform: translateY(-1px);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.map-filter.active {
+    background: rgba(255, 255, 255, 0.13);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+
+/* =========================================================
+   REAL MAP CONTAINER
+   ========================================================= */
+
+.lifelink-map {
+    position: relative;
+    width: 100%;
+    height: 560px;
+    min-height: 420px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    background: #11161d;
+}
+
+
+/*
+   IMPORTANT:
+
+   MapLibre needs an explicit height on its container.
+*/
+
+.lifelink-map canvas {
+    display: block;
+}
+
+
+/* =========================================================
+   MAP STATUS
+   ========================================================= */
+
+.map-status {
+    margin-top: 12px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.035);
+    font-size: 0.85rem;
+    opacity: 0.7;
+}
+
+
+/* =========================================================
+   MAP INFORMATION
+   ========================================================= */
+
+.map-information {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.map-information-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.025);
+}
+
+.map-information-item > span {
+    font-size: 1.3rem;
+    line-height: 1;
+}
+
+.map-information-item strong {
+    display: block;
+    margin-bottom: 4px;
+}
+
+.map-information-item small {
+    display: block;
+    line-height: 1.5;
+    opacity: 0.6;
+}
+
+
+/* =========================================================
+   DISCLAIMER
+   ========================================================= */
+
+.map-disclaimer {
+    display: flex;
+    gap: 10px;
+    margin-top: 16px;
+    padding: 14px 16px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+    font-size: 0.82rem;
+    line-height: 1.55;
+    opacity: 0.65;
+}
+
+
+/* =========================================================
+   MAPLIBRE UI OVERRIDES
+   ========================================================= */
+
+.lifelink-map .maplibregl-ctrl-group {
+    overflow: hidden;
+    border: 0;
+    border-radius: 10px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.lifelink-map .maplibregl-ctrl-group button {
+    width: 36px;
+    height: 36px;
+}
+
+.lifelink-map .maplibregl-ctrl-attrib {
+    font-size: 10px;
+}
+
+
+/* =========================================================
+   POPUPS
+   ========================================================= */
+
+.lifelink-map .maplibregl-popup-content {
+    min-width: 220px;
+    padding: 16px;
+    border-radius: 12px;
+    color: #111;
+}
+
+.lifelink-map .maplibregl-popup-close-button {
+    font-size: 18px;
+}
+
+.map-popup-title {
+    margin: 0 0 6px;
+    font-size: 1rem;
+    font-weight: 800;
+}
+
+.map-popup-category {
+    margin-bottom: 8px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    opacity: 0.6;
+}
+
+.map-popup-location {
+    margin: 0;
+    font-size: 0.85rem;
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 800px) {
+
+    .lifelink-map-module {
+        width: min(100% - 20px, 1200px);
+        padding: 22px;
+        border-radius: 18px;
+    }
+
+    .map-toolbar {
+        flex-direction: column;
+    }
+
+    .map-location-button {
+        width: 100%;
+    }
+
+    .lifelink-map {
+        height: 480px;
+        min-height: 360px;
+    }
+
+    .map-information {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+@media (max-width: 520px) {
+
+    .lifelink-map-module {
+        width: calc(100% - 12px);
+        padding: 16px;
+    }
+
+    .map-search {
+        flex-wrap: wrap;
+        padding: 10px;
+    }
+
+    .map-search input {
+        flex: 1 1 150px;
+    }
+
+    .map-search button {
+        width: 100%;
+    }
+
+    .lifelink-map {
+        height: 420px;
+        min-height: 320px;
+        border-radius: 14px;
+    }
+
+    .map-filter {
+        font-size: 0.8rem;
+        padding: 8px 11px;
+    }
+
+}
